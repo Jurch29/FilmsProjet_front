@@ -1,8 +1,15 @@
 footer {
-    padding: 10px 20px;
+    position: fixed;
+    height: 50px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    margin-bottom: 0px;
     background: #666;
     color: white;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-  }
+    /*width: 100%;*/
+}
+
+p{
+  margin-left: 15px;
+}

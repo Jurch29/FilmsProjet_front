@@ -6,12 +6,6 @@
     flex: 1 1 auto;
 }
 
-mat-icon:hover
-{
-    box-shadow: inset 5em 1em rgb(233, 136, 136);
-    cursor: pointer;
-}
-
 .title{
     position: relative;
     left: 10px;
