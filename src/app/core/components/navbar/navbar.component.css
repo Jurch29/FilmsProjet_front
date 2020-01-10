@@ -10,3 +10,42 @@
     position: relative;
     left: 10px;
 }
+.search-container {
+    padding-top: 20px;
+    margin-left: 20px;
+}
+.search-container mat-form-field{
+    width: 50vw;
+}
+.search-container input{
+    font-size: 12px;
+}
+@media (max-width: 937px)  {
+    .search-container{
+        font-size: 10px;
+        padding-top: 5px;
+    }
+    .SmallSettings{
+        font-size: 12px;
+        padding:2px;
+    }
+}
+
+@media (max-width: 839px)  {
+    mat-toolbar{
+        height: 40px;
+        padding: 0px;
+        padding-right: 10px;
+    }
+    .search-container mat-form-field{
+        width: 25vw;
+    }
+    .SmallSettings{
+        font-size: 10px;
+        padding:2px;
+    }
+    button{
+        min-width: 0px;
+        padding: 0 10px;
+    }
+}

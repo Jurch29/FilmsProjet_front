@@ -1,11 +1,45 @@
 
-<mat-toolbar color="warn">
-
+<mat-toolbar>
     <button mat-icon-button (click)="toggleMenu()"><mat-icon>menu</mat-icon></button>
-    <span class="title">EZ movie</span>
+    <div>
+        <span class="title">EZ movie</span>
+    </div>
     <span class="spacer"></span>
-    <button *ngIf="!currentUser" mat-button (click)="openConnexionDialog()">Connexion</button>
-    <button *ngIf="!currentUser" mat-button>Inscription</button>
-    <button *ngIf="currentUser" mat-button (click)="disconnect()">Deconnexion</button>
-
+    <div class="search-container">
+        <mat-form-field>
+            <input matInput placeholder="Search" [(ngModel)]="textValue" id="textValue">
+        </mat-form-field>
+            <button mat-button ng-click="initiateSearch()">
+                <mat-icon>search</mat-icon>
+            </button>
+    </div>
+    <span class="spacer"></span>
+    <button mat-button ng-click="shop()">
+        <mat-icon>shopping_cart</mat-icon>
+    </button>
+    <button *ngIf="!currentUser" class="SmallSettings" mat-button (click)="openConnexionDialog()">Connexion</button>
+    <button *ngIf="!currentUser" class="SmallSettings" mat-button (click)="openInscriptionDialog()">Inscription</button>
+    <button *ngIf="currentUser"  class="SmallSettings" mat-button (click)="disconnect()">Deconnexion</button>
 </mat-toolbar>
+
+
+  
+       
+  
+        <!-- 
+        <div ng-show="showSearchBar()" class="md-toolbar-tools search-bar">
+  
+            <md-button class="md-icon-button" ng-click="submit()">
+              <md-icon>search</md-icon>
+            </md-button>
+    
+           
+            <md-input-container flex>
+              <input id="search-input" type="text" ng-model="search" />
+            </md-input-container>
+    
+            <md-button class="md-icon-button" ng-click="endSearch()">
+              <md-icon>close</md-icon>
+            </md-button>
+          </div>-->
+  

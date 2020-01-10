@@ -1,5 +1,5 @@
 footer {
-    position: fixed;
+    position: relative;
     height: 50px;
     bottom: 0px;
     left: 0px;
@@ -7,9 +7,17 @@ footer {
     margin-bottom: 0px;
     background: #666;
     color: white;
-    /*width: 100%;*/
 }
 
 p{
-  margin-left: 15px;
+  text-align: center;
+  position: absolute;
+  left: 0;
+  right: 0;
+}
+@media (max-width: 839px)  {
+  footer{
+      height: 30px;
+      font-size: 10px;   
+  }
 }

@@ -3,9 +3,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { LoginComponent } from '../../../public/components/login/login.component';
 import { first } from 'rxjs/operators';
 
+
 import { User } from '../../../shared/models/user';
 import { AuthenticationService } from '../../service/authentication.service';
 import { UserService } from '../../service/user.service';
+import { RegisterComponent } from 'src/app/public/components/register/register.component';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-navbar',
@@ -19,13 +22,19 @@ export class NavbarComponent implements OnInit {
   userFromApi: User;
   currentUser: User;
   showMenu = false;
-
   constructor(public dialog: MatDialog, private userService: UserService,
     private authenticationService: AuthenticationService) 
   {
     this.currentUser = this.authenticationService.currentUserValue;
+    
+  }
+  
+ 
+  initiateSearch(){
   }
 
+  shop() {
+  }
   ngOnInit() {
     if (this.currentUser!=null){
       this.userService.getById(this.currentUser.id).pipe(first()).subscribe(user => {
@@ -33,7 +42,7 @@ export class NavbarComponent implements OnInit {
       });
     }
   }
-
+  
   openConnexionDialog(): void {
     const dialogRef = this.dialog.open(LoginComponent, {
       width: '250px'
@@ -44,7 +53,15 @@ export class NavbarComponent implements OnInit {
       console.log('The dialog was closed');
     });
   }
+  openInscriptionDialog(): void {
+    const dialogRef = this.dialog.open(RegisterComponent, {
+      width: '250px'
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
   disconnect(){
     this.authenticationService.logout();
     this.currentUser = null;

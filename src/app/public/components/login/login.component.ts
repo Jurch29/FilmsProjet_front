@@ -19,7 +19,8 @@ export class LoginComponent implements OnInit {
   error = '';
 
   email = new FormControl('', [Validators.required, Validators.email]);
-  mdp = new FormControl('', [Validators.required]);
+  passwd = new FormControl('', [Validators.required]);
+  hide: boolean;
 
   constructor(public dialogRef: MatDialogRef<LoginComponent>,
               private route: ActivatedRoute,
@@ -38,6 +39,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
      // get return url from route parameters or default to '/'
+     this.hide = true;
      this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
      console.log(this.returnUrl);
   }
@@ -50,14 +52,14 @@ export class LoginComponent implements OnInit {
 
   login(){
     this.submitted = true;
-    // stop here if form is invalid
-    if (this.email.hasError('required') || this.mdp.hasError('required') || this.email.hasError('email')) {
+    if (this.email.hasError('required') || this.passwd.hasError('required') || this.email.hasError('email')) {
+       this.submitted = false;
         return;
     }
 
     this.error = '';
     this.loading = true;
-    this.authenticationService.login(this.email.value, this.mdp.value)
+    this.authenticationService.login(this.email.value, this.passwd.value)
         .pipe(first())
         .subscribe(
             data => {
