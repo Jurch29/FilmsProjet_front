@@ -5,15 +5,21 @@ html, body {
     height: auto;
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif; 
+    background-color: #666666;
+    color: white;
  }
+
 body { 
      overflow: hidden;
 }
 
-
-.mat-toolbar {
+.mat-toolbar{
     color: white;
     background-color: #333333;
+}
+
+.mat-dialog-container.dark{
+    background-color: silver !important;
 }
 @media (max-width: 697px)  {
    p{

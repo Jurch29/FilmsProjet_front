@@ -1,7 +1,6 @@
 
-import {Component, ChangeDetectorRef } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { MediaMatcher } from '@angular/cdk/layout';
+import {Component } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -11,16 +10,24 @@ import { MediaMatcher } from '@angular/cdk/layout';
 export class AppComponent {
   title = 'ProjetsFilm';
 
-  private messageSource = new Subject<string>();
+  private OpenSidenavEvent = new Subject<boolean>();
+  private LightModeEvent = new Subject<boolean>();
 
   constructor() { 
   }
 
-  changeMessage(message: string) {
-    console.log("changing message to : "+message);
-    this.messageSource.next(message);
+  ChangeOpenSidenavEventMessage(message: boolean) {
+    this.OpenSidenavEvent.next(message);
   }
-  getMessageSource(): Observable<string>{
-    return this.messageSource.asObservable(); 
+  getOpenSidenavEventMessage(): Observable<boolean>{
+    return this.OpenSidenavEvent.asObservable(); 
+  }
+
+
+  ChangeLightModeEventMessage(message: boolean) {
+    this.LightModeEvent.next(message);
+  }
+  getLightModeEventMessage(): Observable<boolean>{
+    return this.LightModeEvent.asObservable(); 
   }
 }

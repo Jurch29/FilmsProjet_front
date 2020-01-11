@@ -12,24 +12,25 @@ import { AppComponent } from 'src/app/app.component';
 })
 export class SidenavComponent implements OnInit, OnDestroy {
 
-  subscription: any;
+  subscriptionOpenSideNav: any;
   mobileQuery: MediaQueryList;
-
+  show: string;
+  subscriptionlightMode: any;
 
   @ViewChild('snav', {static: false}) public sidenav: MatSidenav;
   
+  lightMode : boolean;
 
   public fillerNav = Array.from({length: 10}, (_, i) => `Nav Item ${i + 1}`);
 
   _mobileQueryListener: () => void;
-  show: string;
 
   toggleSideNav(evnt){
     this.show = evnt;
     this.sidenav.toggle();
   }
 
-  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,private data: AppComponent) {
+  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,private appComponent: AppComponent) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener); 
@@ -37,14 +38,17 @@ export class SidenavComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
-    this.subscription.unsubscribe();
+    this.subscriptionOpenSideNav.unsubscribe();
+    this.subscriptionlightMode.unsubscribe();
   }
 
   
   ngOnInit() {
-    this.subscription = this.data.getMessageSource().subscribe(mymessage =>{
-      console.log("subscirbe: ",mymessage );
-      this.toggleSideNav(mymessage+"");
+    this.subscriptionOpenSideNav = this.appComponent.getOpenSidenavEventMessage().subscribe(dataTransmited =>{
+      this.toggleSideNav(dataTransmited);
+    });
+    this.subscriptionlightMode = this.appComponent.getLightModeEventMessage().subscribe(dataTransmited =>{
+      this.lightMode = dataTransmited;
     });
   }
   

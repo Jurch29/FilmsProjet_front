@@ -10,6 +10,7 @@ import { UserService } from '../../service/user.service';
 import { RegisterComponent } from 'src/app/public/components/register/register.component';
 import { FormControl, Validators } from '@angular/forms';
 import { AppComponent } from 'src/app/app.component';
+import { removeSummaryDuplicates } from '@angular/compiler';
 
 @Component({
   selector: 'app-navbar',
@@ -20,15 +21,18 @@ export class NavbarComponent implements OnInit {
   
   userFromApi: User;
   currentUser: User;
+  lightModeEvent: boolean = false;
   showMenu = false;
   constructor(public dialog: MatDialog, private userService: UserService,
-    private authenticationService: AuthenticationService,private data: AppComponent) 
+    private authenticationService: AuthenticationService,private appComponent: AppComponent) 
   {
     this.currentUser = this.authenticationService.currentUserValue;
-    
   }
   
- 
+  ChangeWebMode(){
+    this.lightModeEvent = !this.lightModeEvent;
+    this.appComponent.ChangeLightModeEventMessage(this.lightModeEvent);
+  }
   initiateSearch(){
     console.log("searching");
   }
@@ -70,7 +74,6 @@ export class NavbarComponent implements OnInit {
 
   toggleMenu() {
     this.showMenu = !this.showMenu;
-    console.log("inside toggleMenu : "+this.showMenu);
-    this.data.changeMessage(this.showMenu+"");
+    this.appComponent.ChangeOpenSidenavEventMessage(this.showMenu);
  }
 }

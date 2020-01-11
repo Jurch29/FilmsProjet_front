@@ -14,6 +14,12 @@
             </button>
     </div>
     <span class="spacer"></span>
+    <button mat-button *ngIf="!lightModeEvent"(click)="ChangeWebMode()">
+        <mat-icon>wb_sunny</mat-icon>
+    </button>
+    <button mat-button *ngIf="lightModeEvent" (click)="ChangeWebMode()">
+        <mat-icon>nights_stay</mat-icon>
+    </button>
     <button mat-button (click)="shop()">
         <mat-icon>shopping_cart</mat-icon>
     </button>

@@ -29,7 +29,13 @@
 .container {
   height: calc(100vh - 114px);
 }
-
+.container.dark{
+  background-color: #222222;
+}
+.mat-list-base.dark,.mat-drawer.dark, .mat-list-item.dark{
+  background-color: #666;
+  color: white;
+}
 @media (max-width: 839px)  {
   .container {
       height: calc(100vh - 70px);
