@@ -9,6 +9,7 @@ import { AuthenticationService } from '../../service/authentication.service';
 import { UserService } from '../../service/user.service';
 import { RegisterComponent } from 'src/app/public/components/register/register.component';
 import { FormControl, Validators } from '@angular/forms';
+import { AppComponent } from 'src/app/app.component';
 
 @Component({
   selector: 'app-navbar',
@@ -16,14 +17,12 @@ import { FormControl, Validators } from '@angular/forms';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-
-  @Output() menuState = new EventEmitter();
   
   userFromApi: User;
   currentUser: User;
   showMenu = false;
   constructor(public dialog: MatDialog, private userService: UserService,
-    private authenticationService: AuthenticationService) 
+    private authenticationService: AuthenticationService,private data: AppComponent) 
   {
     this.currentUser = this.authenticationService.currentUserValue;
     
@@ -31,9 +30,11 @@ export class NavbarComponent implements OnInit {
   
  
   initiateSearch(){
+    console.log("searching");
   }
 
   shop() {
+    console.log("buy");
   }
   ngOnInit() {
     if (this.currentUser!=null){
@@ -68,8 +69,8 @@ export class NavbarComponent implements OnInit {
   }
 
   toggleMenu() {
-    console.log("inside toggleMenu");
     this.showMenu = !this.showMenu;
-    this.menuState.emit(this.showMenu);
+    console.log("inside toggleMenu : "+this.showMenu);
+    this.data.changeMessage(this.showMenu+"");
  }
 }

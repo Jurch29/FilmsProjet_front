@@ -1,6 +1,5 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
 
 import { SharedModule } from '../shared/shared.module';
 
@@ -12,6 +11,7 @@ import { HelpersModule } from './helpers/helpers.module';
 import { FooterComponent } from './components/footer/footer.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
+import { AppRoutingModule } from '../app-routing.module';
 
 
 @NgModule({
@@ -21,7 +21,8 @@ import { SidenavComponent } from './components/sidenav/sidenav.component';
     ProtectedModule,
     SharedModule,
     HelpersModule,
-    HttpClientModule
+    HttpClientModule,
+    AppRoutingModule
   ],
   exports: [NavbarComponent, FooterComponent, SidenavComponent],
   providers: [
