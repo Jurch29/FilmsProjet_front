@@ -20,6 +20,14 @@
 .search-container input{
     font-size: 12px;
 }
+button{
+   min-width: 0px;
+}
+@media (max-width: 986px)  {
+    button{
+        padding: 0 7px;
+     }
+}
 @media (max-width: 937px)  {
     .search-container{
         font-size: 10px;
@@ -34,7 +42,6 @@
 @media (max-width: 839px)  {
     mat-toolbar{
         height: 40px;
-        padding: 0px;
         padding-right: 10px;
     }
     .search-container mat-form-field{

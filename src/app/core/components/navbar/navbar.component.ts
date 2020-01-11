@@ -48,23 +48,39 @@ export class NavbarComponent implements OnInit {
     }
   }
   
-  openConnexionDialog(): void {
-    const dialogRef = this.dialog.open(LoginComponent, {
-      width: '250px'
-    });
+  openConnexionDialog() {
+    let dialogRef;
+    console.log(this.lightModeEvent)
+    if(this.lightModeEvent)
+      dialogRef = this.dialog.open(LoginComponent, {
+        width: '250px'
+      });
+    else
+      dialogRef = this.dialog.open(LoginComponent, {
+        width: '250px',
+        panelClass:'dark'
+      });
 
     dialogRef.afterClosed().subscribe(result => {
       this.currentUser = this.authenticationService.currentUserValue;
-      console.log('The dialog was closed');
     });
   }
-  openInscriptionDialog(): void {
-    const dialogRef = this.dialog.open(RegisterComponent, {
-      width: '250px'
-    });
-
+  openInscriptionDialog() {
+    let dialogRef;
+    console.log(this.lightModeEvent)
+    if(this.lightModeEvent){
+      dialogRef =this.dialog.open(RegisterComponent, {
+        width: '250px'
+      });
+    }else{
+      console.log("ici")
+      dialogRef = this.dialog.open(RegisterComponent, {
+        width: '250px',
+        panelClass:'dark'
+      });
+    }
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      
     });
   }
   disconnect(){

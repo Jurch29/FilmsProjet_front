@@ -17,8 +17,7 @@ body {
     color: white;
     background-color: #333333;
 }
-
-.mat-dialog-container.dark{
+.dark .mat-dialog-container{
     background-color: silver !important;
 }
 @media (max-width: 697px)  {
