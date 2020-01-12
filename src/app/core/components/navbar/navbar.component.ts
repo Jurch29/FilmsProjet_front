@@ -1,16 +1,14 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginComponent } from '../../../public/components/login/login.component';
 import { first } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 
 import { User } from '../../../shared/models/user';
 import { AuthenticationService } from '../../service/authentication.service';
 import { UserService } from '../../service/user.service';
-import { RegisterComponent } from 'src/app/public/components/register/register.component';
-import { FormControl, Validators } from '@angular/forms';
 import { AppComponent } from 'src/app/app.component';
-import { removeSummaryDuplicates } from '@angular/compiler';
 
 @Component({
   selector: 'app-navbar',
@@ -23,7 +21,9 @@ export class NavbarComponent implements OnInit {
   currentUser: User;
   lightModeEvent: boolean = false;
   showMenu = false;
-  constructor(public dialog: MatDialog, private userService: UserService,
+  numberOfItems: Number;
+
+  constructor(public dialog: MatDialog, private userService: UserService, private router: Router,
     private authenticationService: AuthenticationService,private appComponent: AppComponent) 
   {
     this.currentUser = this.authenticationService.currentUserValue;
@@ -37,10 +37,11 @@ export class NavbarComponent implements OnInit {
     console.log("searching");
   }
 
-  shop() {
+  goToCart() {
     console.log("buy");
   }
   ngOnInit() {
+    this.appComponent.getNumberOfItemsInCart().subscribe(number => this.numberOfItems =number);
     if (this.currentUser!=null){
       this.userService.getById(this.currentUser.id).pipe(first()).subscribe(user => {
         this.userFromApi = user;
@@ -48,16 +49,15 @@ export class NavbarComponent implements OnInit {
     }
   }
   
-  openConnexionDialog() {
+  openLoginDialog() {
     let dialogRef;
-    console.log(this.lightModeEvent)
     if(this.lightModeEvent)
       dialogRef = this.dialog.open(LoginComponent, {
-        width: '250px'
+        width: '350px'
       });
     else
       dialogRef = this.dialog.open(LoginComponent, {
-        width: '250px',
+        width: '350px',
         panelClass:'dark'
       });
 
@@ -65,23 +65,12 @@ export class NavbarComponent implements OnInit {
       this.currentUser = this.authenticationService.currentUserValue;
     });
   }
-  openInscriptionDialog() {
-    let dialogRef;
-    console.log(this.lightModeEvent)
-    if(this.lightModeEvent){
-      dialogRef =this.dialog.open(RegisterComponent, {
-        width: '250px'
-      });
-    }else{
-      console.log("ici")
-      dialogRef = this.dialog.open(RegisterComponent, {
-        width: '250px',
-        panelClass:'dark'
-      });
-    }
-    dialogRef.afterClosed().subscribe(result => {
-      
-    });
+  openRegisterWebPage() {
+    this.router.navigate(['register']);
+  }
+
+  openHome() {
+    this.router.navigate(['home']);
   }
   disconnect(){
     this.authenticationService.logout();

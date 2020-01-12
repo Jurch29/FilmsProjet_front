@@ -12,20 +12,28 @@ export class AppComponent {
 
   private OpenSidenavEvent = new Subject<boolean>();
   private LightModeEvent = new Subject<boolean>();
+  private NumberOfItemsInCart = new Subject<Number>();
 
   constructor() { 
   }
 
-  ChangeOpenSidenavEventMessage(message: boolean) {
-    this.OpenSidenavEvent.next(message);
+  ChangeOpenSidenavEventMessage(Sidenavstate: boolean) {
+    this.OpenSidenavEvent.next(Sidenavstate);
   }
   getOpenSidenavEventMessage(): Observable<boolean>{
     return this.OpenSidenavEvent.asObservable(); 
   }
 
+  ChangeNumberOfItemsInCartMessage(NumberOfItems: Number){
+    this.NumberOfItemsInCart.next(NumberOfItems);
+  }
+  getNumberOfItemsInCart() :  Observable<Number>{
+    return this.NumberOfItemsInCart.asObservable(); 
+  }
 
-  ChangeLightModeEventMessage(message: boolean) {
-    this.LightModeEvent.next(message);
+
+  ChangeLightModeEventMessage(LightmodeState: boolean) {
+    this.LightModeEvent.next(LightmodeState);
   }
   getLightModeEventMessage(): Observable<boolean>{
     return this.LightModeEvent.asObservable(); 

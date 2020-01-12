@@ -12,7 +12,16 @@ html, body {
 body { 
      overflow: hidden;
 }
+mat-spinner{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
 
+.dark .mat-sidenav-container {
+    background-color: #222222 !important;
+  }
+  
 .mat-toolbar{
     color: white;
     background-color: #333333;

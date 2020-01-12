@@ -1,47 +1,110 @@
 <div class="register-container">
-    <mat-form-field>
-        <input matInput placeholder="Nom" [formControl]="firstname" required>
-        <mat-error *ngIf="firstname.errors?.required">Champ recquis</mat-error>
-        <mat-error *ngIf="firstname.errors"></mat-error>
-    </mat-form-field>
-    
-    <mat-form-field>
-        <input matInput placeholder="Prenom" [formControl]="lastname" required>
-        <mat-error *ngIf="lastname.errors?.required">Champ recquis</mat-error>
-        <mat-error *ngIf="lastname.errors"></mat-error>
-    </mat-form-field>
-    
-    <mat-form-field>
-        <input matInput placeholder="Psoeudo" [formControl]="username" required>
-        <mat-error *ngIf="username.errors?.required">Champ recquis</mat-error>
-        <mat-error *ngIf="username.errors"></mat-error>
-    </mat-form-field>
-    
-    <mat-form-field>
-      <input matInput placeholder="Entrer votre mail" [formControl]="email" required>
-      <mat-error *ngIf="email.errors?.required">Champ recquis</mat-error>
-      <mat-error *ngIf="email.errors?.email">Email non valide</mat-error>
-      <mat-error *ngIf="email.errors"></mat-error>
-    </mat-form-field>
-    
-    <mat-form-field>
-        <input matInput placeholder="Entrer votre mot de passe" [formControl]="passwd" required [type]="hide ? 'password' : 'text'"> 
-        <mat-error *ngIf="passwd.errors?.required">Champ recquis</mat-error>
-        <mat-error *ngIf="passwd.errors?.minlength">Mot de passe trop court</mat-error>
-        <mat-error *ngIf="passwd.errors"></mat-error>
-        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Cacher le mot de passe'" [attr.aria-pressed]="hide">
-          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-        </button>
-    </mat-form-field>
-    
-    <mat-form-field>
-        <input matInput placeholder="Confirmez votre mot de passe" onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false"[formControl]="passwdControl" required type="password" (input)="passwdControlCheck()"> 
-        <mat-error *ngIf="passwdControl.errors?.required">Champ recquis</mat-error>
-        <mat-error *ngIf="passwdControl.errors?.unmatch">Mots de passe differents</mat-error>
-        <mat-error *ngIf="passwdControl.errors"></mat-error>
-    </mat-form-field>
-    
-    <button mat-button color="primary" *ngIf="!loading" (click)="register()">S'inscrire</button>
-    <div *ngIf="error" class="alertError">{{error}}</div>
-    <mat-spinner *ngIf="loading" diameter="30"></mat-spinner>
+    <mat-grid-list [cols]="breakpoint" (window:resize)="onResize($event)" [class.dark]="!lightMode"
+        [rowHeight]="rowheight">
+        <mat-grid-tile *ngIf="!mobileSize">
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="size">
+            <mat-form-field appearance="outline">
+                <mat-label>Nom</mat-label>
+                <input matInput placeholder="Nom" [formControl]="firstname" [(ngModel)]="firstnameValue" required>
+                <button mat-button *ngIf="firstnameValue" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="firstnameValue=''">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <mat-error *ngIf="firstname.errors?.required">Champ recquis</mat-error>
+                <mat-error *ngIf="firstname.errors"></mat-error>
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile *ngIf="!mobileSize">
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="size">
+            <mat-form-field appearance="outline">
+                <mat-label>Entrer votre mail</mat-label>
+                <input matInput placeholder="Entrer votre mail" [formControl]="email" [(ngModel)]="emailValue" required>
+                <button mat-button *ngIf="emailValue" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="emailValue=''">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <mat-error *ngIf="email.errors?.required">Champ recquis</mat-error>
+                <mat-error *ngIf="email.errors?.email">Email non valide</mat-error>
+                <mat-error *ngIf="email.errors"></mat-error>
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile *ngIf="!mobileSize">
+        </mat-grid-tile>
+        <mat-grid-tile *ngIf="!mobileSize">
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="size">
+            <mat-form-field appearance="outline">
+                <mat-label>Prenom</mat-label>
+                <input matInput placeholder="Prenom" [formControl]="lastname" [(ngModel)]="lastnameValue" required>
+                <button mat-button *ngIf="lastnameValue" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="lastnameValue=''">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <mat-error *ngIf="lastname.errors?.required">Champ recquis</mat-error>
+                <mat-error *ngIf="lastname.errors"></mat-error>
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile *ngIf="!mobileSize">
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="size">
+            <mat-form-field appearance="outline">
+                <mat-label>Entrer votre mot de passe</mat-label>
+                <input matInput placeholder="Entrer votre mot de passe" [formControl]="passwd" required
+                    [type]="hide ? 'password' : 'text'">
+                <mat-error *ngIf="passwd.errors?.required">Champ recquis</mat-error>
+                <mat-error *ngIf="passwd.errors?.minlength">Mot de passe trop court</mat-error>
+                <mat-error *ngIf="passwd.errors"></mat-error>
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Cacher le mot de passe'"
+                    [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile *ngIf="!mobileSize">
+        </mat-grid-tile>
+        <mat-grid-tile *ngIf="!mobileSize">
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="size">
+            <mat-form-field appearance="outline">
+                <mat-label>Psoeudo</mat-label>
+                <input matInput placeholder="Psoeudo" [formControl]="username" [(ngModel)]="usernameValue" required>
+                <button mat-button *ngIf="usernameValue" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="usernameValue=''">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <mat-error *ngIf="username.errors?.required">Champ recquis</mat-error>
+                <mat-error *ngIf="username.errors"></mat-error>
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile *ngIf="!mobileSize">
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="size">
+            <mat-form-field appearance="outline">
+                <mat-label>Confirmez votre mot de passe</mat-label>
+                <input matInput placeholder="Confirmez votre mot de passe" [(ngModel)]="passwdControlValue"
+                    onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false"
+                    [formControl]="passwdControl" required type="password" (input)="passwdControlCheck()">
+                <button mat-button *ngIf="passwdControlValue" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="passwdControlValue=''">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <mat-error *ngIf="passwdControl.errors?.required">Champ recquis</mat-error>
+                <mat-error *ngIf="passwdControl.errors?.unmatch">Mots de passe differents</mat-error>
+                <mat-error *ngIf="passwdControl.errors"></mat-error>
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile *ngIf="!mobileSize">
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="sizeBig" *ngIf="!mobileSize">
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <button mat-raised-button color="primary" *ngIf="!loading" (click)="register()">S'inscrire</button>
+            <div *ngIf="error" class="alertError">{{error}}</div>
+            <mat-spinner *ngIf="loading" diameter="30"></mat-spinner>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="sizeBig" *ngIf="!mobileSize">
+        </mat-grid-tile>
+    </mat-grid-list>
 </div>

@@ -14,7 +14,7 @@ import { LoginComponent } from './components/login/login.component';
     PublicRoutingModule,
     HomeModule
   ],
-  exports: [RegisterComponent, LoginComponent],
-  entryComponents: [RegisterComponent,LoginComponent]
+  exports: [ RegisterComponent, LoginComponent],
+  entryComponents: [LoginComponent]
 })
 export class PublicModule { }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import {FormControl, Validators} from '@angular/forms';
+import {FormControl, Validators, FormGroup} from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
 
@@ -21,6 +21,11 @@ export class LoginComponent implements OnInit {
   email = new FormControl('', [Validators.required, Validators.email]);
   passwd = new FormControl('', [Validators.required]);
   hide: boolean;
+  
+  groupControl = new FormGroup({
+    email : this.email,
+    passwd : this.passwd,
+  });
 
   constructor(public dialogRef: MatDialogRef<LoginComponent>,
               private route: ActivatedRoute,
@@ -49,10 +54,17 @@ export class LoginComponent implements OnInit {
         this.email.hasError('email') ? 'Email non valide' :
             '';
   }
+  checkValidationBeforeSubmit(){
+    Object.keys(this.groupControl.controls).forEach(field => { 
+      const control = this.groupControl.get(field);           
+      control.markAsTouched({ onlySelf: true });      
+    });
+  }
 
   login(){
     this.submitted = true;
-    if (this.email.hasError('required') || this.passwd.hasError('required') || this.email.hasError('email')) {
+    this.checkValidationBeforeSubmit();
+    if (this.groupControl.invalid){
        this.submitted = false;
         return;
     }

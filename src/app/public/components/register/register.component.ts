@@ -1,6 +1,6 @@
-import { Component, OnInit, Directive, HostListener } from '@angular/core';
-import { Validators, FormControl, FormArray, FormGroup } from '@angular/forms';
-import { MatDialogRef } from '@angular/material';
+import { Component, OnInit, Directive, OnDestroy } from '@angular/core';
+import { Validators, FormControl, FormGroup } from '@angular/forms';
+import { AppComponent } from 'src/app/app.component';
 
 @Component({
   selector: 'app-register',
@@ -10,13 +10,13 @@ import { MatDialogRef } from '@angular/material';
 @Directive({
   selector: '[appBlockCopyPaste]'
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit , OnDestroy{
 
   loading = false;
   submitted = false;
   returnUrl: string;
   error = '';
-
+  breakpoint: number;
   lastname = new FormControl('', Validators.required);
   firstname = new FormControl('', Validators.required);
   username = new FormControl('', Validators.required);
@@ -24,6 +24,14 @@ export class RegisterComponent implements OnInit {
   passwd = new FormControl('', [Validators.required,Validators.minLength(6)]);
   passwdControl = new FormControl('', Validators.required);
 
+  size: number= 3;
+  sizeBig : number = 4;
+  mobileSize :boolean =false;
+
+  hide: boolean;
+  subscriptionlightMode: any;
+  lightMode: boolean;
+  rowheight: string;
 
   groupControl = new FormGroup({
     lastname : this.lastname,
@@ -34,24 +42,53 @@ export class RegisterComponent implements OnInit {
     passwdControl : this.passwdControl
   });
 
-  hide: boolean;
-  constructor(public dialogRef: MatDialogRef<RegisterComponent>) {
+  
+  constructor(private appComponent : AppComponent) {
   }
 
-  
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
   ngOnInit() {
     this.hide = true;
+    this.subscriptionlightMode = this.appComponent.getLightModeEventMessage().subscribe(dataTransmited =>{
+      this.lightMode = dataTransmited;
+    });
+    this.TestSize();
+  }
+  ngOnDestroy(): void {
+    this.subscriptionlightMode.unsubscribe();
+  }
+  TestSize(){
+    
+    if(window.innerWidth<=760){
+      this.breakpoint =1;
+      this.size=1;
+      this.sizeBig=0;
+      this.rowheight = "100px";
+      this.mobileSize=true;
+    }else{
+        this.breakpoint =9;
+        this.size =3;
+        this.sizeBig = 4;
+        this.rowheight ="115px";
+        this.mobileSize=false;
+    }
+  }
+  onResize(event) {
+    this.TestSize();
   }
 
   register(){
     this.submitted = true;
+    this.checkValidationBeforeSubmit();
     if (this.groupControl.invalid){
       this.submitted = false;
       return;
     }
+  }
+  checkValidationBeforeSubmit(){
+    Object.keys(this.groupControl.controls).forEach(field => { 
+      const control = this.groupControl.get(field);           
+      control.markAsTouched({ onlySelf: true });      
+    });
   }
   passwdControlCheck() {
           if (this.passwd.value !== this.passwdControl.value) 

@@ -2,7 +2,9 @@
 <mat-toolbar>
     <button mat-icon-button (click)="toggleMenu()"><mat-icon>menu</mat-icon></button>
     <div>
-        <span class="title">EZ movie</span>
+        <button mat-button (click)="openHome()">
+            <span class="title">EZ movie</span>
+        </button>
     </div>
     <span class="spacer"></span>
     <div class="search-container">
@@ -20,10 +22,12 @@
     <button mat-button *ngIf="lightModeEvent" (click)="ChangeWebMode()">
         <mat-icon>nights_stay</mat-icon>
     </button>
-    <button mat-button (click)="shop()">
-        <mat-icon>shopping_cart</mat-icon>
+    <button mat-button (click)="goToCart()">
+        <mat-icon [matBadge]="numberOfItems" matBadgePosition="above after">
+            <mat-icon>shopping_cart</mat-icon>
+         </mat-icon>
     </button>
-    <button *ngIf="!currentUser" class="SmallSettings" mat-button (click)="openConnexionDialog()">Connexion</button>
-    <button *ngIf="!currentUser" class="SmallSettings" mat-button (click)="openInscriptionDialog()">Inscription</button>
+    <button *ngIf="!currentUser" class="SmallSettings" mat-button (click)="openLoginDialog()">Connexion</button>
+    <button *ngIf="!currentUser" class="SmallSettings" mat-button (click)="openRegisterWebPage()">Inscription</button>
     <button *ngIf="currentUser"  class="SmallSettings" mat-button (click)="disconnect()">Deconnexion</button>
 </mat-toolbar>

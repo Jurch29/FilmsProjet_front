@@ -20,8 +20,6 @@
     position: fixed;
     z-index: 2;
 }
-
-
 .example-is-mobile .example-sidenav-container {
     flex: 1 0 auto;
     margin-top: 0px !important;
@@ -36,6 +34,10 @@
   background-color: #666;
   color: white;
 }
+
+.mat-drawer:not(.mat-drawer-side){
+  bottom: 30px !important;
+}
 @media (max-width: 839px)  {
   .container {
       height: calc(100vh - 70px);
@@ -43,8 +45,5 @@
   .mat-list-base .mat-list-item, .mat-list-base .mat-list-option{
     font-size: 12px !important;
     height: 32px !important;
-  }
-  .mat-drawer:not(.mat-drawer-side){
-    display: table !important;
   }
 }

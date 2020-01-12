@@ -1,4 +1,4 @@
-<div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
+<div [class.dark]="!lightMode" class="example-container" [class.example-is-mobile]="mobileQuery.matches">
   <mat-sidenav-container class="example-sidenav-container"
                         [style.marginTop.px]="mobileQuery.matches ? 40 : 0">
 <mat-sidenav #snav [class.dark]="!lightMode" [mode]="mobileQuery.matches ? 'over' : 'side'"
