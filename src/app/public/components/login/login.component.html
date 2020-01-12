@@ -1,7 +1,7 @@
 <div class="login-container">
     <mat-form-field>
-      <input matInput placeholder="Entrer votre mail" [formControl]="email" required>
-      <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+      <input matInput placeholder="Entrer votre login" [formControl]="userlogin" required>
+      <mat-error *ngIf="userlogin.invalid">{{getErrorMessage()}}</mat-error>
     </mat-form-field>
     <br/>
     <mat-form-field>
