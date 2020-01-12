@@ -1,24 +1,31 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AppComponent } from 'src/app/app.component';
+import { Component, ViewChild, ViewContainerRef, ComponentFactory, ComponentFactoryResolver, OnDestroy, ComponentRef } from '@angular/core';
+import { MoviePreviewComponent } from '../../components/movie-preview/move-preview/movie-preview.component';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit,OnDestroy {
+export class HomeComponent implements OnDestroy {
  
+  @ViewChild("moviecontainer", { static : false,read: ViewContainerRef }) container;
+  private componentFactory: ComponentFactory<any>;
+  someProp: any;
+  private componentRef: ComponentRef<any>;
 
-  lightMode: boolean;
-  subscriptionlightMode: any;
-  constructor(private appComponent : AppComponent) { }
+  constructor(private resolver: ComponentFactoryResolver) {
+    this.componentFactory = resolver.resolveComponentFactory(MoviePreviewComponent);
+   }
 
-  ngOnInit() {
-    this.subscriptionlightMode = this.appComponent.getLightModeEventMessage().subscribe(dataTransmited =>{
-      this.lightMode = dataTransmited;
-    });
+  
+  CreateCompenentMovie() {
+    this.componentRef = this.container.createComponent(this.componentFactory, 0);
+    this.componentRef.instance.url = 'http://image.tmdb.org/t/p/w500/vloNTScJ3w7jwNwtNGoG8DbTThv.jpg';
+    this.componentRef.instance.title = 'Malefique';
+    this.componentRef.instance.year = '2018';
+    this.componentRef.instance.rating = 3;
   }
   ngOnDestroy() {
-    this.subscriptionlightMode.unsubscribe();
-  }
+    this.componentRef.destroy(); 
+   }
 }
