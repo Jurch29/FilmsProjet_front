@@ -7,8 +7,8 @@ import { Role } from '../../shared/models/role';
 import { User } from '../../shared/models/user';
 
 const users: User[] = [
-    { id: 1, username: 'j@j', password: 'j', firstName: 'Admin', lastName: 'User', role: Role.Admin },
-    { id: 2, username: 'a@a', password: 'a', firstName: 'Normal', lastName: 'User', role: Role.User }
+    { id: 1, email:"jacqou@jac.fr", username: 'ju', password: 'j', firstname: 'Admin', lastname: 'User', role: [Role.Admin] },
+    { id: 2, email:"jacqou@jacot.fr", username: 'peter', password: 'a', firstname: 'Normal', lastname: 'User', role: [Role.User] }
 ];
 
 @Injectable()
@@ -46,8 +46,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             return ok({
                 id: user.id,
                 username: user.username,
-                firstName: user.firstName,
-                lastName: user.lastName,
+                firstName: user.firstname,
+                lastName: user.lastname,
                 role: user.role,
                 token: `fake-jwt-token.${user.id}`
             });
@@ -88,7 +88,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function isAdmin() {
-            return isLoggedIn() && currentUser().role === Role.Admin;
+            return isLoggedIn() && currentUser().role === [Role.Admin];
         }
 
         function currentUser() {
