@@ -45,3 +45,15 @@ mat-grid-list.dark ::ng-deep .mat-form-field-appearance-outline.mat-form-field-i
 mat-grid-list.dark input::placeholder {
     color: rgba(255,255,255,0.7)!important;
 }
+.lastnameMobileVersion{
+    top : calc(101px) !important;
+}
+.pseudoMobileVersion{
+    top : calc(202px) !important;
+}
+.emailMobileVersion{
+    top : calc(303px) !important;
+}
+.passwdMobileVersion{
+    top : calc(404px) !important;
+}

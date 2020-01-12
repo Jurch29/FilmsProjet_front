@@ -23,7 +23,8 @@ export class RegisterComponent implements OnInit , OnDestroy{
   email = new FormControl('', [Validators.required, Validators.email]);
   passwd = new FormControl('', [Validators.required,Validators.minLength(6)]);
   passwdControl = new FormControl('', Validators.required);
-
+  
+  
   size: number= 3;
   sizeBig : number = 4;
   mobileSize :boolean =false;
@@ -58,7 +59,7 @@ export class RegisterComponent implements OnInit , OnDestroy{
   }
   TestSize(){
     
-    if(window.innerWidth<=760){
+    if(window.innerWidth<=775){
       this.breakpoint =1;
       this.size=1;
       this.sizeBig=0;
