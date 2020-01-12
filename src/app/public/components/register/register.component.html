@@ -17,7 +17,7 @@
         </mat-grid-tile>
         <mat-grid-tile *ngIf="!mobileSize">
         </mat-grid-tile>
-        <mat-grid-tile [colspan]="size">
+        <mat-grid-tile [colspan]="size" [class.emailMobileVersion]="mobileSize">
             <mat-form-field appearance="outline">
                 <mat-label>Entrer votre mail</mat-label>
                 <input matInput placeholder="Entrer votre mail" [formControl]="email" [(ngModel)]="emailValue" required>
@@ -34,7 +34,7 @@
         </mat-grid-tile>
         <mat-grid-tile *ngIf="!mobileSize">
         </mat-grid-tile>
-        <mat-grid-tile [colspan]="size">
+        <mat-grid-tile [colspan]="size" [class.lastnameMobileVersion]="mobileSize">
             <mat-form-field appearance="outline">
                 <mat-label>Prenom</mat-label>
                 <input matInput placeholder="Prenom" [formControl]="lastname" [(ngModel)]="lastnameValue" required>
@@ -48,7 +48,7 @@
         </mat-grid-tile>
         <mat-grid-tile *ngIf="!mobileSize">
         </mat-grid-tile>
-        <mat-grid-tile [colspan]="size">
+        <mat-grid-tile [colspan]="size" [class.passwdMobileVersion]="mobileSize">
             <mat-form-field appearance="outline">
                 <mat-label>Entrer votre mot de passe</mat-label>
                 <input matInput placeholder="Entrer votre mot de passe" [formControl]="passwd" required
@@ -66,10 +66,10 @@
         </mat-grid-tile>
         <mat-grid-tile *ngIf="!mobileSize">
         </mat-grid-tile>
-        <mat-grid-tile [colspan]="size">
+        <mat-grid-tile [colspan]="size" [class.pseudoMobileVersion]="mobileSize">
             <mat-form-field appearance="outline">
-                <mat-label>Psoeudo</mat-label>
-                <input matInput placeholder="Psoeudo" [formControl]="username" [(ngModel)]="usernameValue" required>
+                <mat-label>Pseudo</mat-label>
+                <input matInput placeholder="Pseudo" [formControl]="username" [(ngModel)]="usernameValue" required>
                 <button mat-button *ngIf="usernameValue" matSuffix mat-icon-button aria-label="Clear"
                     (click)="usernameValue=''">
                     <mat-icon>close</mat-icon>

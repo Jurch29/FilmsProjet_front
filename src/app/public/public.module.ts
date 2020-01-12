@@ -6,7 +6,6 @@ import { HomeModule } from './home/home.module';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 
-
 @NgModule({
   declarations: [RegisterComponent, LoginComponent],
   imports: [
