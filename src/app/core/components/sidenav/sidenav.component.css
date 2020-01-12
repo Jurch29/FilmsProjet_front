@@ -47,3 +47,7 @@
     height: 32px !important;
   }
 }
+
+.mat-drawer-content{
+  width:100vw !important;
+}
