@@ -25,7 +25,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
         function handleRoute() {
             switch (true) {
-                case url.endsWith('/users/authenticate') && method === 'POST':
+                case url.endsWith('/auth/signin') && method === 'POST':
                     return authenticate();
                 case url.endsWith('/users') && method === 'GET':
                     return getUsers();
@@ -105,7 +105,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 }
 
 export const fakeBackendProvider = {
-    // use fake backend in place of Http service for backend-less development
+    // Utilisation d'un fake backend pour la phase de DEV
     provide: HTTP_INTERCEPTORS,
     useClass: FakeBackendInterceptor,
     multi: true

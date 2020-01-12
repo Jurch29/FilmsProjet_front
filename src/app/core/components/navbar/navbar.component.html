@@ -28,6 +28,6 @@
          </mat-icon>
     </button>
     <button *ngIf="!currentUser" class="SmallSettings" mat-button (click)="openLoginDialog()">Connexion</button>
-    <button *ngIf="!currentUser" class="SmallSettings" mat-button (click)="openRegisterWebPage()">Inscription</button>
+    <button *ngIf="!currentUser" class="SmallSettings" mat-button routerLink="/register">Inscription</button>
     <button *ngIf="currentUser"  class="SmallSettings" mat-button (click)="disconnect()">Deconnexion</button>
 </mat-toolbar>

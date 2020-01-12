@@ -18,12 +18,12 @@ export class LoginComponent implements OnInit {
   returnUrl: string;
   error = '';
 
-  email = new FormControl('', [Validators.required, Validators.email]);
+  userlogin = new FormControl('', [Validators.required]);
   passwd = new FormControl('', [Validators.required]);
   hide: boolean;
   
   groupControl = new FormGroup({
-    email : this.email,
+    userlogin : this.userlogin,
     passwd : this.passwd,
   });
 
@@ -50,9 +50,7 @@ export class LoginComponent implements OnInit {
   }
 
   getErrorMessage() {
-    return this.email.hasError('required') ? 'Champ recquis' :
-        this.email.hasError('email') ? 'Email non valide' :
-            '';
+    return this.userlogin.hasError('required') ? 'Champ recquis' : '';
   }
   checkValidationBeforeSubmit(){
     Object.keys(this.groupControl.controls).forEach(field => { 
@@ -71,7 +69,7 @@ export class LoginComponent implements OnInit {
 
     this.error = '';
     this.loading = true;
-    this.authenticationService.login(this.email.value, this.passwd.value)
+    this.authenticationService.login(this.userlogin.value, this.passwd.value)
         .pipe(first())
         .subscribe(
             data => {

@@ -1,6 +1,12 @@
 import { Component, OnInit, Directive, OnDestroy } from '@angular/core';
 import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { AppComponent } from 'src/app/app.component';
+import { first } from 'rxjs/operators';
+
+import { User } from '../../../shared/models/user';
+import { Role } from 'src/app/shared/models/role';
+
+import { AuthenticationService } from '../../../core/service/authentication.service';
 
 @Component({
   selector: 'app-register',
@@ -11,6 +17,7 @@ import { AppComponent } from 'src/app/app.component';
   selector: '[appBlockCopyPaste]'
 })
 export class RegisterComponent implements OnInit , OnDestroy{
+  user: User;
 
   loading = false;
   submitted = false;
@@ -43,7 +50,8 @@ export class RegisterComponent implements OnInit , OnDestroy{
   });
 
   
-  constructor(private appComponent : AppComponent) {
+  constructor(private appComponent : AppComponent, private authenticationService: AuthenticationService) {
+    this.user = new User();
   }
 
   ngOnInit() {
@@ -83,6 +91,22 @@ export class RegisterComponent implements OnInit , OnDestroy{
       this.submitted = false;
       return;
     }
+
+    this.user.lastname = this.lastname.value;
+    this.user.firstname = this.firstname.value;
+    this.user.username = this.username.value;
+    this.user.email = this.email.value;
+    this.user.password = this.passwd.value;
+    this.user.role = [Role.User];
+
+    this.authenticationService.register(this.user).pipe(first())
+    .subscribe(
+        data => {
+            console.log(data);
+        },
+        error => {
+            
+        });
   }
   checkValidationBeforeSubmit(){
     Object.keys(this.groupControl.controls).forEach(field => { 
