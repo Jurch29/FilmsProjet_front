@@ -1,0 +1,25 @@
+
+.cartContainer{
+    width: 50vw;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+}
+.cartContainer .panel{
+    background-color: lightgray !important;
+}
+.cover {
+    background-size: 134px 196px;
+    width: 134px;
+    height: 196px;
+    border-radius: 4px;
+    box-shadow: 0px 0px 10px;
+    opacity: 1;
+}
+.inlineClass{
+    display: inline-block;
+    margin-right: 10px;
+}
+.description div{
+    margin-right: 10px;
+}

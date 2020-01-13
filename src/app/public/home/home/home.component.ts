@@ -1,5 +1,5 @@
 import { Component, ViewChild, ViewContainerRef, ComponentFactory, ComponentFactoryResolver, OnDestroy, ComponentRef } from '@angular/core';
-import { MoviePreviewComponent } from '../../components/movie-preview/move-preview/movie-preview.component';
+import { MoviePreviewComponent } from '../../components/movie-preview/movie-preview/movie-preview.component';
 
 @Component({
   selector: 'app-home',

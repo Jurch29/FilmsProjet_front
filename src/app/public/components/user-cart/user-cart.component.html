@@ -1,0 +1,27 @@
+<div class="cartContainer">
+  <mat-accordion>
+    <mat-expansion-panel class="panel">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{movieTitle}}
+        </mat-panel-title>
+        <mat-panel-description class="description">
+          <div>
+            Achat le : {{BuyDate}}
+          </div>
+          <div>
+            Cout total : {{TotalCost}}
+          </div>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div class="cover inlineClass" [ngStyle]="MoviePreviewImage">
+      </div>
+      <div class="inlineClass">
+        Nombre d'unités : {{NumberOfItems}}
+      </div>
+      <div class="inlineClass">
+        Cout total : {{TotalCost}}
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

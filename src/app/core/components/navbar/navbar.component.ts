@@ -38,7 +38,7 @@ export class NavbarComponent implements OnInit {
   }
 
   goToCart() {
-    console.log("buy");
+    this.router.navigate(['userCart']);
   }
   ngOnInit() {
     this.appComponent.getNumberOfItemsInCart().subscribe(number =>{ if(number!=0)this.numberOfItems =number});
