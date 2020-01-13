@@ -1,7 +1,7 @@
 <div [class.dark]="!lightMode" class="item" >
         <!--prewiev-->
         <div class="cover fadein"
-        [ngStyle]="previewImage" (click)="infobule()">
+        [ngStyle]="previewImage" (click)="infobule($event)">
             <!--overlay-->
             <div class="overlay">
                 <!--rating-->
@@ -17,4 +17,3 @@
         <p  class="title">{{title}}</p>
         <p  class="year">{{year}}</p>
     </div>
-    <div #infobulecontainer></div>

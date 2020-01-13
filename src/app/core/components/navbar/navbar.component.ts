@@ -41,7 +41,7 @@ export class NavbarComponent implements OnInit {
     console.log("buy");
   }
   ngOnInit() {
-    this.appComponent.getNumberOfItemsInCart().subscribe(number => this.numberOfItems =number);
+    this.appComponent.getNumberOfItemsInCart().subscribe(number =>{ if(number!=0)this.numberOfItems =number});
     if (this.currentUser!=null){
       this.userService.getById(this.currentUser.id).pipe(first()).subscribe(user => {
         this.userFromApi = user;

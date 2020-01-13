@@ -1,24 +1,45 @@
-.movieContainer{
+.movieCardContainer{
     display: block;
     color: white;
     width: 100vw;
     height: 50vh;
+    text-align: left;
+    position: relative;
+    background-color: black;
 }
-.movieContainer.dark{
-    color: black !important;
-}
-.player{
-    display: inline-block;
+.playercontainer{
+    display: block;
     position: absolute;
     right: 0px;
+    width: 60vw;
+    height: 50vh;
 }
-.title{
-    font-size: 30px;
-}
+.playercontainer iframe {
+    border: 0;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+ }
 .actionContainer{
-    display: inline-block;
+    display: block;
     position: relative;
     left: 35px;
+    width: calc(40vw - 35px);
+    height: 40vh;
+}
+.actionContainer p{
+        display: block;
+        word-wrap: wrap;
+        word-break: break-all;
+        margin: 0px;
+        padding: 0px;
+        width: 100%;
+}
+
+.title{
+    font-size: 30px;
 }
 .yearAndDuration{
     font-style: italic;
@@ -30,14 +51,26 @@
     word-wrap: break-word;
     width: 35vw;
 }
-.closebtn{
-    display: inline-block;
-    right: 0px;
-    position: absolute;
+.nowMore,.synopsis,.rating,.yearAndDuration,.title,.actors{
+    margin-bottom: 5px !important;
 }
 .addCartButton{
     background-color: green !important;
 }
 .rating{
     display: inline-block;
+}
+
+.closebtn{
+    display: inline-block;
+    left: 2px;
+    top: -5px;
+    position: absolute;
+}
+.realisators{
+    font-style: italic;
+    font-size: 14px;
+}
+.actors{
+    font-size: 12px;
 }

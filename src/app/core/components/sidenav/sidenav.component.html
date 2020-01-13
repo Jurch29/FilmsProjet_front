@@ -7,7 +7,7 @@
     <a [class.dark]="!lightMode" mat-list-item routerLink="." *ngFor="let nav of fillerNav">{{nav}}</a>
   </mat-nav-list>
 </mat-sidenav>
-<mat-sidenav-content>
+<mat-sidenav-content [class.mat-sidenav-content-drawer-open]="show">
   <div class="container" [class.dark]="!lightMode">
       <router-outlet></router-outlet>
   </div>

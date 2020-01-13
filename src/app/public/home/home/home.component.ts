@@ -11,8 +11,7 @@ export class HomeComponent implements OnDestroy {
   @ViewChild("moviecontainer", { static : false,read: ViewContainerRef }) container;
   @ViewChild("infobulecontainer", { static : false,read: ViewContainerRef }) containerinfobule;
   
-  private componentFactory: ComponentFactory<any>;
-  someProp: any;
+  private componentFactory: ComponentFactory<any>
   private componentRef: ComponentRef<any>;
 
   constructor(private resolver: ComponentFactoryResolver) {
@@ -26,9 +25,8 @@ export class HomeComponent implements OnDestroy {
     this.componentRef.instance.title = 'Malefique';
     this.componentRef.instance.year = '2018';
     this.componentRef.instance.rating = 3;
-    this.componentRef.instance.container =this.containerinfobule;
+    this.componentRef.instance.containerinfobule=this.containerinfobule;
   }
   ngOnDestroy() {
-    this.componentRef.destroy(); 
    }
 }

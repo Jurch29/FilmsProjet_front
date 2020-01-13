@@ -8,16 +8,18 @@ import { AppComponent } from 'src/app/app.component';
 })
 export class MovieCardComponent implements OnInit,OnDestroy {
 
-   container :any;
+  infobulecontainer :any;
 
   ngOnDestroy() {
-    this.container.clear();
+    this.infobulecontainer.clear();
   }
   year:string ="2019";
-  duration:string  ="110 min";
+  duration:string  ="110";
   synopsis:string =" de d e djkenkjndenjdnjkenkjdbehjbdjhevjdgvegvghdvgevdghvevdghveghdvevgvdevhdgevhgdveghvdhgevhgdvegdbebhgvchbcbhrvicUVCUVUCYvucevevgcyvcevcevcvcehoixejoidhicrgyguCBUVEveecbyVCvec";
   title:string ="MALEFIQUE" ;
   rating:number=3;
+  realisators:string="Mikael Plage";
+  actors:string="Bras trou";
   constructor(private appComponent:AppComponent) { }
 
   ngOnInit() {

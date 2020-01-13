@@ -6,6 +6,7 @@
     margin: 10px;
     width: 134px;
     font-size: 0.8em;
+    text-align: left;
   }
 .item .cover.fadein:hover {
     transition: opacity 0s ease;

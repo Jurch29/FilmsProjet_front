@@ -1,13 +1,21 @@
-<div class="movieContainer">
-    <div class="player">
-        <iframe width="800" height="400" src="https://www.youtube.com/embed/0ZD711IkW1g?autoplay=1&rel=0&showinfo=0&controls=0&iv_load_policy=3&modestbranding=1" frameborder="0"  allowfullscreen></iframe>
+<div class="movieCardContainer">
+    <div class="playercontainer">
+        <iframe
+            src="https://www.youtube.com/embed/0ZD711IkW1g?rel=0&showinfo=0&controls=0&iv_load_policy=3&modestbranding=1"
+            frameborder="0" allowfullscreen></iframe>
     </div>
     <div class="actionContainer">
         <p class="title">
             {{title}}
         </p>
         <p class="yearAndDuration">
-            {{year}} {{duration}}
+            {{year}} {{duration}}min
+        </p>
+        <p class="realisators">
+            Par :{{realisators}}
+        </p>
+        <p class="actors">
+            Avec :{{actors}}
         </p>
         <p class="synopsis">
             {{synopsis}}
@@ -26,9 +34,10 @@
             <span>Ajouter au panier</span>
             <mat-icon>shopping_cart</mat-icon>
         </button>
-        
     </div>
     <div class="closebtn">
-        <button mat-icon-button (click)="ngOnDestroy()"><mat-icon>close</mat-icon></button>
+        <button mat-icon-button (click)="ngOnDestroy()">
+            <mat-icon>close</mat-icon>
+        </button>
     </div>
 </div>

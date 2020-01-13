@@ -38,6 +38,13 @@
 .mat-drawer:not(.mat-drawer-side){
   bottom: 30px !important;
 }
+.mat-sidenav-content {
+  width: 100vw!important; 
+}
+.mat-sidenav-content-drawer-open{
+  width: 91vw!important;
+}
+
 @media (max-width: 839px)  {
   .container {
       height: calc(100vh - 70px);
@@ -46,8 +53,10 @@
     font-size: 12px !important;
     height: 32px !important;
   }
-}
 
-.mat-drawer-content{
-  width:100vw !important;
+}
+@media(max-width: 600px){
+  .mat-sidenav-content-drawer-open{
+    width: 100vw!important;
+  }
 }

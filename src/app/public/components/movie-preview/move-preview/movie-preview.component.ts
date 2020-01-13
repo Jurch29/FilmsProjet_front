@@ -8,11 +8,10 @@ import { MovieCardComponent } from '../movie-card/movie-card/movie-card.componen
   styleUrls: ['./movie-preview.component.css']
 })
 export class MoviePreviewComponent implements OnInit {
-  container:any;
+  containerinfobule:any;
   private componentFactory: ComponentFactory<any>;
   someProp: any;
   private componentRef: ComponentRef<any>;
-
   lightMode: boolean;
   subscriptionlightMode: any;
   
@@ -36,11 +35,10 @@ export class MoviePreviewComponent implements OnInit {
   }
   ngOnDestroy() {
     this.subscriptionlightMode.unsubscribe();
-    this.componentRef.destroy();
   }
-  infobule(){
-    this.container.clear();
-    this.componentRef = this.container.createComponent(this.componentFactory, 0);
-    this.componentRef.instance.container = this.container;
+  infobule(event){
+    this.containerinfobule.clear();
+    this.componentRef = this.containerinfobule.createComponent(this.componentFactory, 0);
+    this.componentRef.instance.infobulecontainer = this.containerinfobule;
   }
 }
