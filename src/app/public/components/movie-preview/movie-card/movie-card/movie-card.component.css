@@ -1,0 +1,43 @@
+.movieContainer{
+    display: block;
+    color: white;
+    width: 100vw;
+    height: 50vh;
+}
+.movieContainer.dark{
+    color: black !important;
+}
+.player{
+    display: inline-block;
+    position: absolute;
+    right: 0px;
+}
+.title{
+    font-size: 30px;
+}
+.actionContainer{
+    display: inline-block;
+    position: relative;
+    left: 35px;
+}
+.yearAndDuration{
+    font-style: italic;
+    font-size: 20px;
+}
+.synopsis{
+    font-size: 15px;
+    word-break: break-word;
+    word-wrap: break-word;
+    width: 35vw;
+}
+.closebtn{
+    display: inline-block;
+    right: 0px;
+    position: absolute;
+}
+.addCartButton{
+    background-color: green !important;
+}
+.rating{
+    display: inline-block;
+}

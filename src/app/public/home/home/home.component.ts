@@ -9,6 +9,8 @@ import { MoviePreviewComponent } from '../../components/movie-preview/move-previ
 export class HomeComponent implements OnDestroy {
  
   @ViewChild("moviecontainer", { static : false,read: ViewContainerRef }) container;
+  @ViewChild("infobulecontainer", { static : false,read: ViewContainerRef }) containerinfobule;
+  
   private componentFactory: ComponentFactory<any>;
   someProp: any;
   private componentRef: ComponentRef<any>;
@@ -24,6 +26,7 @@ export class HomeComponent implements OnDestroy {
     this.componentRef.instance.title = 'Malefique';
     this.componentRef.instance.year = '2018';
     this.componentRef.instance.rating = 3;
+    this.componentRef.instance.container =this.containerinfobule;
   }
   ngOnDestroy() {
     this.componentRef.destroy(); 

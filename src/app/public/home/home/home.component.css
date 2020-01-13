@@ -11,3 +11,6 @@
     display: none;
     visibility: hidden;
 }
+.ng-star-inserted{
+    display: inline-block!important;
+}

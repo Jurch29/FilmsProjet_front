@@ -1,6 +1,7 @@
 
 import {Component } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, BehaviorSubject } from 'rxjs';
+import { typeWithParameters } from '@angular/compiler/src/render3/util';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,7 @@ export class AppComponent {
 
   private OpenSidenavEvent = new Subject<boolean>();
   private LightModeEvent = new Subject<boolean>();
-  private NumberOfItemsInCart = new Subject<Number>();
+  private NumberOfItemsInCart = new BehaviorSubject<number>(0);
 
   constructor() { 
   }
@@ -24,13 +25,15 @@ export class AppComponent {
     return this.OpenSidenavEvent.asObservable(); 
   }
 
-  ChangeNumberOfItemsInCartMessage(NumberOfItems: Number){
+  ChangeNumberOfItemsInCartMessage(NumberOfItems: number){
     this.NumberOfItemsInCart.next(NumberOfItems);
   }
-  getNumberOfItemsInCart() :  Observable<Number>{
+  getNumberOfItemsInCart() :  Observable<number>{
     return this.NumberOfItemsInCart.asObservable(); 
   }
-
+  getItemsCount() : number{
+    return this.NumberOfItemsInCart.getValue();
+  }
 
   ChangeLightModeEventMessage(LightmodeState: boolean) {
     this.LightModeEvent.next(LightmodeState);
