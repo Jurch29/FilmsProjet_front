@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AppComponent } from 'src/app/app.component';
+import { NumberOfItemsInCartService } from 'src/app/core/service/number-of-items-in-cart.service';
 
 @Component({
   selector: 'app-movie-card',
@@ -20,12 +21,12 @@ export class MovieCardComponent implements OnInit,OnDestroy {
   rating:number=3;
   realisators:string="Mikael Plage";
   actors:string="Bras trou";
-  constructor(private appComponent:AppComponent) { }
+  constructor(private numberofitemsincartService : NumberOfItemsInCartService) { }
 
   ngOnInit() {
   }
   addToCart(){
-    this.appComponent.ChangeNumberOfItemsInCartMessage(this.appComponent.getItemsCount()+1);
+    this.numberofitemsincartService.ChangeNumberOfItemsInCartMessage(this.numberofitemsincartService.getItemsCount()+1);
   }
 
 }

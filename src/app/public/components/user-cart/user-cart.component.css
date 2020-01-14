@@ -4,22 +4,25 @@
     margin-left: auto;
     margin-right: auto;
     margin-top: 20px;
+    text-align: right;
 }
-.cartContainer .panel{
-    background-color: lightgray !important;
+.notConnected{
+    text-align: center;
 }
-.cover {
-    background-size: 134px 196px;
-    width: 134px;
-    height: 196px;
-    border-radius: 4px;
-    box-shadow: 0px 0px 10px;
-    opacity: 1;
+.BuyButton{
+    background-color: green !important;
 }
-.inlineClass{
-    display: inline-block;
-    margin-right: 10px;
+
+.LoginRegister{
+    margin: 0px 10px;
 }
-.description div{
-    margin-right: 10px;
+@media(max-width:820px){
+    .cartContainer{
+        width: 70vw;
+    }
+}
+@media(max-width:600px){
+    .cartContainer{
+        width: 100vw;
+    }
 }

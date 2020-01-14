@@ -6,9 +6,9 @@
         <mat-grid-tile [colspan]="size">
             <mat-form-field appearance="outline">
                 <mat-label>Nom</mat-label>
-                <input matInput placeholder="Nom" [formControl]="firstname" [(ngModel)]="firstnameValue" required>
-                <button mat-button *ngIf="firstnameValue" matSuffix mat-icon-button aria-label="Clear"
-                    (click)="firstnameValue=''">
+                <input matInput placeholder="Nom" [formControl]="firstname" required>
+                <button mat-button *ngIf="firstname.value" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="firstname.setValue('')">
                     <mat-icon>close</mat-icon>
                 </button>
                 <mat-error *ngIf="firstname.errors?.required">Champ recquis</mat-error>
@@ -20,9 +20,9 @@
         <mat-grid-tile [colspan]="size" [class.emailMobileVersion]="mobileSize">
             <mat-form-field appearance="outline">
                 <mat-label>Entrer votre mail</mat-label>
-                <input matInput placeholder="Entrer votre mail" [formControl]="email" [(ngModel)]="emailValue" required>
-                <button mat-button *ngIf="emailValue" matSuffix mat-icon-button aria-label="Clear"
-                    (click)="emailValue=''">
+                <input matInput placeholder="Entrer votre mail" [formControl]="email" required>
+                <button mat-button *ngIf="email.value" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="email.setValue('')">
                     <mat-icon>close</mat-icon>
                 </button>
                 <mat-error *ngIf="email.errors?.required">Champ recquis</mat-error>
@@ -37,9 +37,9 @@
         <mat-grid-tile [colspan]="size" [class.lastnameMobileVersion]="mobileSize">
             <mat-form-field appearance="outline">
                 <mat-label>Prenom</mat-label>
-                <input matInput placeholder="Prenom" [formControl]="lastname" [(ngModel)]="lastnameValue" required>
-                <button mat-button *ngIf="lastnameValue" matSuffix mat-icon-button aria-label="Clear"
-                    (click)="lastnameValue=''">
+                <input matInput placeholder="Prenom" [formControl]="lastname" required>
+                <button mat-button *ngIf="lastname.value" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="lastname.setValue('')">
                     <mat-icon>close</mat-icon>
                 </button>
                 <mat-error *ngIf="lastname.errors?.required">Champ recquis</mat-error>
@@ -69,9 +69,9 @@
         <mat-grid-tile [colspan]="size" [class.pseudoMobileVersion]="mobileSize">
             <mat-form-field appearance="outline">
                 <mat-label>Pseudo</mat-label>
-                <input matInput placeholder="Pseudo" [formControl]="username" [(ngModel)]="usernameValue" required>
-                <button mat-button *ngIf="usernameValue" matSuffix mat-icon-button aria-label="Clear"
-                    (click)="usernameValue=''">
+                <input matInput placeholder="Pseudo" [formControl]="username" required>
+                <button mat-button *ngIf="username.value" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="username.setValue('')">
                     <mat-icon>close</mat-icon>
                 </button>
                 <mat-error *ngIf="username.errors?.required">Champ recquis</mat-error>
@@ -83,11 +83,11 @@
         <mat-grid-tile [colspan]="size">
             <mat-form-field appearance="outline">
                 <mat-label>Confirmez votre mot de passe</mat-label>
-                <input matInput placeholder="Confirmez votre mot de passe" [(ngModel)]="passwdControlValue"
+                <input matInput placeholder="Confirmez votre mot de passe"
                     onCopy="return false" onDrag="return false" onDrop="return false" onPaste="return false"
                     [formControl]="passwdControl" required type="password" (input)="passwdControlCheck()">
-                <button mat-button *ngIf="passwdControlValue" matSuffix mat-icon-button aria-label="Clear"
-                    (click)="passwdControlValue=''">
+                <button mat-button *ngIf="passwdControl.value" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="passwdControl.setValue('')">
                     <mat-icon>close</mat-icon>
                 </button>
                 <mat-error *ngIf="passwdControl.errors?.required">Champ recquis</mat-error>

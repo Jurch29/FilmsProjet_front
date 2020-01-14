@@ -1,6 +1,7 @@
 import { Component, OnInit, ComponentFactory, ViewChild, ViewContainerRef, ComponentRef, ComponentFactoryResolver } from '@angular/core';
 import { AppComponent } from 'src/app/app.component';
-import { MovieCardComponent } from '../movie-card/movie-card/movie-card.component';
+import { MovieCardComponent } from '../movie-card/movie-card.component';
+import { LightmodeService } from 'src/app/core/service/lightmode.service';
 
 @Component({
   selector: 'app-movie-preview',
@@ -22,14 +23,14 @@ export class MoviePreviewComponent implements OnInit {
   previewImage = {
     "background-image": ""
   } 
-  constructor(private appComponent : AppComponent, private resolver: ComponentFactoryResolver) {
+  constructor(private lightmodeService : LightmodeService, private resolver: ComponentFactoryResolver) {
     this.componentFactory = resolver.resolveComponentFactory(MovieCardComponent);
    }
   ngOnInit() {
 
     this.previewImage["background-image"] = "url("+this.url+")";
     
-    this.subscriptionlightMode = this.appComponent.getLightModeEventMessage().subscribe(dataTransmited =>{
+    this.subscriptionlightMode = this.lightmodeService.getLightModeEventMessage().subscribe(dataTransmited =>{
       this.lightMode = dataTransmited;
     });
   }

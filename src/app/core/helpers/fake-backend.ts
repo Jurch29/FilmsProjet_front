@@ -7,7 +7,7 @@ import { Role } from '../../shared/models/role';
 import { User } from '../../shared/models/user';
 
 const users: User[] = [
-    { id: 1, email:"jacqou@jac.fr", username: 'ju', password: 'j', firstname: 'Admin', lastname: 'User', role: [Role.Admin] },
+    { id: 1, email:"j@j", username: 'ju', password: 'j', firstname: 'Admin', lastname: 'User', role: [Role.Admin] },
     { id: 2, email:"jacqou@jacot.fr", username: 'peter', password: 'a', firstname: 'Normal', lastname: 'User', role: [Role.User] }
 ];
 
@@ -42,7 +42,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         function authenticate() {
             const { username, password } = body;
             const user = users.find(x => x.username === username && x.password === password);
-            if (!user) return error('Mot de passe ou mail incorrect');
+            if (!user) return error('Login ou Mot de passe');
             return ok({
                 id: user.id,
                 username: user.username,

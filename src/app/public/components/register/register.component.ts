@@ -7,6 +7,7 @@ import { User } from '../../../shared/models/user';
 import { Role } from 'src/app/shared/models/role';
 
 import { AuthenticationService } from '../../../core/service/authentication.service';
+import { LightmodeService } from 'src/app/core/service/lightmode.service';
 
 @Component({
   selector: 'app-register',
@@ -51,13 +52,13 @@ export class RegisterComponent implements OnInit , OnDestroy{
   });
 
   
-  constructor(private appComponent : AppComponent, private authenticationService: AuthenticationService) {
+  constructor(private lightmodeService : LightmodeService, private authenticationService: AuthenticationService) {
     this.user = new User();
   }
 
   ngOnInit() {
     this.hide = true;
-    this.subscriptionlightMode = this.appComponent.getLightModeEventMessage().subscribe(dataTransmited =>{
+    this.subscriptionlightMode = this.lightmodeService.getLightModeEventMessage().subscribe(dataTransmited =>{
       this.lightMode = dataTransmited;
     });
     this.TestSize();
@@ -106,7 +107,6 @@ export class RegisterComponent implements OnInit , OnDestroy{
             console.log(data);
         },
         error => {
-            
         });
   }
   checkValidationBeforeSubmit(){

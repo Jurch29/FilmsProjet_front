@@ -6,16 +6,16 @@ import { HomeModule } from './home/home.module';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { UserCartComponent } from './components/user-cart/user-cart.component';
-
+import { UserCartItemComponent } from './components/user-cart/user-cart-item/user-cart-item.component';
 
 @NgModule({
-  declarations: [RegisterComponent, LoginComponent, UserCartComponent],
+  declarations: [RegisterComponent, LoginComponent, UserCartComponent, UserCartItemComponent],
   imports: [
     SharedModule,
     PublicRoutingModule,
     HomeModule
   ],
   exports: [ RegisterComponent, LoginComponent],
-  entryComponents: [LoginComponent]
+  entryComponents: [LoginComponent,UserCartItemComponent]
 })
 export class PublicModule { }

@@ -2,8 +2,8 @@
 <mat-toolbar>
     <button mat-icon-button (click)="toggleMenu()"><mat-icon>menu</mat-icon></button>
     <div>
-        <button mat-button (click)="openHome()">
-            <span class="title">EZ movie</span>
+        <button class="title" mat-button routerLink="/home">
+            <span>EZ movie</span>
         </button>
     </div>
     <span class="spacer"></span>
@@ -16,18 +16,18 @@
             </button>
     </div>
     <span class="spacer"></span>
-    <button mat-button *ngIf="!lightModeEvent"(click)="ChangeWebMode()">
+    <button mat-button class="sunandcart" *ngIf="!lightModeEvent"(click)="ChangeWebMode()">
         <mat-icon>wb_sunny</mat-icon>
     </button>
-    <button mat-button *ngIf="lightModeEvent" (click)="ChangeWebMode()">
+    <button mat-button class="sunandcart" *ngIf="lightModeEvent" (click)="ChangeWebMode()">
         <mat-icon>nights_stay</mat-icon>
     </button>
-    <button mat-button (click)="goToCart()">
+    <button mat-button class="sunandcart" (click)="goToCart()">
         <mat-icon [matBadge]="numberOfItems" matBadgePosition="above after">
             <mat-icon>shopping_cart</mat-icon>
          </mat-icon>
     </button>
-    <button *ngIf="!currentUser" class="SmallSettings" mat-button (click)="openLoginDialog()">Connexion</button>
-    <button *ngIf="!currentUser" class="SmallSettings" mat-button routerLink="/register">Inscription</button>
-    <button *ngIf="currentUser"  class="SmallSettings" mat-button (click)="disconnect()">Deconnexion</button>
+    <button *ngIf="!currentUser && !SmallSettingsNoButtons" class="SmallSettings" mat-button (click)="openLoginDialog()">Connexion</button>
+    <button *ngIf="!currentUser && !SmallSettingsNoButtons" class="SmallSettings" mat-button routerLink="/register">Inscription</button>
+    <button *ngIf="currentUser && !SmallSettingsNoButtons"  class="SmallSettings" mat-button (click)="disconnect()">Deconnexion</button>
 </mat-toolbar>

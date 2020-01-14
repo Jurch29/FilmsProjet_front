@@ -36,3 +36,11 @@ app-movie-preview{
     font-size: 10px;
     }
 }
+@media(max-width:600px){
+    .mat-list-base .mat-list-item .mat-list-item-content{
+        padding:0px 10px !important;
+      }
+      .search-container{
+          margin: 0px;
+      }
+}

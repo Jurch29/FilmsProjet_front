@@ -23,10 +23,7 @@ export class AuthenticationService {
     login(username: string, password: string) {
         return this.http.post<any>(`${environment.apiUrl}/auth/signin`, { username, password })
             .pipe(map(user => {
-                //console.log("User : " + JSON.stringify(user));
-                // login successful si il y a un JWT dans la réponse
-                if (user && user.accessToken) {
-                    // Enregistre les détail user + jwt dans le local storage
+                if (user && user.token) {
                     localStorage.setItem('currentUser', JSON.stringify(user));
                     this.currentUserSubject.next(user);
                 }
@@ -35,15 +32,11 @@ export class AuthenticationService {
     }
 
     register(user: User) {
-        console.log(user);
-
-        return this.http.post<any>(`${environment.apiUrl}/auth/signup`, user).pipe(map(response=> {
-            console.log(response);
+        return this.http.post<any>(`${environment.apiUrl}/auth/signup`, user).pipe(map(response => {
         }));
     }
 
     logout() {
-        // Supprime l'utilisateur du local storage pour loggout
         localStorage.removeItem('currentUser');
         this.currentUserSubject.next(null);
     }
