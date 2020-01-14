@@ -1,5 +1,4 @@
-import { Component, OnInit, ComponentFactory, ViewChild, ViewContainerRef, ComponentRef, ComponentFactoryResolver } from '@angular/core';
-import { AppComponent } from 'src/app/app.component';
+import { Component, OnInit, ComponentFactory, ComponentRef, ComponentFactoryResolver } from '@angular/core';
 import { MovieCardComponent } from '../movie-card/movie-card.component';
 import { LightmodeService } from 'src/app/core/service/lightmode.service';
 

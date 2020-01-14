@@ -1,6 +1,5 @@
 import { Component, OnInit, Directive, OnDestroy } from '@angular/core';
 import { Validators, FormControl, FormGroup } from '@angular/forms';
-import { AppComponent } from 'src/app/app.component';
 import { first } from 'rxjs/operators';
 
 import { User } from '../../../shared/models/user';

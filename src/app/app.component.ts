@@ -1,7 +1,5 @@
 
 import {Component } from '@angular/core';
-import { Observable, Subject, BehaviorSubject } from 'rxjs';
-import { typeWithParameters } from '@angular/compiler/src/render3/util';
 
 @Component({
   selector: 'app-root',

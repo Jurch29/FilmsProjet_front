@@ -11,7 +11,6 @@ import { UserService } from '../../service/user.service';
 import { LightmodeService } from '../../service/lightmode.service';
 import { OpensidenavService } from '../../service/opensidenav.service';
 import { NumberOfItemsInCartService } from '../../service/number-of-items-in-cart.service';
-import { ProtectedModule } from 'src/app/protected/protected.module';
 import { ProtectedRoutingModule } from 'src/app/protected/protected-routing.module';
 
 @Component({

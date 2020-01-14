@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild, ViewContainerRef, ComponentRef, ComponentFactoryResolver, ComponentFactory } from '@angular/core';
-import { MatCardModule } from '@angular/material/';
 import { UserCartItemComponent } from './user-cart-item/user-cart-item.component';
 import { AuthenticationService } from 'src/app/core/service/authentication.service';
 import { User } from 'src/app/shared/models/user';

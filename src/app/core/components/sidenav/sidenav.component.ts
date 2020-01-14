@@ -1,12 +1,8 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild, NgModule } from '@angular/core';
-import { MatSidenav, MatDialog } from '@angular/material';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MatSidenav } from '@angular/material';
 import {MediaMatcher} from '@angular/cdk/layout';
-import { AppComponent } from 'src/app/app.component';
 import { AuthenticationService } from '../../service/authentication.service';
-import { UserService } from '../../service/user.service';
 import { User } from 'src/app/shared/models/user';
-import { Router } from '@angular/router';
-import { first } from 'rxjs/operators';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { LightmodeService } from '../../service/lightmode.service';
 import { OpensidenavService } from '../../service/opensidenav.service';
