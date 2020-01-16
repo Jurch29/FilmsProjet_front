@@ -1,0 +1,14 @@
+.filterbarContainer{
+    text-align: center;
+
+}
+.filterbarContainer mat-form-field{
+    margin-left: 10px;
+    margin-top:10px;
+}
+
+@media (max-width:839px){
+    .filterbarContainer{
+       font-size: 10px;
+    }
+}

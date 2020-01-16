@@ -1,15 +1,27 @@
 
-import {Component } from '@angular/core';
+import {Component, OnInit, OnDestroy } from '@angular/core';
+import { OpenfilterbarService } from './core/service/openfilterbar.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  title = 'ProjetsFilm';
+export class AppComponent implements OnInit, OnDestroy{
 
-  constructor() { 
+  title = 'ProjetsFilm';
+  openfilterbar : boolean;
+  subscriptionfilterbar: any;
+  constructor(private openFilterBarService : OpenfilterbarService) {  
   }
 
+  ngOnInit(){
+    this.subscriptionfilterbar = this.openFilterBarService.getOpenFilterBar().subscribe(dataTransmited =>{
+      this.openfilterbar = dataTransmited;
+    });
+  }
+
+  ngOnDestroy(){
+    this.subscriptionfilterbar.destroy();
+  }
 }

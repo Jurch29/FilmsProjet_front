@@ -1,0 +1,21 @@
+<div class="filterbarContainer">
+    <span>Trier par :</span>
+    <mat-form-field>
+        <mat-label>Catégorie</mat-label>
+        <mat-select (selectionChange)="onCategoryChange($event)">
+            <mat-option></mat-option>
+            <mat-option *ngFor="let category of categorys" [value]="category.value">
+                {{category.value}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Acteur</mat-label>
+        <mat-select (selectionChange)="onActorChange($event)"> 
+            <mat-option></mat-option>
+            <mat-option *ngFor="let actor of actors" [value]="actor.value">
+                {{actor.value}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>

@@ -11,7 +11,7 @@ import { UserService } from '../../service/user.service';
 import { LightmodeService } from '../../service/lightmode.service';
 import { OpensidenavService } from '../../service/opensidenav.service';
 import { NumberOfItemsInCartService } from '../../service/number-of-items-in-cart.service';
-import { ProtectedRoutingModule } from 'src/app/protected/protected-routing.module';
+import { OpenfilterbarService } from '../../service/openfilterbar.service';
 
 @Component({
   selector: 'app-navbar',
@@ -25,11 +25,12 @@ export class NavbarComponent implements OnInit {
   lightModeEvent: boolean = false;
   showMenu = false;
   numberOfItems: Number;
+  filterBarOpened : boolean = false;
   SmallSettingsNoButtons: boolean = false;
 
-  constructor(private protectedroutingmodule: ProtectedRoutingModule,public dialog: MatDialog, private userService: UserService, private router: Router,
+  constructor(public dialog: MatDialog, private userService: UserService, private router: Router,
     private authenticationService: AuthenticationService, private lightmodeService : LightmodeService,
-    private opensidenavService : OpensidenavService,private numberofitemsincartService : NumberOfItemsInCartService) {
+    private opensidenavService : OpensidenavService,private openfilterbarService : OpenfilterbarService,private numberofitemsincartService : NumberOfItemsInCartService) {
     this.currentUser = this.authenticationService.currentUserValue;
   }
 
@@ -39,6 +40,10 @@ export class NavbarComponent implements OnInit {
   }
   initiateSearch() {
     console.log("searching");
+  }
+  openFilterBar(){
+    this.filterBarOpened = !this.filterBarOpened;
+    this.openfilterbarService.ChangeOpenFilterBarMessage(this.filterBarOpened);
   }
 
   goToCart() {

@@ -13,10 +13,11 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { AppComponent } from '../app.component';
+import { FilterbarComponent } from './components/filterbar/filterbar.component';
 
 
 @NgModule({
-  declarations: [NavbarComponent, FooterComponent, SidenavComponent],
+  declarations: [NavbarComponent, FooterComponent, SidenavComponent, FilterbarComponent],
   imports: [
     PublicModule,
     ProtectedModule,
@@ -25,7 +26,7 @@ import { AppComponent } from '../app.component';
     HttpClientModule,
     AppRoutingModule
   ],
-  exports: [NavbarComponent, FooterComponent, SidenavComponent],
+  exports: [NavbarComponent, FooterComponent, SidenavComponent,FilterbarComponent],
   providers: [
     AppComponent,
     NavbarComponent

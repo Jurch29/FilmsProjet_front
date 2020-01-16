@@ -11,7 +11,7 @@
         <mat-form-field>
             <input matInput placeholder="Search" [(ngModel)]="textValue" id="textValue" (input)="initiateSearch()" (keyup.enter)="initiateSearch()">
         </mat-form-field>
-            <button mat-button (click)="initiateSearch()">
+            <button mat-button (click)="openFilterBar()">
                 <mat-icon>search</mat-icon>
             </button>
     </div>

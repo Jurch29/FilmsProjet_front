@@ -37,7 +37,6 @@ export class SidenavComponent implements OnInit, OnDestroy {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener); 
-    
   }
   
 
@@ -68,4 +67,5 @@ export class SidenavComponent implements OnInit, OnDestroy {
     this.authenticationService.logout();
   }
 
+  
 }
