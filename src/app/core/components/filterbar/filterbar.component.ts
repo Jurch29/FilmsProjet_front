@@ -1,14 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { MovieService } from '../../service/movie-service.service';
+import { first } from 'rxjs/operators';
+import { Author } from 'src/app/shared/models/author';
+import { Category } from 'src/app/shared/models/category';
+import { Actor } from 'src/app/shared/models/actor';
 
-export interface Actor {
-  value: string;
-  viewValue: string;
-}
-
-export interface Category {
-  value: string;
-  viewValue: string;
-}
 @Component({
   selector: 'app-filterbar',
   templateUrl: './filterbar.component.html',
@@ -16,26 +12,26 @@ export interface Category {
 })
 
 export class FilterbarComponent implements OnInit {
-  categorys : Category[];
-  actors :Actor[];
-  constructor() { }
+  categorys  =new Array<Category>();
+  actors  =new Array<Actor>();
+  authors =new Array<Author>();
+  constructor(private movieService : MovieService) { }
 
   ngOnInit() {
-    this.categorys = [
-      {value: 'Action', viewValue: 'Action'},
-      {value: 'Comedie', viewValue: 'Comédie'}
-    ];
-    this.actors = [
-      {value: 'Brad Pitt', viewValue: 'Brad Pitt'},
-      {value: 'Mister T', viewValue: 'Mister T'}
-    ];
+    this.movieService.getAllAuthors().pipe(first()).subscribe(data => this.authors = data);
+    this.movieService.getAllCategorys().pipe(first()).subscribe(data => this.categorys = data);
+    this.movieService.getAllActors().pipe(first()).subscribe(data => this.actors = data);
+  }
+  onAuthorChange(event){
+    if(event.value != undefined)
+      console.log("event = "+event.value);
   }
   onCategoryChange(event){
-    if(event.value = "")
-    console.log(event);
+    if(event.value != undefined)
+      console.log("event = "+event.value);
   }
   onActorChange(event){
-    if(event.value = "")
-     console.log(event);
+    if(event.value != undefined)
+     console.log("event = "+event.value);
   }
 }

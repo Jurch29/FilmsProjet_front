@@ -9,20 +9,23 @@
             {{title}}
         </p>
         <p class="yearAndDuration">
-            {{year}} {{duration}}min
+            {{year}}
+        </p>
+        <p class="yearAndDuration">
+            {{duration}}min
         </p>
         <p class="realisators">
-            Par :{{realisators}}
+            Par :<span *ngFor="let realisator of (realisators) let isLast=last">{{realisator.author_lastname}} {{realisator.author_firstname}}{{isLast ? '' : ', '}} </span>
         </p>
         <p class="actors">
-            Avec :{{actors}}
+            Avec :<span *ngFor="let actor of (actors) let isLast=last">{{actor.actor_firstname}} {{actor.actor_lastname}}{{isLast ? '' : ', '}} </span>
         </p>
         <p class="synopsis">
             {{synopsis}}
         </p>
         <div>
             <div class="rating">
-                <star-rating [value]=rating checkedcolor="gold" uncheckedcolor="grey" size="15px" readonly="true">
+                <star-rating [value]=(rating) checkedcolor="gold" uncheckedcolor="grey" size="15px" readonly="true">
                 </star-rating>
             </div>
             <div class="rating">{{rating}}/5</div>
@@ -36,7 +39,7 @@
         </button>
     </div>
     <div class="closebtn">
-        <button mat-icon-button (click)="ngOnDestroy()">
+        <button mat-icon-button (click)="close()">
             <mat-icon>close</mat-icon>
         </button>
     </div>

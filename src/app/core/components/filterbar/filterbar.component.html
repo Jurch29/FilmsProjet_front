@@ -2,10 +2,19 @@
     <span>Trier par :</span>
     <mat-form-field>
         <mat-label>Catégorie</mat-label>
-        <mat-select (selectionChange)="onCategoryChange($event)">
+        <mat-select (selectionChange)="onCategoryChange($event)" >
             <mat-option></mat-option>
-            <mat-option *ngFor="let category of categorys" [value]="category.value">
-                {{category.value}}
+            <mat-option *ngFor="let category of categorys" [value]="category.category_id">
+                {{category.category_title}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Auteur</mat-label>
+        <mat-select (selectionChange)="onAuthorChange($event)"> 
+            <mat-option></mat-option>
+            <mat-option *ngFor="let author of authors" [value]="author.author_id">
+                {{author.author_lastname}} {{author.author_firstname}}
             </mat-option>
         </mat-select>
     </mat-form-field>
@@ -13,8 +22,8 @@
         <mat-label>Acteur</mat-label>
         <mat-select (selectionChange)="onActorChange($event)"> 
             <mat-option></mat-option>
-            <mat-option *ngFor="let actor of actors" [value]="actor.value">
-                {{actor.value}}
+            <mat-option *ngFor="let actor of actors" [value]="actor.actor_id" >
+                {{actor.actor_lastname}} {{actor.actor_firstname}}
             </mat-option>
         </mat-select>
     </mat-form-field>

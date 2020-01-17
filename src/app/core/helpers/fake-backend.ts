@@ -5,12 +5,163 @@ import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
 
 import { Role } from '../../shared/models/role';
 import { User } from '../../shared/models/user';
+import { Movie } from 'src/app/shared/models/movie';
+import { Actor } from 'src/app/shared/models/actor';
+import { Author } from 'src/app/shared/models/author';
+import { MovieActor } from 'src/app/shared/models/movie-actor';
+import { MovieAuthor } from 'src/app/shared/models/movie-author';
+import { Category } from 'src/app/shared/models/category';
+import { MovieCategory } from 'src/app/shared/models/movie-category';
 
 const users: User[] = [
-    { id: 1, email:"j@j", username: 'ju', password: 'j', firstname: 'Admin', lastname: 'User', role: [Role.Admin] },
-    { id: 2, email:"jacqou@jacot.fr", username: 'peter', password: 'a', firstname: 'Normal', lastname: 'User', role: [Role.User] }
+    { id: 1, email: "j@j", username: 'ju', password: 'j', firstname: 'Admin', lastname: 'User', role: [Role.Admin] },
+    { id: 2, email: "jacqou@jacot.fr", username: 'peter', password: 'a', firstname: 'Normal', lastname: 'User', role: [Role.User] }
 ];
 
+const movies: Movie[] = [
+    {
+        movie_id: 1,
+        movie_title: "Deadpool",
+        movie_price: 10,
+        movie_image_path: "PicturesFolder/Preview/BDA_Deadpool.jpg",
+        movie_file_path: "PicturesFolder/Preview/BDA_Deadpool.jpg",
+        movie_date: new Date("10/02/2016"),
+        movie_duration: 108,
+        movie_mark: 4.1,
+        movie_is_deleted: false
+    }, {
+        movie_id: 2,
+        movie_title: "The Dark Knight",
+        movie_price: 3,
+        movie_image_path: "PicturesFolder/Preview/BDA_BatmanTheDarkNight.jpg",
+        movie_file_path: "PicturesFolder/Preview/BDA_BatmanTheDarkNight.jpg",
+        movie_date: new Date("2008-08-13"),
+        movie_duration: 153,
+        movie_mark: 4.5,
+        movie_is_deleted: false
+    },
+];
+const movieCategory: MovieCategory[] = [
+    {
+        moviecategory_movie_id: 1,
+        moviecategory_category_id: 1
+    },
+    {
+        moviecategory_movie_id: 1,
+        moviecategory_category_id: 2
+    },
+    {
+        moviecategory_movie_id: 1,
+        moviecategory_category_id: 3
+    },
+    {
+        moviecategory_movie_id: 2,
+        moviecategory_category_id: 1
+    },
+    {
+        moviecategory_movie_id: 2,
+        moviecategory_category_id: 2
+    },
+    {
+        moviecategory_movie_id: 2,
+        moviecategory_category_id: 3
+    }
+];
+const categorys: Category[] = [
+    {
+        category_id: 1,
+        category_title: "Super-heros"
+    }, {
+        category_id: 2,
+        category_title: "Comedie"
+    }, {
+        category_id: 3,
+        category_title: "Action"
+    }
+];
+const movieAuthor: MovieAuthor[] = [
+    {
+        movieauthor_movie_id: 1,
+        movieauthor_author_id: 1
+    }, {
+        movieauthor_movie_id: 2,
+        movieauthor_author_id: 2
+    }
+];
+const movieActor: MovieActor[] = [
+    {
+        movieactor_movie_id: 1,
+        movieactor_actor_id: 1
+    }, {
+        movieactor_movie_id: 1,
+        movieactor_actor_id: 2
+    }, {
+        movieactor_movie_id: 1,
+        movieactor_actor_id: 3
+    }, {
+        movieactor_movie_id: 2,
+        movieactor_actor_id: 4
+    }, {
+        movieactor_movie_id: 2,
+        movieactor_actor_id: 5
+    }, {
+        movieactor_movie_id: 2,
+        movieactor_actor_id: 6
+    }, {
+        movieactor_movie_id: 2,
+        movieactor_actor_id: 7
+    }, {
+        movieactor_movie_id: 2,
+        movieactor_actor_id: 8
+    }
+];
+const authors: Author[] = [
+    {
+        author_id: 1,
+        author_lastname: "Brad",
+        author_firstname: "Trou"
+    }, {
+        author_id: 2,
+        author_lastname: "Angelina",
+        author_firstname: "La Belle"
+    },
+];
+
+const actors: Actor[] = [
+    {
+        actor_id: 1,
+        actor_lastname: "Reynolds",
+        actor_firstname: "Ryan"
+    }, {
+        actor_id: 2,
+        actor_lastname: "Baccarin",
+        actor_firstname: "Morena"
+    }, {
+        actor_id: 3,
+        actor_lastname: "T. J.",
+        actor_firstname: "Miller"
+    }, {
+        actor_id: 4,
+        actor_lastname: "Chris",
+        actor_firstname: "Pratt"
+    }, {
+        actor_id: 5,
+        actor_lastname: "Saldana",
+        actor_firstname: "Zoe"
+    }, {
+        actor_id: 6,
+        actor_lastname: "Bautista",
+        actor_firstname: "David"
+    }, {
+        actor_id: 7,
+        actor_lastname: "Gunn",
+        actor_firstname: "James"
+    }, {
+        actor_id: 8,
+        actor_lastname: "Vin",
+        actor_firstname: "Diesel"
+    }
+];
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -31,10 +182,62 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return getUsers();
                 case url.match(/\/users\/\d+$/) && method === 'GET':
                     return getUserById();
+                case url.endsWith('/movies') && method === 'GET':
+                    return getMovies();
+                case url.match(/\/movies\/\d+$/) && method === 'GET':
+                    return getMovieById();
+                case url.endsWith('/actors') && method === 'GET':
+                    return getActors();
+                case url.match(/\/actors\/\d+$/) && method === 'GET':
+                    return getActorsByMovieId();
+                case url.endsWith('/author') && method === 'GET':
+                    return getAuthors();
+                case url.match(/\/author\/\d+$/) && method === 'GET':
+                    return getAuthorsByMovieId();
+                case url.endsWith('/category') && method === 'GET':
+                    return getCategorys();
+                case url.match(/\/category\/\d+$/) && method === 'GET':
+                    return getCategorysByMovieId();
                 default:
-                    // pass through any requests not handled above
                     return next.handle(request);
             }
+        }
+        function getCategorys() {
+            return ok(categorys);
+        }
+
+        function getCategorysByMovieId() {
+            let moviecategorys = movieCategory.filter(x => x.moviecategory_movie_id === idFromUrl());
+            const categoryz = new Array<Category>();
+            moviecategorys.forEach(element => {
+                categoryz.push(categorys.find(x => x.category_id === element.moviecategory_category_id));
+            });
+            return ok(categoryz);
+        }
+        function getAuthors() {
+            return ok(authors);
+        }
+
+        function getAuthorsByMovieId() {
+            let movieauthors = movieAuthor.filter(x => x.movieauthor_movie_id === idFromUrl());
+            const authorz = new Array<Author>();
+            movieauthors.forEach(element => {
+                authorz.push(authors.find(x => x.author_id === element.movieauthor_author_id));
+            });
+            return ok(authorz);
+        }
+
+        function getActors() {
+            return ok(actors);
+        }
+
+        function getActorsByMovieId() {
+            const movieactors = movieActor.filter(x => x.movieactor_movie_id === idFromUrl());
+            let actorz = new Array<Actor>();
+            movieactors.forEach(element => {
+                actorz.push(actors.find(x => x.actor_id === element.movieactor_actor_id));
+            });
+            return ok(actorz);
         }
 
         // route functions
@@ -66,6 +269,14 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
             const user = users.find(x => x.id === idFromUrl());
             return ok(user);
+        }
+        function getMovies() {
+            return ok(movies);
+        }
+
+        function getMovieById() {
+            const movie = movies.find(x => x.movie_id === idFromUrl());
+            return ok(movie);
         }
 
         // helper functions

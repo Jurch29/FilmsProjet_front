@@ -22,6 +22,6 @@ export class AppComponent implements OnInit, OnDestroy{
   }
 
   ngOnDestroy(){
-    this.subscriptionfilterbar.destroy();
+    this.subscriptionfilterbar.unsubscribe();
   }
 }

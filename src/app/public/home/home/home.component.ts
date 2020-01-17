@@ -1,32 +1,14 @@
-import { Component, ViewChild, ViewContainerRef, ComponentFactory, ComponentFactoryResolver, OnDestroy, ComponentRef } from '@angular/core';
-import { MoviePreviewComponent } from '../../components/movie-preview/movie-preview/movie-preview.component';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnDestroy {
- 
-  @ViewChild("moviecontainer", { static : false,read: ViewContainerRef }) container;
-  @ViewChild("infobulecontainer", { static : false,read: ViewContainerRef }) containerinfobule;
+export class HomeComponent {
   
-  private componentFactory: ComponentFactory<any>
-  private componentRef: ComponentRef<any>;
 
-  constructor(private resolver: ComponentFactoryResolver) {
-    this.componentFactory = resolver.resolveComponentFactory(MoviePreviewComponent);
+  constructor() {
    }
 
-  
-  CreateCompenentMovie() {
-    this.componentRef = this.container.createComponent(this.componentFactory, 0);
-    this.componentRef.instance.url = 'http://image.tmdb.org/t/p/w500/vloNTScJ3w7jwNwtNGoG8DbTThv.jpg';
-    this.componentRef.instance.title = 'Malefique';
-    this.componentRef.instance.year = '2018';
-    this.componentRef.instance.rating = 3;
-    this.componentRef.instance.containerinfobule=this.containerinfobule;
-  }
-  ngOnDestroy() {
-   }
 }

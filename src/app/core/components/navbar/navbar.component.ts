@@ -66,7 +66,7 @@ export class NavbarComponent implements OnInit {
       this.currentUser =dataTransmited
       );
   }
-
+  
   openLoginDialog() {
     let dialogRef;
     if (this.lightModeEvent)
