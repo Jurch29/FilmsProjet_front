@@ -32,8 +32,7 @@ export class AuthenticationService {
     }
 
     register(user: User) {
-        return this.http.post<any>(`${environment.apiUrl}/auth/signup`, user).pipe(map(response => {
-        }));
+        return this.http.post<any>(`${environment.apiUrl}/auth/signup`, user);
     }
 
     logout() {

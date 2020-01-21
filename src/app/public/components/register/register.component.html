@@ -11,7 +11,7 @@
                     (click)="firstname.setValue('')">
                     <mat-icon>close</mat-icon>
                 </button>
-                <mat-error *ngIf="firstname.errors?.required">Champ recquis</mat-error>
+                <mat-error *ngIf="firstname.errors?.required">Champ requis</mat-error>
                 <mat-error *ngIf="firstname.errors"></mat-error>
             </mat-form-field>
         </mat-grid-tile>
@@ -25,7 +25,7 @@
                     (click)="email.setValue('')">
                     <mat-icon>close</mat-icon>
                 </button>
-                <mat-error *ngIf="email.errors?.required">Champ recquis</mat-error>
+                <mat-error *ngIf="email.errors?.required">Champ requis</mat-error>
                 <mat-error *ngIf="email.errors?.email">Email non valide</mat-error>
                 <mat-error *ngIf="email.errors"></mat-error>
             </mat-form-field>
@@ -42,7 +42,7 @@
                     (click)="lastname.setValue('')">
                     <mat-icon>close</mat-icon>
                 </button>
-                <mat-error *ngIf="lastname.errors?.required">Champ recquis</mat-error>
+                <mat-error *ngIf="lastname.errors?.required">Champ requis</mat-error>
                 <mat-error *ngIf="lastname.errors"></mat-error>
             </mat-form-field>
         </mat-grid-tile>
@@ -53,7 +53,7 @@
                 <mat-label>Entrer votre mot de passe</mat-label>
                 <input matInput placeholder="Entrer votre mot de passe" [formControl]="passwd" required
                     [type]="hide ? 'password' : 'text'">
-                <mat-error *ngIf="passwd.errors?.required">Champ recquis</mat-error>
+                <mat-error *ngIf="passwd.errors?.required">Champ requis</mat-error>
                 <mat-error *ngIf="passwd.errors?.minlength">Mot de passe trop court</mat-error>
                 <mat-error *ngIf="passwd.errors"></mat-error>
                 <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Cacher le mot de passe'"
@@ -74,7 +74,7 @@
                     (click)="username.setValue('')">
                     <mat-icon>close</mat-icon>
                 </button>
-                <mat-error *ngIf="username.errors?.required">Champ recquis</mat-error>
+                <mat-error *ngIf="username.errors?.required">Champ requis</mat-error>
                 <mat-error *ngIf="username.errors"></mat-error>
             </mat-form-field>
         </mat-grid-tile>
@@ -90,7 +90,7 @@
                     (click)="passwdControl.setValue('')">
                     <mat-icon>close</mat-icon>
                 </button>
-                <mat-error *ngIf="passwdControl.errors?.required">Champ recquis</mat-error>
+                <mat-error *ngIf="passwdControl.errors?.required">Champ requis</mat-error>
                 <mat-error *ngIf="passwdControl.errors?.unmatch">Mots de passe differents</mat-error>
                 <mat-error *ngIf="passwdControl.errors"></mat-error>
             </mat-form-field>
@@ -101,9 +101,10 @@
         </mat-grid-tile>
         <mat-grid-tile>
             <button mat-raised-button color="primary" *ngIf="!loading" (click)="register()">S'inscrire</button>
-            <div *ngIf="error" class="alertError">{{error}}</div>
             <mat-spinner *ngIf="loading" diameter="30"></mat-spinner>
         </mat-grid-tile>
+        <div *ngIf="error" class="alertError">{{error}}</div>
+        <div *ngIf="success" class="alertSuccess">{{success}}</div>
         <mat-grid-tile [colspan]="sizeBig" *ngIf="!mobileSize">
         </mat-grid-tile>
     </mat-grid-list>

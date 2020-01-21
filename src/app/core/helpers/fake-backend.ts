@@ -178,6 +178,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             switch (true) {
                 case url.endsWith('/auth/signin') && method === 'POST':
                     return authenticate();
+                case url.endsWith('/auth/signup') && method === 'POST':
+                    return registerate();
                 case url.endsWith('/users') && method === 'GET':
                     return getUsers();
                 case url.match(/\/users\/\d+$/) && method === 'GET':
@@ -254,6 +256,38 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 role: user.role,
                 token: `fake-jwt-token.${user.id}`
             });
+        }
+
+        function registerate() {
+            let newUser = new User();
+            newUser.username = body.username;
+            newUser.lastname = body.lastname;
+            newUser.firstname = body.firstname;
+            newUser.password = body.password;
+            newUser.email = body.email;
+            newUser.role = body.role;
+            let maxId = 0;
+            let found = {
+                username : false,
+                email : false
+            };
+            for (let user of users) {
+                if (maxId < user.id) {
+                    maxId = user.id;
+                }
+                if (user.username == newUser.username) {
+                    found.username = true;
+                }
+                if (user.email == newUser.email) {
+                    found.email = true;
+                }
+            }
+            if (!found.username && !found.email) {
+                newUser.id = maxId + 1;
+                users.push(newUser);
+                return ok(found);
+            }
+            return error(found);
         }
 
         function getUsers() {
