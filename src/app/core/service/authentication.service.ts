@@ -25,7 +25,8 @@ export class AuthenticationService {
     }
 
     validateUser(user_id: number, activation_code: string) {
-        return this.http.get<any>(`${environment.apiUrl}/auth/activation`);
+        console.log(`${environment.apiUrl}/auth/activation/${user_id}&${activation_code}`);
+        return this.http.get<any>(`${environment.apiUrl}/auth/activation/${user_id}&${activation_code}`);
     }
 
     login(username: string, password: string) {
