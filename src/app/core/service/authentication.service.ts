@@ -20,6 +20,14 @@ export class AuthenticationService {
         return this.currentUserSubject.value;
     }
 
+    isUserFirstConnection(user_id : number) {
+        return this.http.get<any>(`${environment.apiUrl}/auth/isFirstConnection/${user_id}`);
+    }
+
+    validateUser(user_id: number, activation_code: string) {
+        return this.http.get<any>(`${environment.apiUrl}/auth/activation`);
+    }
+
     login(username: string, password: string) {
         return this.http.post<any>(`${environment.apiUrl}/auth/signin`, { username, password })
             .pipe(map(user => {

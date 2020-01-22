@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
@@ -17,15 +17,25 @@ export class LoginComponent implements OnInit {
   submitted = false;
   returnUrl: string;
   error = '';
+  isUserToActivate = false;
 
   userlogin = new FormControl('', [Validators.required]);
   passwd = new FormControl('', [Validators.required]);
+  userid = new FormControl('', [Validators.required]);
+  activationcode = new FormControl('', [Validators.required]);
   hide: boolean;
 
   groupControl = new FormGroup({
     userlogin: this.userlogin,
     passwd: this.passwd,
   });
+
+  activationGroupControl = new FormGroup({
+    userid: this.userid,
+    activationcode: this.activationcode,
+  });
+
+  user_id: number;
 
   constructor(public dialogRef: MatDialogRef<LoginComponent>,
     private route: ActivatedRoute,
@@ -70,15 +80,37 @@ export class LoginComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
-          this.dialogRef.close();
-          if(this.returnUrl!="/register")
-            this.router.navigate([this.returnUrl]);
-          else
-            this.router.navigate(['/']);
+          this.user_id = data.id;
+          this.authenticationService.isUserFirstConnection(this.user_id)
+          .pipe(first())
+          .subscribe(
+            data => {
+              if (data.isActivation) {
+                this.isUserToActivate = true;
+                this.authenticationService.logout();
+                this.loading = false;
+                this.userid.setValue = this.user_id.toString;
+              } else {
+                this.isUserToActivate = false;
+                this.dialogRef.close();
+                if(this.returnUrl!="/register")
+                  this.router.navigate([this.returnUrl]);
+                else
+                  this.router.navigate(['/']);
+              }
+            },
+            error => {
+              console.log("error" + error);
+            }
+          );
         },
         error => {
           this.error = error;
           this.loading = false;
         });
+  }
+
+  activate() {
+    this.authenticationService.validateUser(1, "jeveuxpasserla");
   }
 }

@@ -5,6 +5,7 @@ import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
 
 import { Role } from '../../shared/models/role';
 import { User } from '../../shared/models/user';
+import { UserActivation } from '../../shared/models/user-activation';
 import { Movie } from 'src/app/shared/models/movie';
 import { Actor } from 'src/app/shared/models/actor';
 import { Author } from 'src/app/shared/models/author';
@@ -16,6 +17,10 @@ import { MovieCategory } from 'src/app/shared/models/movie-category';
 const users: User[] = [
     { id: 1, email: "j@j", username: 'ju', password: 'j', firstname: 'Admin', lastname: 'User', role: [Role.Admin] },
     { id: 2, email: "jacqou@jacot.fr", username: 'peter', password: 'a', firstname: 'Normal', lastname: 'User', role: [Role.User] }
+];
+
+const activations: UserActivation[] = [
+    { user_id: 1, user_activation_code: 'ee'}
 ];
 
 const movies: Movie[] = [
@@ -175,6 +180,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             .pipe(dematerialize());
 
         function handleRoute() {
+            console.log(url);
             switch (true) {
                 case url.endsWith('/auth/signin') && method === 'POST':
                     return authenticate();
@@ -200,10 +206,13 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return getCategorys();
                 case url.match(/\/category\/\d+$/) && method === 'GET':
                     return getCategorysByMovieId();
+                case url.match(/\/auth\/\isFirstConnection\/\d+$/) && method === 'GET':
+                    return isUserToActivate();
                 default:
                     return next.handle(request);
             }
         }
+        
         function getCategorys() {
             return ok(categorys);
         }
@@ -285,6 +294,11 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             if (!found.username && !found.email) {
                 newUser.id = maxId + 1;
                 users.push(newUser);
+                let activation = new UserActivation();
+                activation.user_id = newUser.id;
+                //TODO Faire une générateur de token plus random dans un service (un truc léger)
+                activation.user_activation_code = 'jeveuxpasserla';
+                activations.push(activation);
                 return ok(found);
             }
             return error(found);
@@ -311,6 +325,18 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         function getMovieById() {
             const movie = movies.find(x => x.movie_id === idFromUrl());
             return ok(movie);
+        }
+
+        function isUserToActivate() {
+            const activation = activations.find(x => x.user_id === idFromUrl());
+            if (activation == undefined)
+                return ok({ isActivation : false });
+            return ok({ isActivation : true });
+        }
+
+        function activate() {
+            console.log("passss");
+            return ok({});
         }
 
         // helper functions

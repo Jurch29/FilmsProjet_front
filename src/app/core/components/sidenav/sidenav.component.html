@@ -13,13 +13,13 @@
           <mat-icon>face</mat-icon><span class="distanceLogo">Compte</span>
         </a>
         <a [class.dark]="!lightMode" mat-list-item *ngIf="!currentUser" (click)="openLoginDialog()">
-          <mat-icon>person_outline</mat-icon><span class="distanceLogo">Connection</span>
+          <mat-icon>person_outline</mat-icon><span class="distanceLogo">Connexion</span>
         </a>
         <a [class.dark]="!lightMode" mat-list-item *ngIf="!currentUser" routerLink="/register">
           <mat-icon>person_add</mat-icon><span class="distanceLogo">Inscription</span>
         </a>
         <a [class.dark]="!lightMode" mat-list-item *ngIf="currentUser" (click)="disconnect()">
-          <mat-icon>exit_to_app</mat-icon><span class="distanceLogo">Deconnection</span>
+          <mat-icon>exit_to_app</mat-icon><span class="distanceLogo">Deconnexion</span>
         </a>
       </mat-nav-list>
     </mat-sidenav>

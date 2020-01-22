@@ -62,8 +62,9 @@ export class NavbarComponent implements OnInit {
         this.userFromApi = user;
       });
     }
-    this.authenticationService.currentUser.subscribe(dataTransmited =>
+    this.authenticationService.currentUser.subscribe(dataTransmited => {
       this.currentUser =dataTransmited
+    }
       );
   }
   
