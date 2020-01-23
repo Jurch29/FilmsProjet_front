@@ -21,7 +21,6 @@ export class LoginComponent implements OnInit {
 
   userlogin = new FormControl('', [Validators.required]);
   passwd = new FormControl('', [Validators.required]);
-  userid = new FormControl('', [Validators.required]);
   activationcode = new FormControl('', [Validators.required]);
   hide: boolean;
 
@@ -31,8 +30,7 @@ export class LoginComponent implements OnInit {
   });
 
   activationGroupControl = new FormGroup({
-    userid: this.userid,
-    activationcode: this.activationcode,
+    activationcode: this.activationcode
   });
 
   user_id: number;
@@ -82,14 +80,13 @@ export class LoginComponent implements OnInit {
         data => {
           this.user_id = data.id;
           this.authenticationService.isUserFirstConnection(this.user_id)
-          .pipe(first())
+          .pipe()
           .subscribe(
             data => {
               if (data.isActivation) {
                 this.isUserToActivate = true;
                 this.authenticationService.logout();
                 this.loading = false;
-                this.userid.setValue = this.user_id.toString;
               } else {
                 this.isUserToActivate = false;
                 this.dialogRef.close();
@@ -100,17 +97,32 @@ export class LoginComponent implements OnInit {
               }
             },
             error => {
+              this.user_id = undefined;
               console.log("error" + error);
             }
           );
         },
         error => {
+          this.user_id = undefined;
           this.error = error;
           this.loading = false;
         });
   }
 
   activate() {
-    this.authenticationService.validateUser(1, "jeveuxpasserla");
+    this.authenticationService.validateUser(this.user_id, this.activationcode.value)
+    .pipe().subscribe(
+      data => {
+        if (data.isActivated) {
+          this.login();
+        } else {
+          this.error = 'Code erroné';
+        }
+      },
+      error => {
+        this.user_id = undefined;
+        console.log("error" + error);
+      }
+    );
   }
 }

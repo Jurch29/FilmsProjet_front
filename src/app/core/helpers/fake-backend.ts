@@ -16,11 +16,13 @@ import { MovieCategory } from 'src/app/shared/models/movie-category';
 
 const users: User[] = [
     { id: 1, email: "j@j", username: 'ju', password: 'j', firstname: 'Admin', lastname: 'User', role: [Role.Admin] },
-    { id: 2, email: "jacqou@jacot.fr", username: 'peter', password: 'a', firstname: 'Normal', lastname: 'User', role: [Role.User] }
+    { id: 2, email: "jacqou@jacot.fr", username: 'peter', password: 'a', firstname: 'Normal', lastname: 'User', role: [Role.User] },
+    { id: 3, email: "a@a", username: 'anthal', password: 'a', firstname: 'Normal', lastname: 'User', role: [Role.User] }
 ];
 
-const activations: UserActivation[] = [
-    { user_id: 1, user_activation_code: 'ee'}
+let activations: UserActivation[] = [
+    { user_id: 1, user_activation_code: 'ee'},
+    { user_id: 3, user_activation_code: 'jeveuxpasser'}
 ];
 
 const movies: Movie[] = [
@@ -180,12 +182,13 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             .pipe(dematerialize());
 
         function handleRoute() {
-            console.log(url);
             switch (true) {
                 case url.endsWith('/auth/signin') && method === 'POST':
                     return authenticate();
                 case url.endsWith('/auth/signup') && method === 'POST':
                     return registerate();
+                case url.match(/\/auth\/\activation\/\d+&[a-zA-Z]+$/) && method === 'GET':
+                    return activate();
                 case url.endsWith('/users') && method === 'GET':
                     return getUsers();
                 case url.match(/\/users\/\d+$/) && method === 'GET':
@@ -335,8 +338,15 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function activate() {
-            console.log("passss");
-            return ok({});
+            const params = multipleParametersFromUrl();
+            const activation = activations.find(x => x.user_id === parseInt(params[0]) && x.user_activation_code === params[1]);
+            if (activation) {
+                activations = activations.filter(function(element) {
+                    return element != activation;
+                });
+                return ok({ isActivated : true });
+            }
+            return ok({ isActivated : false });
         }
 
         // helper functions
@@ -371,6 +381,10 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         function idFromUrl() {
             const urlParts = url.split('/');
             return parseInt(urlParts[urlParts.length - 1]);
+        }
+
+        function multipleParametersFromUrl() {
+            return url.split('/')[url.split('/').length - 1].split('&');
         }
     }
 }

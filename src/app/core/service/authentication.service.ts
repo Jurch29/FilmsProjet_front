@@ -24,12 +24,11 @@ export class AuthenticationService {
         return this.http.get<any>(`${environment.apiUrl}/auth/isFirstConnection/${user_id}`);
     }
 
-    validateUser(user_id: number, activation_code: string) {
-        console.log(`${environment.apiUrl}/auth/activation/${user_id}&${activation_code}`);
+    validateUser(user_id : number, activation_code : string) {
         return this.http.get<any>(`${environment.apiUrl}/auth/activation/${user_id}&${activation_code}`);
     }
 
-    login(username: string, password: string) {
+    login(username : string, password : string) {
         return this.http.post<any>(`${environment.apiUrl}/auth/signin`, { username, password })
             .pipe(map(user => {
                 if (user && user.token) {
@@ -40,7 +39,7 @@ export class AuthenticationService {
             }));
     }
 
-    register(user: User) {
+    register(user : User) {
         return this.http.post<any>(`${environment.apiUrl}/auth/signup`, user);
     }
 
