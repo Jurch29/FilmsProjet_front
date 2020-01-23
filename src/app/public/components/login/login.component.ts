@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
 
   userlogin = new FormControl('', [Validators.required]);
   passwd = new FormControl('', [Validators.required]);
-  activationcode = new FormControl('', [Validators.required]);
+  activationcode = new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]);
   hide: boolean;
 
   groupControl = new FormGroup({
@@ -54,9 +54,10 @@ export class LoginComponent implements OnInit {
     this.returnUrl = this.router.url || '/';
   }
 
-  getErrorMessage() {
+  getErrorLoginMessage() {
     return this.userlogin.hasError('required') ? 'Champ recquis' : '';
   }
+
   checkValidationBeforeSubmit() {
     Object.keys(this.groupControl.controls).forEach(field => {
       const control = this.groupControl.get(field);
@@ -79,28 +80,17 @@ export class LoginComponent implements OnInit {
       .subscribe(
         data => {
           this.user_id = data.id;
-          this.authenticationService.isUserFirstConnection(this.user_id)
-          .pipe()
-          .subscribe(
-            data => {
-              if (data.isActivation) {
-                this.isUserToActivate = true;
-                this.authenticationService.logout();
-                this.loading = false;
-              } else {
-                this.isUserToActivate = false;
-                this.dialogRef.close();
-                if(this.returnUrl!="/register")
-                  this.router.navigate([this.returnUrl]);
-                else
-                  this.router.navigate(['/']);
-              }
-            },
-            error => {
-              this.user_id = undefined;
-              console.log("error" + error);
-            }
-          );
+          if (data.isActivation) {
+            this.isUserToActivate = true;
+            this.loading = false;
+          } else {
+            this.isUserToActivate = false;
+            this.dialogRef.close();
+            if(this.returnUrl!="/register")
+              this.router.navigate([this.returnUrl]);
+            else
+              this.router.navigate(['/']);
+          }
         },
         error => {
           this.user_id = undefined;
@@ -110,16 +100,24 @@ export class LoginComponent implements OnInit {
   }
 
   activate() {
+    if (this.activationGroupControl.invalid){
+      this.submitted = false;
+      return;
+    }
+    this.loading = true;
+    this.error = '';
     this.authenticationService.validateUser(this.user_id, this.activationcode.value)
     .pipe().subscribe(
       data => {
+        this.loading = false;
         if (data.isActivated) {
           this.login();
         } else {
-          this.error = 'Code erroné';
+          this.error = 'Code d\'activation incorrect';
         }
       },
       error => {
+        this.loading = false;
         this.user_id = undefined;
         console.log("error" + error);
       }

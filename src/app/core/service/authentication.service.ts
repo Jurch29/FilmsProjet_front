@@ -20,22 +20,19 @@ export class AuthenticationService {
         return this.currentUserSubject.value;
     }
 
-    isUserFirstConnection(user_id : number) {
-        return this.http.get<any>(`${environment.apiUrl}/auth/isFirstConnection/${user_id}`);
-    }
-
     validateUser(user_id : number, activation_code : string) {
         return this.http.get<any>(`${environment.apiUrl}/auth/activation/${user_id}&${activation_code}`);
     }
 
     login(username : string, password : string) {
         return this.http.post<any>(`${environment.apiUrl}/auth/signin`, { username, password })
-            .pipe(map(user => {
-                if (user && user.token) {
-                    localStorage.setItem('currentUser', JSON.stringify(user));
-                    this.currentUserSubject.next(user);
+            .pipe(map(data => {
+                console.log("my data : "+data.isActivation);
+                if (data && data.token) {
+                    localStorage.setItem('currentUser', JSON.stringify(data));
+                    this.currentUserSubject.next(data);
                 }
-                return user;
+                return data;
             }));
     }
 

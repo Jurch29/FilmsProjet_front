@@ -209,8 +209,6 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return getCategorys();
                 case url.match(/\/category\/\d+$/) && method === 'GET':
                     return getCategorysByMovieId();
-                case url.match(/\/auth\/\isFirstConnection\/\d+$/) && method === 'GET':
-                    return isUserToActivate();
                 default:
                     return next.handle(request);
             }
@@ -259,7 +257,12 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         function authenticate() {
             const { username, password } = body;
             const user = users.find(x => x.username === username && x.password === password);
-            if (!user) return error('Login ou Mot de passe');
+            if (!user) return error('Login ou mot de passe incorrect');
+
+            const activation = activations.find(x => x.user_id === user.id);
+            if (activation)
+                return ok({ isActivation : true, id: user.id });
+
             return ok({
                 id: user.id,
                 username: user.username,
@@ -299,8 +302,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 users.push(newUser);
                 let activation = new UserActivation();
                 activation.user_id = newUser.id;
-                //TODO Faire une générateur de token plus random dans un service (un truc léger)
-                activation.user_activation_code = 'jeveuxpasserla';
+                activation.user_activation_code = 'CodeX1';
                 activations.push(activation);
                 return ok(found);
             }
@@ -328,13 +330,6 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         function getMovieById() {
             const movie = movies.find(x => x.movie_id === idFromUrl());
             return ok(movie);
-        }
-
-        function isUserToActivate() {
-            const activation = activations.find(x => x.user_id === idFromUrl());
-            if (activation == undefined)
-                return ok({ isActivation : false });
-            return ok({ isActivation : true });
         }
 
         function activate() {

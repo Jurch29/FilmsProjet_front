@@ -1,12 +1,12 @@
 <div *ngIf="!isUserToActivate" class="login-container">
   <mat-form-field>
     <input matInput placeholder="Entrer votre login" [formControl]="userlogin" required>
-    <mat-error *ngIf="userlogin.invalid">{{getErrorMessage()}}</mat-error>
+    <mat-error *ngIf="userlogin.invalid">{{getErrorLoginMessage()}}</mat-error>
   </mat-form-field>
   <br/>
   <mat-form-field>
   <input matInput placeholder="Entrer votre mot de passe" [formControl]="passwd" required [type]="hide ? 'password' : 'text'"> 
-  <mat-error *ngIf="passwd.invalid">{{getErrorMessage()}}</mat-error>
+  <mat-error *ngIf="passwd.invalid">{{getErrorLoginMessage()}}</mat-error>
     <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Cacher le mot de passe'" [attr.aria-pressed]="hide">
       <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
     </button>
@@ -16,11 +16,12 @@
   <div *ngIf="error" class="alertError">{{error}}</div>
   <mat-spinner *ngIf="loading" diameter="30"></mat-spinner>
 </div>
+
 <div *ngIf="isUserToActivate" class="activation-container">
   <label>Vous avez reçu un mail contenant un code afin d'activer votre compte</label>
   <mat-form-field>
     <input matInput placeholder="Entrer votre code d'activation" [formControl]="activationcode" required>
-    <mat-error *ngIf="activationcode.invalid">{{getErrorMessage()}}</mat-error>
+    <mat-error *ngIf="activationcode.invalid">alphanumeric seulement</mat-error>
   </mat-form-field>
   <button mat-button color="primary" *ngIf="!loading" (click)="activate()">Valider code</button>
   <div *ngIf="error" class="alertError">{{error}}</div>

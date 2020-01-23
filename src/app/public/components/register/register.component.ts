@@ -63,9 +63,11 @@ export class RegisterComponent implements OnInit , OnDestroy{
     });
     this.TestSize();
   }
+
   ngOnDestroy(): void {
     this.subscriptionlightMode.unsubscribe();
   }
+
   TestSize(){
     
     if(window.innerWidth<=775){
@@ -82,6 +84,7 @@ export class RegisterComponent implements OnInit , OnDestroy{
         this.mobileSize=false;
     }
   }
+
   onResize(event) {
     this.TestSize();
   }
@@ -120,12 +123,14 @@ export class RegisterComponent implements OnInit , OnDestroy{
           this.success = undefined;
         });
   }
+  
   checkValidationBeforeSubmit(){
     Object.keys(this.groupControl.controls).forEach(field => { 
       const control = this.groupControl.get(field);           
       control.markAsTouched({ onlySelf: true });      
     });
   }
+
   passwdControlCheck() {
           if (this.passwd.value !== this.passwdControl.value) 
             this.passwdControl.setErrors({ unmatch: true });
