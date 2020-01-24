@@ -32,7 +32,6 @@ export class RegisterComponent implements OnInit , OnDestroy{
   passwd = new FormControl('', [Validators.required,Validators.minLength(6)]);
   passwdControl = new FormControl('', Validators.required);
   
-  
   size: number= 3;
   sizeBig : number = 4;
   mobileSize :boolean =false;
@@ -123,7 +122,7 @@ export class RegisterComponent implements OnInit , OnDestroy{
           this.success = undefined;
         });
   }
-  
+
   checkValidationBeforeSubmit(){
     Object.keys(this.groupControl.controls).forEach(field => { 
       const control = this.groupControl.get(field);           
@@ -137,5 +136,4 @@ export class RegisterComponent implements OnInit , OnDestroy{
           else
           this.passwdControl.setErrors(null);
   }
-
 }

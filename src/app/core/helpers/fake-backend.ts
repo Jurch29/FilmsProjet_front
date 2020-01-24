@@ -49,6 +49,7 @@ const movies: Movie[] = [
         movie_is_deleted: false
     },
 ];
+
 const movieCategory: MovieCategory[] = [
     {
         moviecategory_movie_id: 1,
@@ -75,6 +76,7 @@ const movieCategory: MovieCategory[] = [
         moviecategory_category_id: 3
     }
 ];
+
 const categorys: Category[] = [
     {
         category_id: 1,
@@ -87,6 +89,7 @@ const categorys: Category[] = [
         category_title: "Action"
     }
 ];
+
 const movieAuthor: MovieAuthor[] = [
     {
         movieauthor_movie_id: 1,
@@ -96,6 +99,7 @@ const movieAuthor: MovieAuthor[] = [
         movieauthor_author_id: 2
     }
 ];
+
 const movieActor: MovieActor[] = [
     {
         movieactor_movie_id: 1,
@@ -123,6 +127,7 @@ const movieActor: MovieActor[] = [
         movieactor_actor_id: 8
     }
 ];
+
 const authors: Author[] = [
     {
         author_id: 1,
@@ -189,9 +194,9 @@ const carts: CartItem[] = [
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
+
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const { url, method, headers, body } = request;
-
         // wrap in delayed observable to simulate server api call
         return of(null)
             .pipe(mergeMap(handleRoute))
@@ -205,7 +210,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return authenticate();
                 case url.endsWith('/auth/signup') && method === 'POST':
                     return registerate();
-                case url.match(/\/auth\/\activation\/\d+&[a-zA-Z0-9]+$/) && method === 'GET':
+                case url.includes("/auth/activation") && method === 'GET':
                     return activate();
                 case url.endsWith('/users') && method === 'GET':
                     return getUsers();
@@ -246,6 +251,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             });
             return ok(categoryz);
         }
+
         function getAuthors() {
             return ok(authors);
         }
@@ -343,6 +349,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             const user = users.find(x => x.id === idFromUrl());
             return ok(user);
         }
+
         function getMovies() {
             return ok(movies);
         }
@@ -353,8 +360,10 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function activate() {
-            const params = multipleParametersFromUrl();
-            const activation = activations.find(x => x.user_id === parseInt(params[0]) && x.user_activation_code === params[1]);
+            const user_id = request.params.get('user_id');
+            const activation_code = request.params.get('activation_code');
+
+            const activation = activations.find(x => x.user_id === parseInt(user_id) && x.user_activation_code === activation_code);
             if (activation) {
                 activations = activations.filter(function(element) {
                     return element != activation;

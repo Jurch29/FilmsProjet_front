@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -21,7 +21,8 @@ export class AuthenticationService {
     }
 
     validateUser(user_id : number, activation_code : string) {
-        return this.http.get<any>(`${environment.apiUrl}/auth/activation/${user_id}&${activation_code}`);
+        let params = new HttpParams().set("user_id",user_id.toString()).set("activation_code", activation_code); //Create new HttpParams
+        return this.http.get<any>(`${environment.apiUrl}/auth/activation`, {params: params});
     }
 
     login(username : string, password : string) {
