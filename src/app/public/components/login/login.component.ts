@@ -118,7 +118,6 @@ export class LoginComponent implements OnInit {
       },
       error => {
         this.loading = false;
-        this.user_id = undefined;
         console.log("error" + error);
       }
     );

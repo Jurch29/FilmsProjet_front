@@ -187,7 +187,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return authenticate();
                 case url.endsWith('/auth/signup') && method === 'POST':
                     return registerate();
-                case url.match(/\/auth\/\activation\/\d+&[a-zA-Z]+$/) && method === 'GET':
+                case url.match(/\/auth\/\activation\/\d+&[a-zA-Z0-9]+$/) && method === 'GET':
                     return activate();
                 case url.endsWith('/users') && method === 'GET':
                     return getUsers();
