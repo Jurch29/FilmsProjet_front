@@ -5,7 +5,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class NumberOfItemsInCartService {
-
   private NumberOfItemsInCart = new BehaviorSubject<number>(0);
 
   constructor() { }
@@ -13,11 +12,12 @@ export class NumberOfItemsInCartService {
   ChangeNumberOfItemsInCartMessage(NumberOfItems: number){
     this.NumberOfItemsInCart.next(NumberOfItems);
   }
+
   getNumberOfItemsInCart() :  Observable<number>{
     return this.NumberOfItemsInCart.asObservable(); 
   }
+
   getItemsCount() : number{
     return this.NumberOfItemsInCart.getValue();
   }
-
 }

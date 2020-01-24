@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MovieService } from 'src/app/core/service/movie-service.service';
 
 @Component({
   selector: 'app-user-cart-item',
@@ -6,18 +7,33 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./user-cart-item.component.css']
 })
 export class UserCartItemComponent implements OnInit {
-  movieTitle: string;
-  BuyDate : string;
-  NumberOfItems : number;
-  TotalCost : string ;
-  url: string;
-  MoviePreviewImage = {
+  movieTitle : string;
+  numberOfItems : number;
+  unitCost : number;
+  totalCost : number ;
+  moviePreviewImage = {
     "background-image": ""
   } 
-  constructor() { }
+  constructor(private movieService : MovieService) { }
 
   ngOnInit() {
-    this.MoviePreviewImage["background-image"] = "url("+this.url+")";
+    
   }
 
+  setProperties(movie_id : number, count : number) {
+    this.numberOfItems = count;
+    this.movieService.getMovieById(movie_id)
+    .pipe()
+    .subscribe(
+      movie => {
+        this.movieTitle = movie.movie_title;
+        this.unitCost = movie.movie_price;
+        this.totalCost = this.unitCost * this.numberOfItems;
+        this.moviePreviewImage["background-image"] = "url(" + movie.movie_image_path + ")";
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
 }

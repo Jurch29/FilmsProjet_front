@@ -13,6 +13,7 @@ import { MovieActor } from 'src/app/shared/models/movie-actor';
 import { MovieAuthor } from 'src/app/shared/models/movie-author';
 import { Category } from 'src/app/shared/models/category';
 import { MovieCategory } from 'src/app/shared/models/movie-category';
+import { CartItem } from 'src/app/shared/models/cart-item';
 
 const users: User[] = [
     { id: 1, email: "j@j", username: 'ju', password: 'j', firstname: 'Admin', lastname: 'User', role: [Role.Admin] },
@@ -30,7 +31,7 @@ const movies: Movie[] = [
         movie_id: 1,
         movie_title: "Deadpool",
         movie_price: 10,
-        movie_image_path: "PicturesFolder/Preview/BDA_Deadpool.jpg",
+        movie_image_path: "https://upload.wikimedia.org/wikipedia/en/2/23/Deadpool_%282016_poster%29.png",
         movie_file_path: "PicturesFolder/Preview/BDA_Deadpool.jpg",
         movie_date: new Date("10/02/2016"),
         movie_duration: 108,
@@ -40,7 +41,7 @@ const movies: Movie[] = [
         movie_id: 2,
         movie_title: "The Dark Knight",
         movie_price: 3,
-        movie_image_path: "PicturesFolder/Preview/BDA_BatmanTheDarkNight.jpg",
+        movie_image_path: "http://culturaddict.com/wp-content/uploads/2016/07/TDK1.jpg",
         movie_file_path: "PicturesFolder/Preview/BDA_BatmanTheDarkNight.jpg",
         movie_date: new Date("2008-08-13"),
         movie_duration: 153,
@@ -169,6 +170,23 @@ const actors: Actor[] = [
         actor_firstname: "Diesel"
     }
 ];
+
+const carts: CartItem[] = [
+    {
+        user_id: 2,
+        movie_id: 1,
+        movie_user_cart_count: 3
+    }, {
+        user_id: 2,
+        movie_id: 2,
+        movie_user_cart_count: 1
+    }, {
+        user_id: 3,
+        movie_id: 1,
+        movie_user_cart_count: 1
+    }
+];
+
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -209,6 +227,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return getCategorys();
                 case url.match(/\/category\/\d+$/) && method === 'GET':
                     return getCategorysByMovieId();
+                case url.match(/\/user\/cart\/\d+$/) && method === 'GET':
+                        return getUserCart();
                 default:
                     return next.handle(request);
             }
@@ -342,6 +362,14 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 return ok({ isActivated : true });
             }
             return ok({ isActivated : false });
+        }
+
+        function getUserCart() {
+            let user_id = idFromUrl();
+            let cart = carts.filter(function(element) {
+                return element.user_id == user_id;
+            });
+            return ok(cart);
         }
 
         // helper functions

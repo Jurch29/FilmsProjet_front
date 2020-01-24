@@ -19,18 +19,18 @@ import { OpenfilterbarService } from '../../service/openfilterbar.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-
   userFromApi: User;
   currentUser: User;
   lightModeEvent: boolean = false;
   showMenu = false;
-  numberOfItems: Number;
+  numberOfItems: number;
   filterBarOpened : boolean = false;
   SmallSettingsNoButtons: boolean = false;
 
-  constructor(public dialog: MatDialog, private userService: UserService, private router: Router,
-    private authenticationService: AuthenticationService, private lightmodeService : LightmodeService,
-    private opensidenavService : OpensidenavService,private openfilterbarService : OpenfilterbarService,private numberofitemsincartService : NumberOfItemsInCartService) {
+  constructor(public dialog : MatDialog, private userService : UserService, private router : Router,
+    private authenticationService : AuthenticationService, private lightmodeService : LightmodeService,
+    private opensidenavService : OpensidenavService, private openfilterbarService : OpenfilterbarService, 
+    private numberofitemsincartService : NumberOfItemsInCartService) {
     this.currentUser = this.authenticationService.currentUserValue;
   }
 
@@ -38,9 +38,11 @@ export class NavbarComponent implements OnInit {
     this.lightModeEvent = !this.lightModeEvent;
     this.lightmodeService.ChangeLightModeEventMessage(this.lightModeEvent);
   }
+
   initiateSearch() {
     console.log("searching");
   }
+
   openFilterBar(){
     this.filterBarOpened = !this.filterBarOpened;
     this.openfilterbarService.ChangeOpenFilterBarMessage(this.filterBarOpened);
@@ -49,14 +51,16 @@ export class NavbarComponent implements OnInit {
   goToCart() {
     this.router.navigate(['userCart']);
   }
+
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     if (event.innerWidth < 400) this.SmallSettingsNoButtons = true;
   }
+
   ngOnInit() {
     if (window.innerWidth < 400) this.SmallSettingsNoButtons = true;
 
-    this.numberofitemsincartService.getNumberOfItemsInCart().subscribe(number => { if (number != 0) this.numberOfItems = number });
+    this.numberofitemsincartService.getNumberOfItemsInCart().subscribe(number => { this.numberOfItems = number });
     if (this.currentUser != null) {
       this.userService.getById(this.currentUser.id).pipe(first()).subscribe(user => {
         this.userFromApi = user;
@@ -87,11 +91,16 @@ export class NavbarComponent implements OnInit {
 
   disconnect() {
     this.authenticationService.logout();
+    this.numberofitemsincartService.ChangeNumberOfItemsInCartMessage(0);
     this.currentUser = null;
   }
 
   toggleMenu() {
     this.showMenu = !this.showMenu;
     this.opensidenavService.ChangeOpenSidenavEventMessage(this.showMenu);
+  }
+  
+  setNumberOfItems(number : number) {
+    this.numberofitemsincartService.ChangeNumberOfItemsInCartMessage(number);
   }
 }

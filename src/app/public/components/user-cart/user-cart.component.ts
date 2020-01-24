@@ -3,6 +3,7 @@ import { UserCartItemComponent } from './user-cart-item/user-cart-item.component
 import { AuthenticationService } from 'src/app/core/service/authentication.service';
 import { User } from 'src/app/shared/models/user';
 import { NavbarComponent } from 'src/app/core/components/navbar/navbar.component';
+import { CartService } from 'src/app/core/service/cart.service';
 
 @Component({
   selector: 'app-user-cart',
@@ -13,31 +14,52 @@ export class UserCartComponent implements OnInit {
   @ViewChild("itemcontainer", { static : false,read: ViewContainerRef }) container;
   
   items : boolean = false;
-  private componentRef: ComponentRef<any>;
-  private componentFactory: ComponentFactory<any>;
-  currentUser: User;
+  private componentRef : ComponentRef<any>;
+  private componentFactory : ComponentFactory<any>;
+  currentUser : User;
   
-  constructor(private navbar: NavbarComponent,private authenticationService: AuthenticationService,private resolver: ComponentFactoryResolver) { 
+  constructor(private navbar : NavbarComponent, private authenticationService : AuthenticationService, private cartService : CartService, private resolver : ComponentFactoryResolver) { 
     this.componentFactory = this.resolver.resolveComponentFactory(UserCartItemComponent);
   }
+
   buy(){
     console.log("achat passé");
   }
+
   ngOnInit() {
-    this.authenticationService.currentUser.subscribe(dataTransmited =>
-      this.currentUser =dataTransmited
-      );
+    this.currentUser = this.authenticationService.currentUserValue;
+    this.items = false;
+    this.authenticationService.currentUser.subscribe(data => {
+      if (data != undefined) {
+        this.cartService.getUserCart(data.id)
+        .pipe()
+        .subscribe(
+          data => {
+            this.navbar.setNumberOfItems(data.length);
+            this.items = true;
+            for (let element of data) {
+              this.componentRef = this.container.createComponent(this.componentFactory, 0);
+              this.componentRef.instance.setProperties(element.movie_id, element.movie_user_cart_count);
+            }
+          },
+          error => {
+            console.log(error);
+          }
+        )
+      }
+    });
   }
-  CreateComponentCartItem(){
-    this.items=true;
-    this.componentRef = this.container.createComponent(this.componentFactory, 0);
-    this.componentRef.instance.url = 'http://image.tmdb.org/t/p/w500/vloNTScJ3w7jwNwtNGoG8DbTThv.jpg';
-    this.componentRef.instance.movieTitle = 'Malefique';
-    this.componentRef.instance.BuyDate = '2018';
-    this.componentRef.instance.NumberOfItems = 3;
-    this.componentRef.instance.TotalCost = "10.50€";
-  }
+
   login(){
     this.navbar.openLoginDialog();
+  }
+
+  get getUser() : boolean {
+    if (this.authenticationService.currentUserValue) {
+      return true;
+    } else {
+      this.items = false;
+      return false;
+    }
   }
 }

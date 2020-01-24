@@ -30,9 +30,11 @@ export class MoviePreviewComponent implements OnInit {
    ngOnInit() {
     this.previewImage["background-image"] = "url(http://image.tmdb.org/t/p/w500/vloNTScJ3w7jwNwtNGoG8DbTThv.jpg)";
     this.movieService.getAllMovies().pipe(first()).subscribe(data => this.Movies=data);
-    this.subscriptionlightMode = this.lightmodeService.getLightModeEventMessage().subscribe(dataTransmited =>{
-      this.lightMode = dataTransmited;
-    });
+    this.subscriptionlightMode = this.lightmodeService.getLightModeEventMessage().subscribe(
+      dataTransmited => {
+        this.lightMode = dataTransmited;
+      }
+    );
   }
   ngOnDestroy() {
     this.subscriptionlightMode.unsubscribe();
@@ -44,8 +46,8 @@ export class MoviePreviewComponent implements OnInit {
     this.componentRef.instance.duration = movie.movie_duration;
     this.componentRef.instance.title = movie.movie_title;
     this.componentRef.instance.rating = movie.movie_mark;
-    this.movieService.getAuthorsByMovieId(movie.movie_id).pipe(first()).subscribe(data =>this.componentRef.instance.realisators =data);
-    this.movieService.getActorByMovieId(movie.movie_id).pipe(first()).subscribe(data =>this.componentRef.instance.actors =data );
+    this.movieService.getAuthorsByMovieId(movie.movie_id).pipe(first()).subscribe(data => this.componentRef.instance.realisators = data);
+    this.movieService.getActorByMovieId(movie.movie_id).pipe(first()).subscribe(data => this.componentRef.instance.actors = data );
     this.componentRef.instance.infobulecontainer = this.containerinfobule;
   }
 }

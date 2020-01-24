@@ -1,25 +1,25 @@
 <div class="containerItemCart">
-    <mat-expansion-panel [expanded]=true class="panel">
+    <mat-expansion-panel [expanded]=false class="panel">
         <mat-expansion-panel-header>
             <mat-panel-title>
                 {{movieTitle}}
             </mat-panel-title>
             <mat-panel-description class="description">
                 <div>
-                    Achat le : {{BuyDate}}
-                </div>
-                <div>
-                    Cout total : {{TotalCost}}
+                    Cout total : {{totalCost}}
                 </div>
             </mat-panel-description>
         </mat-expansion-panel-header>
-        <div class="cover inlineClass" [ngStyle]="MoviePreviewImage">
+        <div class="cover inlineClass" [ngStyle]="moviePreviewImage">
         </div>
         <div class="inlineClass">
-            Nombre d'unités : {{NumberOfItems}}
+            Nombre d'unités : {{numberOfItems}}
         </div>
         <div class="inlineClass">
-            Cout total : {{TotalCost}}
+            Cout unitaire : {{unitCost}}
+        </div>
+        <div class="inlineClass">
+            Cout total : {{totalCost}}
         </div>
     </mat-expansion-panel>
 </div>

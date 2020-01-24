@@ -9,7 +9,7 @@ import { User } from '../../shared/models/user';
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
     private currentUserSubject: BehaviorSubject<User>;
-    public currentUser: Observable<User>;
+    public currentUser: Observable<User> = undefined;
 
     constructor(private http: HttpClient) {
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
@@ -27,7 +27,6 @@ export class AuthenticationService {
     login(username : string, password : string) {
         return this.http.post<any>(`${environment.apiUrl}/auth/signin`, { username, password })
             .pipe(map(data => {
-                console.log("my data : "+data.isActivation);
                 if (data && data.token) {
                     localStorage.setItem('currentUser', JSON.stringify(data));
                     this.currentUserSubject.next(data);
