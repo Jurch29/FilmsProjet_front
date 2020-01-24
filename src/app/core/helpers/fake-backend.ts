@@ -22,8 +22,8 @@ const users: User[] = [
 ];
 
 let activations: UserActivation[] = [
-    { user_id: 1, user_activation_code: 'ee'},
-    { user_id: 3, user_activation_code: 'jeveuxpasser'}
+    { user_id: 1, user_activation_code: 'ee' },
+    { user_id: 3, user_activation_code: 'jeveuxpasser' }
 ];
 
 const movies: Movie[] = [
@@ -47,7 +47,17 @@ const movies: Movie[] = [
         movie_duration: 153,
         movie_mark: 4.5,
         movie_is_deleted: false
-    },
+    }, {
+        movie_id: 3,
+        movie_title: "Elysium",
+        movie_price: 5,
+        movie_image_path: "https://4.bp.blogspot.com/-V-rf6RaIruI/WJwwBeC5ssI/AAAAAAAAi-k/uMMSK5N8N9o022w5vIuMg2_C6jOsSAV0gCLcB/s1600/01.jpg",
+        movie_file_path: "PicturesFolder/Preview/BDA_Elysium.jpg",
+        movie_date: new Date("2013-08-14"),
+        movie_duration: 110,
+        movie_mark: 3.9,
+        movie_is_deleted: false
+    }
 ];
 
 const movieCategory: MovieCategory[] = [
@@ -74,6 +84,10 @@ const movieCategory: MovieCategory[] = [
     {
         moviecategory_movie_id: 2,
         moviecategory_category_id: 3
+    },
+    {
+        moviecategory_movie_id: 3,
+        moviecategory_category_id: 3
     }
 ];
 
@@ -97,6 +111,9 @@ const movieAuthor: MovieAuthor[] = [
     }, {
         movieauthor_movie_id: 2,
         movieauthor_author_id: 2
+    }, {
+        movieauthor_movie_id: 3,
+        movieauthor_author_id: 3
     }
 ];
 
@@ -125,19 +142,26 @@ const movieActor: MovieActor[] = [
     }, {
         movieactor_movie_id: 2,
         movieactor_actor_id: 8
+    }, {
+        movieactor_movie_id: 3,
+        movieactor_actor_id: 9
     }
 ];
 
 const authors: Author[] = [
     {
         author_id: 1,
-        author_lastname: "Brad",
-        author_firstname: "Trou"
+        author_lastname: "Trou",
+        author_firstname: "Brad"
     }, {
         author_id: 2,
-        author_lastname: "Angelina",
-        author_firstname: "La Belle"
-    },
+        author_lastname: "La Belle",
+        author_firstname: "Angelina"
+    }, {
+        author_id: 3,
+        author_lastname: "Blomkamp",
+        author_firstname: "Neill"
+    }
 ];
 
 const actors: Actor[] = [
@@ -155,8 +179,8 @@ const actors: Actor[] = [
         actor_firstname: "Miller"
     }, {
         actor_id: 4,
-        actor_lastname: "Chris",
-        actor_firstname: "Pratt"
+        actor_lastname: "Pratt",
+        actor_firstname: "Chris"
     }, {
         actor_id: 5,
         actor_lastname: "Saldana",
@@ -171,8 +195,12 @@ const actors: Actor[] = [
         actor_firstname: "James"
     }, {
         actor_id: 8,
-        actor_lastname: "Vin",
-        actor_firstname: "Diesel"
+        actor_lastname: "Diesel",
+        actor_firstname: "Vin"
+    }, {
+        actor_id: 9,
+        actor_lastname: "Demon",
+        actor_firstname: "Matt"
     }
 ];
 
@@ -233,12 +261,12 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 case url.match(/\/category\/\d+$/) && method === 'GET':
                     return getCategorysByMovieId();
                 case url.match(/\/user\/cart\/\d+$/) && method === 'GET':
-                        return getUserCart();
+                    return getUserCart();
                 default:
                     return next.handle(request);
             }
         }
-        
+
         function getCategorys() {
             return ok(categorys);
         }
@@ -287,7 +315,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
             const activation = activations.find(x => x.user_id === user.id);
             if (activation)
-                return ok({ isActivation : true, id: user.id });
+                return ok({ isActivation: true, id: user.id });
 
             return ok({
                 id: user.id,
@@ -309,8 +337,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             newUser.role = body.role;
             let maxId = 0;
             let found = {
-                username : false,
-                email : false
+                username: false,
+                email: false
             };
             for (let user of users) {
                 if (maxId < user.id) {
@@ -365,17 +393,17 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
             const activation = activations.find(x => x.user_id === parseInt(user_id) && x.user_activation_code === activation_code);
             if (activation) {
-                activations = activations.filter(function(element) {
+                activations = activations.filter(function (element) {
                     return element != activation;
                 });
-                return ok({ isActivated : true });
+                return ok({ isActivated: true });
             }
-            return ok({ isActivated : false });
+            return ok({ isActivated: false });
         }
 
         function getUserCart() {
             let user_id = idFromUrl();
-            let cart = carts.filter(function(element) {
+            let cart = carts.filter(function (element) {
                 return element.user_id == user_id;
             });
             return ok(cart);

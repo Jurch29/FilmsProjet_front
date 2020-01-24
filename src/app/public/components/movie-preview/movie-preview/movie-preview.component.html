@@ -2,15 +2,11 @@
     <div #infobulecontainer></div>
     <div *ngFor="let movie of Movies">
         <div [class.dark]="!lightMode" class="item">
-            <!--prewiev-->
-            <div class="cover fadein" [ngStyle]="previewImage" (click)="infobule(movie)">
-                <!--overlay-->
+            <div class="cover fadein" [ngStyle]="image(movie.movie_image_path)" (click)="infobule(movie)">
                 <div class="overlay">
-                    <!--rating-->
                     <div class="rating">
                         <div class="rating-star">
-                            <star-rating [value]=(movie.movie_mark) checkedcolor="gold" uncheckedcolor="grey"
-                                size="15px" readonly="true">
+                            <star-rating [value]=(movie.movie_mark) checkedcolor="gold" uncheckedcolor="grey" size="15px" readonly="true">
                             </star-rating>
                         </div>
                         <div class="rating-value">{{movie.movie_mark}}/5</div>

@@ -15,7 +15,7 @@
             {{duration}}min
         </p>
         <p class="realisators">
-            Par :<span *ngFor="let realisator of (realisators) let isLast=last">{{realisator.author_lastname}} {{realisator.author_firstname}}{{isLast ? '' : ', '}} </span>
+            Par :<span *ngFor="let realisator of (realisators) let isLast=last">{{realisator.author_firstname}} {{realisator.author_lastname}}{{isLast ? '' : ', '}} </span>
         </p>
         <p class="actors">
             Avec :<span *ngFor="let actor of (actors) let isLast=last">{{actor.actor_firstname}} {{actor.actor_lastname}}{{isLast ? '' : ', '}} </span>
