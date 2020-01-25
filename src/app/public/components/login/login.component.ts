@@ -80,7 +80,7 @@ export class LoginComponent implements OnInit {
       .subscribe(
         data => {
           this.user_id = data.id;
-          if (data.isActivation) {
+          if (data.toActivate) {
             this.isUserToActivate = true;
             this.loading = false;
           } else {

@@ -267,6 +267,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             }
         }
 
+        // route functions
+
         function getCategorys() {
             return ok(categorys);
         }
@@ -306,8 +308,6 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             return ok(actorz);
         }
 
-        // route functions
-
         function authenticate() {
             const { username, password } = body;
             const user = users.find(x => x.username === username && x.password === password);
@@ -315,7 +315,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
             const activation = activations.find(x => x.user_id === user.id);
             if (activation)
-                return ok({ isActivation: true, id: user.id });
+                return ok({ toActivate: true, id: user.id });
 
             return ok({
                 id: user.id,
