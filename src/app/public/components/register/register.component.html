@@ -6,13 +6,13 @@
         <mat-grid-tile [colspan]="size">
             <mat-form-field appearance="outline">
                 <mat-label>Nom</mat-label>
-                <input matInput placeholder="Nom" [formControl]="firstname" required>
-                <button mat-button *ngIf="firstname.value" matSuffix mat-icon-button aria-label="Clear"
-                    (click)="firstname.setValue('')">
+                <input matInput placeholder="Nom" [formControl]="lastname" required>
+                <button mat-button *ngIf="lastname.value" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="lastname.setValue('')">
                     <mat-icon>close</mat-icon>
                 </button>
-                <mat-error *ngIf="firstname.errors?.required">Champ requis</mat-error>
-                <mat-error *ngIf="firstname.errors"></mat-error>
+                <mat-error *ngIf="lastname.errors?.required">Champ requis</mat-error>
+                <mat-error *ngIf="lastname.errors"></mat-error>
             </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile *ngIf="!mobileSize">
@@ -37,13 +37,13 @@
         <mat-grid-tile [colspan]="size" [class.lastnameMobileVersion]="mobileSize">
             <mat-form-field appearance="outline">
                 <mat-label>Prenom</mat-label>
-                <input matInput placeholder="Prenom" [formControl]="lastname" required>
-                <button mat-button *ngIf="lastname.value" matSuffix mat-icon-button aria-label="Clear"
-                    (click)="lastname.setValue('')">
+                <input matInput placeholder="Prenom" [formControl]="firstname" required>
+                <button mat-button *ngIf="firstname.value" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="firstname.setValue('')">
                     <mat-icon>close</mat-icon>
                 </button>
-                <mat-error *ngIf="lastname.errors?.required">Champ requis</mat-error>
-                <mat-error *ngIf="lastname.errors"></mat-error>
+                <mat-error *ngIf="firstname.errors?.required">Champ requis</mat-error>
+                <mat-error *ngIf="firstname.errors"></mat-error>
             </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile *ngIf="!mobileSize">
