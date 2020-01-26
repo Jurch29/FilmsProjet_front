@@ -79,7 +79,6 @@ export class LoginComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
-          console.log(data);
           this.user_id = data.id;
           if (data.toActivate) {
             this.isUserToActivate = true;

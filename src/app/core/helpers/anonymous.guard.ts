@@ -3,29 +3,26 @@ import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from
 
 import { AuthenticationService } from '../service/authentication.service';
 
-@Injectable({ providedIn: 'root' })
-export class AuthGuard implements CanActivate {
-    constructor(
+@Injectable({
+  providedIn: 'root'
+})
+export class AnonymousGuard implements CanActivate {
+
+  constructor(
         private router: Router,
         private authenticationService: AuthenticationService
     ) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         const currentUser = this.authenticationService.currentUserValue;
-        if (currentUser) {
-            // check if route is restricted by role
-            if (route.data.roles && route.data.roles.indexOf(currentUser.role) === -1) {
-                // role not authorised so redirect to home page
-                this.router.navigate(['/']);
-                return false;
-            }
-
-            // authorised so return true
+        if (!currentUser) {
+            //non connecté = il y a accès
             return true;
         }
 
-        //not logged in so redirect to home page with the return url
+        //connecté = pas accès
         //this.router.navigate(['/home'], { queryParams: { returnUrl: state.url } });
         return false;
     }
+  
 }
