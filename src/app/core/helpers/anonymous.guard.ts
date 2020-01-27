@@ -21,7 +21,7 @@ export class AnonymousGuard implements CanActivate {
         }
 
         //connecté = pas accès
-        //this.router.navigate(['/home'], { queryParams: { returnUrl: state.url } });
+        this.router.navigate(['/home']);
         return false;
     }
   
