@@ -7,9 +7,10 @@ import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { UserCartComponent } from './components/user-cart/user-cart.component';
 import { UserCartItemComponent } from './components/user-cart/user-cart-item/user-cart-item.component';
+import { ForbiddenComponent } from './components/forbidden/forbidden.component';
 
 @NgModule({
-  declarations: [RegisterComponent, LoginComponent, UserCartComponent, UserCartItemComponent],
+  declarations: [RegisterComponent, LoginComponent, UserCartComponent, UserCartItemComponent, ForbiddenComponent],
   imports: [
     SharedModule,
     PublicRoutingModule,
