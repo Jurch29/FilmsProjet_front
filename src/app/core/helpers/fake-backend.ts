@@ -14,6 +14,13 @@ import { MovieAuthor } from 'src/app/shared/models/movie-author';
 import { Category } from 'src/app/shared/models/category';
 import { MovieCategory } from 'src/app/shared/models/movie-category';
 import { CartItem } from 'src/app/shared/models/cart-item';
+import { Trailer } from 'src/app/shared/models/trailer';
+import { MovieTrailer } from 'src/app/shared/models/movie-trailer';
+import { Synopsis } from 'src/app/shared/models/synopsis';
+
+/*
+ * MARIADB
+ */
 
 const users: User[] = [
     { id: 1, email: "j@j", username: 'ju', password: 'j', firstname: 'Admin', lastname: 'User', role: [Role.Admin] },
@@ -220,6 +227,59 @@ const carts: CartItem[] = [
     }
 ];
 
+const trailers : Trailer[] = [
+    {
+        trailer_id : 1,
+        trailer_path : "http://www.youtube.com/embed/0ZD711IkW1g?rel=0&showinfo=0&controls=0&iv_load_policy=3&modestbranding=1"
+    }, {
+        trailer_id : 2,
+        trailer_path : "http://www.youtube.com/embed/A1rWh7fyfPQ?rel=0&showinfo=0&controls=0&iv_load_policy=3&modestbranding=1"
+    }, {
+        trailer_id : 3,
+        trailer_path : "http://www.youtube.com/embed/EXeTwQWrcwY?rel=0&showinfo=0&controls=0&iv_load_policy=3&modestbranding=1"
+    }, {
+        trailer_id : 4,
+        trailer_path : "http://www.youtube.com/embed/oIBtePb-dGY?rel=0&showinfo=0&controls=0&iv_load_policy=3&modestbranding=1"
+    }
+];
+
+const movieTrailer : MovieTrailer[] = [
+    {
+        movie_id : 1,
+        trailer_id : 1
+    }, {
+        movie_id : 1,
+        trailer_id : 2
+    }, {
+        movie_id : 2,
+        trailer_id : 3
+    }, {
+        movie_id : 3,
+        trailer_id : 4
+    }
+];
+
+/*
+ * **********
+ */
+
+ /*
+ * MONGODB
+ */
+
+const synopsises : Synopsis[] = [
+    {
+        movie_id : 1,
+        synopsis : "c'est le synopsis de deadpool là"
+    }, {
+        movie_id : 2,
+        synopsis : "c'est le synopsis de dark knight là"
+    }, {
+        movie_id : 3,
+        synopsis : "c'est le synopsis de elysium là"
+    }
+];
+
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
 
@@ -260,6 +320,10 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return getCategorys();
                 case url.match(/\/category\/\d+$/) && method === 'GET':
                     return getCategorysByMovieId();
+                case url.match(/\/trailer\/\d+$/) && method === 'GET':
+                    return getTrailersByMovieId();
+                case url.match(/\/synopsis\/\d+$/) && method === 'GET':
+                    return getSynopsisByMovieId();
                 case url.match(/\/user\/cart\/\d+$/) && method === 'GET':
                     return getUserCart();
                 default:
@@ -271,6 +335,20 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
         function getCategorys() {
             return ok(categorys);
+        }
+
+        function getSynopsisByMovieId() {
+            let synopsis = synopsises.find(x => x.movie_id === idFromUrl());
+            return ok(synopsis);
+        }
+
+        function getTrailersByMovieId() {
+            let movieTrailers = movieTrailer.filter(x => x.movie_id === idFromUrl());
+            const trailerz = new Array<Trailer>();
+            movieTrailers.forEach(element => {
+                trailerz.push(trailers.find(x => x.trailer_id === element.trailer_id));
+            });
+            return ok(trailerz);
         }
 
         function getCategorysByMovieId() {
