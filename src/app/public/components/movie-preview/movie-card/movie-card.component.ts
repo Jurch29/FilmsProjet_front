@@ -8,6 +8,8 @@ import { Category } from 'src/app/shared/models/category';
 import { Trailer } from 'src/app/shared/models/trailer';
 import { Movie } from 'src/app/shared/models/movie';
 import { first } from 'rxjs/operators';
+import { AuthenticationService } from 'src/app/core/service/authentication.service';
+import { CartService } from 'src/app/core/service/cart.service';
 
 
 @Component({
@@ -27,7 +29,7 @@ export class MovieCardComponent {
   private synopsis : string ;
   private trailers : Trailer[];
 
-  constructor(private movieService : MovieService, private numberofitemsincartService : NumberOfItemsInCartService, private sanitizer: DomSanitizer) { }
+  constructor(private movieService : MovieService, private authenticationService : AuthenticationService, private cartService : CartService, private numberofitemsincartService : NumberOfItemsInCartService, private sanitizer: DomSanitizer) { }
 
   setProperties(movie : Movie) {
     this.id = movie.movie_id;
@@ -62,7 +64,28 @@ export class MovieCardComponent {
   }
 
   addToCart(){
-    this.numberofitemsincartService.ChangeNumberOfItemsInCartMessage(this.numberofitemsincartService.getItemsCount()+1);
+    this.cartService.addItemToCart(this.authenticationService.currentUserValue.id, this.id)
+    .pipe()
+    .subscribe(
+      data => {
+        this.cartService.getUserCart(this.authenticationService.currentUserValue.id)
+        .pipe()
+        .subscribe(
+          data => {
+            let numberOfItems = 0;
+            for (let item of data) {
+              numberOfItems += item.movie_user_cart_count;
+            }
+            this.numberofitemsincartService.ChangeNumberOfItemsInCartMessage(numberOfItems);
+          },
+          error => console.log(error)
+        );
+      },
+      error => console.log(error)
+    );
   }
 
+  nothing() {
+    
+  }
 }

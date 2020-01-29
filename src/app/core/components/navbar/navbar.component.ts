@@ -12,6 +12,7 @@ import { LightmodeService } from '../../service/lightmode.service';
 import { OpensidenavService } from '../../service/opensidenav.service';
 import { NumberOfItemsInCartService } from '../../service/number-of-items-in-cart.service';
 import { OpenfilterbarService } from '../../service/openfilterbar.service';
+import { CartService } from '../../service/cart.service';
 
 @Component({
   selector: 'app-navbar',
@@ -23,15 +24,14 @@ export class NavbarComponent implements OnInit {
   currentUser: User;
   lightModeEvent: boolean = false;
   showMenu = false;
-  numberOfItems: number;
   filterBarOpened : boolean = false;
   SmallSettingsNoButtons: boolean = false;
 
   constructor(public dialog : MatDialog, private userService : UserService, private router : Router,
     private authenticationService : AuthenticationService, private lightmodeService : LightmodeService,
     private opensidenavService : OpensidenavService, private openfilterbarService : OpenfilterbarService, 
-    private numberofitemsincartService : NumberOfItemsInCartService) {
-    this.currentUser = this.authenticationService.currentUserValue;
+    private numberOfItemsService : NumberOfItemsInCartService, private cartService : CartService) {
+      this.currentUser = this.authenticationService.currentUserValue;
   }
 
   ChangeWebMode() {
@@ -59,17 +59,28 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit() {
     if (window.innerWidth < 400) this.SmallSettingsNoButtons = true;
-
-    this.numberofitemsincartService.getNumberOfItemsInCart().subscribe(number => { this.numberOfItems = number });
     if (this.currentUser != null) {
       this.userService.getById(this.currentUser.id).pipe(first()).subscribe(user => {
         this.userFromApi = user;
       });
+      this.cartService.getUserCart(this.currentUser.id)
+      .pipe()
+      .subscribe(
+        data => {
+          let numberOfItems = 0;
+          for (let item of data) {
+            numberOfItems += item.movie_user_cart_count;
+          }
+          this.numberOfItemsService.ChangeNumberOfItemsInCartMessage(numberOfItems);
+        },
+        error => {
+          console.log(error);
+        }
+      );
     }
     this.authenticationService.currentUser.subscribe(dataTransmited => {
       this.currentUser =dataTransmited
-    }
-      );
+    });
   }
   
   openLoginDialog() {
@@ -91,16 +102,12 @@ export class NavbarComponent implements OnInit {
 
   disconnect() {
     this.authenticationService.logout();
-    this.numberofitemsincartService.ChangeNumberOfItemsInCartMessage(0);
+    this.numberOfItemsService.ChangeNumberOfItemsInCartMessage(0);
     this.currentUser = null;
   }
 
   toggleMenu() {
     this.showMenu = !this.showMenu;
     this.opensidenavService.ChangeOpenSidenavEventMessage(this.showMenu);
-  }
-  
-  setNumberOfItems(number : number) {
-    this.numberofitemsincartService.ChangeNumberOfItemsInCartMessage(number);
   }
 }

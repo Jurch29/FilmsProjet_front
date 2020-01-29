@@ -230,16 +230,16 @@ const carts: CartItem[] = [
 const trailers : Trailer[] = [
     {
         trailer_id : 1,
-        trailer_path : "http://www.youtube.com/embed/0ZD711IkW1g?rel=0&showinfo=0&controls=0&iv_load_policy=3&modestbranding=1"
+        trailer_path : "https://www.youtube.com/embed/0ZD711IkW1g?rel=0&showinfo=0&controls=0&iv_load_policy=3&modestbranding=1"
     }, {
         trailer_id : 2,
-        trailer_path : "http://www.youtube.com/embed/A1rWh7fyfPQ?rel=0&showinfo=0&controls=0&iv_load_policy=3&modestbranding=1"
+        trailer_path : "https://www.youtube.com/embed/A1rWh7fyfPQ?rel=0&showinfo=0&controls=0&iv_load_policy=3&modestbranding=1"
     }, {
         trailer_id : 3,
-        trailer_path : "http://www.youtube.com/embed/EXeTwQWrcwY?rel=0&showinfo=0&controls=0&iv_load_policy=3&modestbranding=1"
+        trailer_path : "https://www.youtube.com/embed/EXeTwQWrcwY?rel=0&showinfo=0&controls=0&iv_load_policy=3&modestbranding=1"
     }, {
         trailer_id : 4,
-        trailer_path : "http://www.youtube.com/embed/oIBtePb-dGY?rel=0&showinfo=0&controls=0&iv_load_policy=3&modestbranding=1"
+        trailer_path : "https://www.youtube.com/embed/oIBtePb-dGY?rel=0&showinfo=0&controls=0&iv_load_policy=3&modestbranding=1"
     }
 ];
 
@@ -326,6 +326,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return getSynopsisByMovieId();
                 case url.match(/\/user\/cart\/\d+$/) && method === 'GET':
                     return getUserCart();
+                case url.match(/\/user\/cart\/add/) && method === 'GET':
+                    return addItemToCart();
                 default:
                     return next.handle(request);
             }
@@ -485,6 +487,30 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 return element.user_id == user_id;
             });
             return ok(cart);
+        }
+
+        function addItemToCart() {
+            const user_id = request.params.get('user_id');
+            const movie_id = request.params.get('movie_id');
+            if (!users.find(x => x.id === parseInt(user_id))) {
+                return error("Utilisateur inconnu");
+            }
+            if (!movies.find(x => x.movie_id === parseInt(movie_id))) {
+                return error("Film inconnu");
+            }
+            let cart = carts.find(x => x.user_id === parseInt(user_id) && x.movie_id === parseInt(movie_id));
+            if (cart) {
+                cart.movie_user_cart_count = cart.movie_user_cart_count + 1;
+            } else {
+                carts.push(
+                    {
+                        user_id : parseInt(user_id),
+                        movie_id : parseInt(movie_id),
+                        movie_user_cart_count : 1
+                    }
+                )
+            }
+            return ok({});
         }
 
         // helper functions
