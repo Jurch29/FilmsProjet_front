@@ -41,7 +41,7 @@ export class MoviePreviewComponent implements OnInit {
   infobule(movie: Movie) {
     this.containerinfobule.clear();
     this.componentRef = this.containerinfobule.createComponent(this.componentFactory, 0);
-    this.componentRef.instance.setProperties(movie);
+    this.componentRef.instance.setProperties(movie, this.containerinfobule);
   }
 
   image(url : string) {

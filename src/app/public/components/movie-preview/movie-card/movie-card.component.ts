@@ -18,6 +18,8 @@ import { CartService } from 'src/app/core/service/cart.service';
   styleUrls: ['./movie-card.component.css']
 })
 export class MovieCardComponent {
+  infobulecontainer : any;
+
   private id : number;
   private date : string;
   private duration : number;
@@ -31,7 +33,7 @@ export class MovieCardComponent {
 
   constructor(private movieService : MovieService, private authenticationService : AuthenticationService, private cartService : CartService, private numberofitemsincartService : NumberOfItemsInCartService, private sanitizer: DomSanitizer) { }
 
-  setProperties(movie : Movie) {
+  setProperties(movie : Movie, container) {
     this.id = movie.movie_id;
     this.date = this.formatDate(movie.movie_date);
     this.duration = movie.movie_duration;
@@ -42,6 +44,7 @@ export class MovieCardComponent {
     this.movieService.getCategorysByMovieId(movie.movie_id).pipe(first()).subscribe(data => this.categories = data);
     this.movieService.getTrailersByMovieId(movie.movie_id).pipe(first()).subscribe(data => this.trailers = data);
     this.movieService.getSynopsis(movie.movie_id).pipe(first()).subscribe(data => this.synopsis = data.synopsis);
+    this.infobulecontainer = container;
   }
 
   formatDate(date : Date) {
@@ -85,7 +88,7 @@ export class MovieCardComponent {
     );
   }
 
-  nothing() {
-    
+  close() {
+    this.infobulecontainer.clear();
   }
 }

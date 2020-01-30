@@ -17,6 +17,9 @@ import { CartItem } from 'src/app/shared/models/cart-item';
 import { Trailer } from 'src/app/shared/models/trailer';
 import { MovieTrailer } from 'src/app/shared/models/movie-trailer';
 import { Synopsis } from 'src/app/shared/models/synopsis';
+import { OrderHistory } from 'src/app/shared/models/order-history';
+import { Order } from 'src/app/shared/models/order';
+import { OrderItem } from 'src/app/shared/models/order-item';
 
 /*
  * MARIADB
@@ -211,7 +214,7 @@ const actors: Actor[] = [
     }
 ];
 
-const carts: CartItem[] = [
+let carts: CartItem[] = [
     {
         user_id: 2,
         movie_id: 1,
@@ -280,6 +283,32 @@ const synopsises : Synopsis[] = [
     }
 ];
 
+const orders : OrderHistory[] = [
+    {
+        user_id : 2,
+        orders : [
+            {
+                purchase_date : new Date('2017/12/10 18:48:06'),
+                items : [
+                    {
+                        movie_id : 3,
+                        movie_price : 3.66,
+                        count : 6
+                    }, {
+                        movie_id : 2,
+                        movie_price : 3.03,
+                        count : 1
+                    }
+                ]
+            }
+        ]
+    }
+];
+
+/*
+ * **********
+ */
+
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
 
@@ -328,6 +357,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return getUserCart();
                 case url.match(/\/user\/cart\/add/) && method === 'GET':
                     return addItemToCart();
+                case url.match(/\/user\/cart\/buy\/\d+$/) && method === 'GET':
+                    return buyCart();
                 default:
                     return next.handle(request);
             }
@@ -510,6 +541,38 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     }
                 )
             }
+            return ok({});
+        }
+
+        function buyCart() {
+            const user_id = idFromUrl();
+            let user = users.find(x => x.id === user_id);
+            if (!user) {
+                return error("Utilisateur introuvable");
+            }
+            const userCart = carts.filter(function (element) {
+                return element.user_id == user_id;
+            });
+            if (!userCart) {
+                return error("Panier vide");
+            }
+            let order : Order = new Order();
+            order.purchase_date = new Date();
+            order.items = new Array<OrderItem>();
+            for (let cartItem of userCart) {
+                let orderItem : OrderItem = new OrderItem();
+                orderItem.movie_id = cartItem.movie_id;
+                let movie = movies.find(x => x.movie_id === orderItem.movie_id);
+                if (!movie) {
+                    return error("Film introuvable");
+                }
+                orderItem.movie_price = movie.movie_price;
+                orderItem.count = cartItem.movie_user_cart_count;
+                order.items.push(orderItem);
+            }
+            carts = carts.filter(function (element) {
+                return element.user_id != user_id;
+            });
             return ok({});
         }
 

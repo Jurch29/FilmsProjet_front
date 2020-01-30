@@ -18,4 +18,8 @@ export class CartService {
     let params = new HttpParams().set("user_id", user_id.toString()).set("movie_id", movie_id.toString());
     return this.http.get<any>(`${environment.apiUrl}/user/cart/add`, {params : params});
   }
+
+  buyCart(user_id : number) {
+    return this.http.get<any>(`${environment.apiUrl}/user/cart/buy/${user_id}`);
+  }
 }
