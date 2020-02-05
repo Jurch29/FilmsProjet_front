@@ -9,15 +9,11 @@ export class NumberOfItemsInCartService {
 
   constructor() { }
 
-  ChangeNumberOfItemsInCartMessage(NumberOfItems: number){
+  ChangeNumberOfItemsInCartMessage(NumberOfItems : number){
     this.NumberOfItemsInCart.next(NumberOfItems);
   }
 
-  getNumberOfItemsInCart() :  Observable<number>{
-    return this.NumberOfItemsInCart.asObservable(); 
-  }
-
-  getItemsCount() : number{
-    return this.NumberOfItemsInCart.getValue();
+  get getNumberOfItemsInCart() : number{
+    return this.NumberOfItemsInCart.value;
   }
 }

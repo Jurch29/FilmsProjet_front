@@ -41,13 +41,7 @@ export class MoviePreviewComponent implements OnInit {
   infobule(movie: Movie) {
     this.containerinfobule.clear();
     this.componentRef = this.containerinfobule.createComponent(this.componentFactory, 0);
-    this.componentRef.instance.year = movie.movie_date;
-    this.componentRef.instance.duration = movie.movie_duration;
-    this.componentRef.instance.title = movie.movie_title;
-    this.componentRef.instance.rating = movie.movie_mark;
-    this.movieService.getAuthorsByMovieId(movie.movie_id).pipe(first()).subscribe(data => this.componentRef.instance.realisators = data);
-    this.movieService.getActorByMovieId(movie.movie_id).pipe(first()).subscribe(data => this.componentRef.instance.actors = data);
-    this.componentRef.instance.infobulecontainer = this.containerinfobule;
+    this.componentRef.instance.setProperties(movie, this.containerinfobule);
   }
 
   image(url : string) {

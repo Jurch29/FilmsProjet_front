@@ -5,6 +5,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
 
 import { AuthenticationService } from '../../../core/service/authentication.service';
+import { NavbarComponent } from 'src/app/core/components/navbar/navbar.component';
+import { CartService } from 'src/app/core/service/cart.service';
+import { NumberOfItemsInCartService } from 'src/app/core/service/number-of-items-in-cart.service';
 
 @Component({
   selector: 'app-login',
@@ -38,7 +41,9 @@ export class LoginComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<LoginComponent>,
     private route: ActivatedRoute,
     private router: Router,
-    private authenticationService: AuthenticationService) {
+    private authenticationService: AuthenticationService,
+    private cartService : CartService,
+    private numberOfItemsService : NumberOfItemsInCartService) {
     if (this.authenticationService.currentUserValue) {
       this.dialogRef.close();
       this.router.navigate(['/']);
@@ -86,8 +91,23 @@ export class LoginComponent implements OnInit {
           } else {
             this.isUserToActivate = false;
             this.dialogRef.close();
-            if(this.returnUrl!="/register")
+            if(this.returnUrl!="/register") {
               this.router.navigate([this.returnUrl]);
+              this.cartService.getUserCart(this.user_id)
+              .pipe()
+              .subscribe(
+                data => {
+                  let numberOfItems = 0;
+                  for (let item of data) {
+                    numberOfItems += item.movie_user_cart_count;
+                  }
+                  this.numberOfItemsService.ChangeNumberOfItemsInCartMessage(numberOfItems);
+                },
+                error => {
+                  console.log(error);
+                }
+              );
+            }
             else
               this.router.navigate(['/']);
           }

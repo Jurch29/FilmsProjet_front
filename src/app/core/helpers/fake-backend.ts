@@ -14,6 +14,16 @@ import { MovieAuthor } from 'src/app/shared/models/movie-author';
 import { Category } from 'src/app/shared/models/category';
 import { MovieCategory } from 'src/app/shared/models/movie-category';
 import { CartItem } from 'src/app/shared/models/cart-item';
+import { Trailer } from 'src/app/shared/models/trailer';
+import { MovieTrailer } from 'src/app/shared/models/movie-trailer';
+import { Synopsis } from 'src/app/shared/models/synopsis';
+import { OrderHistory } from 'src/app/shared/models/order-history';
+import { Order } from 'src/app/shared/models/order';
+import { OrderItem } from 'src/app/shared/models/order-item';
+
+/*
+ * MARIADB
+ */
 
 const users: User[] = [
     { id: 1, email: "j@j", username: 'ju', password: 'j', firstname: 'Admin', lastname: 'User', role: [Role.Admin] },
@@ -204,7 +214,7 @@ const actors: Actor[] = [
     }
 ];
 
-const carts: CartItem[] = [
+let carts: CartItem[] = [
     {
         user_id: 2,
         movie_id: 1,
@@ -219,6 +229,85 @@ const carts: CartItem[] = [
         movie_user_cart_count: 1
     }
 ];
+
+const trailers : Trailer[] = [
+    {
+        trailer_id : 1,
+        trailer_path : "https://www.youtube.com/embed/0ZD711IkW1g?rel=0&showinfo=0&controls=0&iv_load_policy=3&modestbranding=1"
+    }, {
+        trailer_id : 2,
+        trailer_path : "https://www.youtube.com/embed/A1rWh7fyfPQ?rel=0&showinfo=0&controls=0&iv_load_policy=3&modestbranding=1"
+    }, {
+        trailer_id : 3,
+        trailer_path : "https://www.youtube.com/embed/EXeTwQWrcwY?rel=0&showinfo=0&controls=0&iv_load_policy=3&modestbranding=1"
+    }, {
+        trailer_id : 4,
+        trailer_path : "https://www.youtube.com/embed/oIBtePb-dGY?rel=0&showinfo=0&controls=0&iv_load_policy=3&modestbranding=1"
+    }
+];
+
+const movieTrailer : MovieTrailer[] = [
+    {
+        movie_id : 1,
+        trailer_id : 1
+    }, {
+        movie_id : 1,
+        trailer_id : 2
+    }, {
+        movie_id : 2,
+        trailer_id : 3
+    }, {
+        movie_id : 3,
+        trailer_id : 4
+    }
+];
+
+/*
+ * **********
+ */
+
+ /*
+ * MONGODB
+ */
+
+const synopsises : Synopsis[] = [
+    {
+        movie_id : 1,
+        synopsis : "c'est le synopsis de deadpool là"
+    }, {
+        movie_id : 2,
+        synopsis : "c'est le synopsis de dark knight là"
+    }, {
+        movie_id : 3,
+        synopsis : "c'est le synopsis de elysium là"
+    }
+];
+
+const orders : OrderHistory[] = [
+    {
+        user_id : 2,
+        orders : [
+            {
+                purchase_date : new Date('2017/12/10 18:48:06'),
+                items : [
+                    {
+                        movie_id : 3,
+                        movie_price : 3.66,
+                        count : 6
+                    }, {
+                        movie_id : 2,
+                        movie_price : 3.03,
+                        count : 1
+                    }
+                ]
+            }
+        ]
+    }
+];
+
+/*
+ * **********
+ */
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
@@ -260,8 +349,16 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return getCategorys();
                 case url.match(/\/category\/\d+$/) && method === 'GET':
                     return getCategorysByMovieId();
+                case url.match(/\/trailer\/\d+$/) && method === 'GET':
+                    return getTrailersByMovieId();
+                case url.match(/\/synopsis\/\d+$/) && method === 'GET':
+                    return getSynopsisByMovieId();
                 case url.match(/\/user\/cart\/\d+$/) && method === 'GET':
                     return getUserCart();
+                case url.match(/\/user\/cart\/add/) && method === 'GET':
+                    return addItemToCart();
+                case url.match(/\/user\/cart\/buy\/\d+$/) && method === 'GET':
+                    return buyCart();
                 default:
                     return next.handle(request);
             }
@@ -271,6 +368,20 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
         function getCategorys() {
             return ok(categorys);
+        }
+
+        function getSynopsisByMovieId() {
+            let synopsis = synopsises.find(x => x.movie_id === idFromUrl());
+            return ok(synopsis);
+        }
+
+        function getTrailersByMovieId() {
+            let movieTrailers = movieTrailer.filter(x => x.movie_id === idFromUrl());
+            const trailerz = new Array<Trailer>();
+            movieTrailers.forEach(element => {
+                trailerz.push(trailers.find(x => x.trailer_id === element.trailer_id));
+            });
+            return ok(trailerz);
         }
 
         function getCategorysByMovieId() {
@@ -407,6 +518,62 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 return element.user_id == user_id;
             });
             return ok(cart);
+        }
+
+        function addItemToCart() {
+            const user_id = request.params.get('user_id');
+            const movie_id = request.params.get('movie_id');
+            if (!users.find(x => x.id === parseInt(user_id))) {
+                return error("Utilisateur inconnu");
+            }
+            if (!movies.find(x => x.movie_id === parseInt(movie_id))) {
+                return error("Film inconnu");
+            }
+            let cart = carts.find(x => x.user_id === parseInt(user_id) && x.movie_id === parseInt(movie_id));
+            if (cart) {
+                cart.movie_user_cart_count = cart.movie_user_cart_count + 1;
+            } else {
+                carts.push(
+                    {
+                        user_id : parseInt(user_id),
+                        movie_id : parseInt(movie_id),
+                        movie_user_cart_count : 1
+                    }
+                )
+            }
+            return ok({});
+        }
+
+        function buyCart() {
+            const user_id = idFromUrl();
+            let user = users.find(x => x.id === user_id);
+            if (!user) {
+                return error("Utilisateur introuvable");
+            }
+            const userCart = carts.filter(function (element) {
+                return element.user_id == user_id;
+            });
+            if (!userCart) {
+                return error("Panier vide");
+            }
+            let order : Order = new Order();
+            order.purchase_date = new Date();
+            order.items = new Array<OrderItem>();
+            for (let cartItem of userCart) {
+                let orderItem : OrderItem = new OrderItem();
+                orderItem.movie_id = cartItem.movie_id;
+                let movie = movies.find(x => x.movie_id === orderItem.movie_id);
+                if (!movie) {
+                    return error("Film introuvable");
+                }
+                orderItem.movie_price = movie.movie_price;
+                orderItem.count = cartItem.movie_user_cart_count;
+                order.items.push(orderItem);
+            }
+            carts = carts.filter(function (element) {
+                return element.user_id != user_id;
+            });
+            return ok({});
         }
 
         // helper functions

@@ -1,15 +1,17 @@
 <div class="movieCardContainer">
     <div class="playercontainer">
-        <iframe
-            src="https://www.youtube.com/embed/0ZD711IkW1g?rel=0&showinfo=0&controls=0&iv_load_policy=3&modestbranding=1"
-            frameborder="0" allowfullscreen></iframe>
+        <mat-carousel [autoplay]="false" maxWidth="auto" proportion="25" slides="trailers.length()" [hideArrows]="false" [hideIndicators]="false" [useKeyboard]="false" [useMouseWheel]="false" orientation="ltr">
+            <mat-carousel-slide #matCarouselSlide *ngFor="let trailer of trailers" overlayColor="#00000040" [hideOverlay]="false">
+                <iframe [src]="sanitizer.bypassSecurityTrustResourceUrl(trailer.trailer_path)" frameborder="0" allowfullscreen></iframe>
+            </mat-carousel-slide>
+        </mat-carousel>
     </div>
     <div class="actionContainer">
         <p class="title">
             {{title}}
         </p>
         <p class="yearAndDuration">
-            {{year}}
+            {{date}}
         </p>
         <p class="yearAndDuration">
             {{duration}}min
@@ -19,6 +21,9 @@
         </p>
         <p class="actors">
             Avec :<span *ngFor="let actor of (actors) let isLast=last">{{actor.actor_firstname}} {{actor.actor_lastname}}{{isLast ? '' : ', '}} </span>
+        </p>
+        <p class="categories">
+            Catégorie :<span *ngFor="let category of (categories) let isLast=last">{{category.category_title}}{{isLast ? '' : ', '}} </span>
         </p>
         <p class="synopsis">
             {{synopsis}}
@@ -33,7 +38,7 @@
         <p class="nowMore">
             <a href="/nowMore/">En savoir plus</a>
         </p>
-        <button mat-raised-button color="primary" class="addCartButton" (click)="addToCart()">
+        <button *ngIf="authenticationService.currentUserValue" mat-raised-button color="primary" class="addCartButton" (click)="addToCart()">
             <span>Ajouter au panier</span>
             <mat-icon>add_shopping_cart</mat-icon>
         </button>
