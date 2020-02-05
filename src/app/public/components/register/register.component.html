@@ -99,12 +99,14 @@
         </mat-grid-tile>
         <mat-grid-tile [colspan]="sizeBig" *ngIf="!mobileSize">
         </mat-grid-tile>
-        <mat-grid-tile>
-            <button mat-raised-button color="primary" *ngIf="!loading" (click)="register()">S'inscrire</button>
-            <mat-spinner *ngIf="loading" diameter="30"></mat-spinner>
+        <mat-grid-tile class="containerSuccess">
+            <div>
+                <button mat-raised-button color="primary" *ngIf="!loading" (click)="register()">S'inscrire</button>
+                <mat-spinner *ngIf="loading" diameter="30"></mat-spinner>
+            </div>
+            <div *ngIf="error" class="alertError"><p>{{error}}</p></div>
+            <div *ngIf="success" class="alertSuccess"><p>{{success}}</p></div>
         </mat-grid-tile>
-        <div *ngIf="error" class="alertError">{{error}}</div>
-        <div *ngIf="success" class="alertSuccess">{{success}}</div>
         <mat-grid-tile [colspan]="sizeBig" *ngIf="!mobileSize">
         </mat-grid-tile>
     </mat-grid-list>

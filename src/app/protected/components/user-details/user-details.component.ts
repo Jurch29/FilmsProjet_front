@@ -11,5 +11,5 @@ export class UserDetailsComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  changeUserDetails(){}
 }

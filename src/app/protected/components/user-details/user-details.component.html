@@ -1,1 +1,61 @@
-<button routerLink="/userCartHistory">Historique des commandes</button>
+<div class="userDetailsContainer">
+    <mat-grid-list [class.dark]="!lightMode">
+        <mat-grid-tile>
+            <mat-form-field appearance="outline">
+                <mat-label>Nom</mat-label>
+                <input matInput placeholder="Nom" [formControl]="lastname" required>
+                <button mat-button *ngIf="lastname.value" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="lastname.setValue('')">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <mat-error *ngIf="lastname.errors?.required">Champ requis</mat-error>
+                <mat-error *ngIf="lastname.errors"></mat-error>
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <mat-form-field appearance="outline">
+                <mat-label>Prenom</mat-label>
+                <input matInput placeholder="Prenom" [formControl]="firstname" required>
+                <button mat-button *ngIf="firstname.value" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="firstname.setValue('')">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <mat-error *ngIf="firstname.errors?.required">Champ requis</mat-error>
+                <mat-error *ngIf="firstname.errors"></mat-error>
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <mat-form-field appearance="outline">
+                <mat-label>Pseudo</mat-label>
+                <input matInput placeholder="Pseudo" [formControl]="username" required>
+                <button mat-button *ngIf="username.value" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="username.setValue('')">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <mat-error *ngIf="username.errors?.required">Champ requis</mat-error>
+                <mat-error *ngIf="username.errors"></mat-error>
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <mat-form-field appearance="outline">
+                <mat-label>Votre mail</mat-label>
+                <input matInput placeholder="Votre mail" [formControl]="email" required>
+                <button mat-button *ngIf="email.value" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="email.setValue('')">
+                    <mat-icon>close</mat-icon>
+                </button>
+                <mat-error *ngIf="email.errors?.required">Champ requis</mat-error>
+                <mat-error *ngIf="email.errors?.email">Email non valide</mat-error>
+                <mat-error *ngIf="email.errors"></mat-error>
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <mat-form-field appearance="outline">
+                <button color="primary" routerLink="/userCartHistory">Changer Votre mot de passe</button>
+            </mat-form-field>
+        </mat-grid-tile>
+    </mat-grid-list>
+    <button color="primary" (click)="changeUserDetails()">Sauvegarder les modifcations</button>
+    <button color="primary" routerLink="/userCartHistory">Historique des commandes</button>
+    <button color="primary" routerLink="/userCommentHistory">Historique des commentaires</button>
+</div>

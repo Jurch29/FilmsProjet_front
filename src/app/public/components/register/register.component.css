@@ -6,9 +6,21 @@
 .register-container  > * {
     width: 100%;
 }
-
+.containerSuccess{
+    overflow: initial;
+}
+.alertSuccess{
+    position: absolute;
+    bottom: -20px;
+    text-align: center;
+    width: 185px;
+}
 .alertError{
     color: red;
+    position: absolute;
+    bottom: -20px;
+    text-align: center;
+    width: 185px;
 }
 .hidden{
     display: none !important;
