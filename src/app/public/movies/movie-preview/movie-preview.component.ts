@@ -26,7 +26,12 @@ export class MoviePreviewComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.movieService.getAllMovies().pipe(first()).subscribe(data => this.Movies = data);
+    this.movieService.getAllMovies().pipe(first()).subscribe(data => {
+       //console.log("data : "+JSON.stringify(data));
+       this.Movies = data;
+       console.log(this.Movies);
+      }
+    );
     this.subscriptionlightMode = this.lightmodeService.getLightModeEventMessage().subscribe(
       dataTransmited => {
         this.lightMode = dataTransmited;

@@ -4,7 +4,10 @@
       [fixedInViewport]="mobileQuery.matches" fixedTopGap="40">
       <mat-nav-list>
         <a [class.dark]="!lightMode" mat-list-item routerLink="/home">
-          <mat-icon>home</mat-icon><span class="distanceLogo">Acceuil</span>
+          <mat-icon>home</mat-icon><span class="distanceLogo">Accueil</span>
+        </a>
+        <a [class.dark]="!lightMode" mat-list-item routerLink="/movies">
+          <mat-icon>movie</mat-icon><span class="distanceLogo">Films</span>
         </a>
         <a [class.dark]="!lightMode" mat-list-item routerLink="/userCart">
           <mat-icon>shopping_cart</mat-icon><span class="distanceLogo">Panier</span>

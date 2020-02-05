@@ -15,7 +15,7 @@ export class MovieService {
   constructor(private http: HttpClient) { }
 
   getAllMovies() {
-    return this.http.get<Movie[]>(`${environment.apiUrl}/movies`);
+    return this.http.get<Movie[]>(`${environment.apiUrl}/movie/movies`);
   }
 
   getMovieById(id : number) {
