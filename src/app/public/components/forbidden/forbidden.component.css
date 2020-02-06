@@ -6,14 +6,14 @@ html {
   
   .maincontainer {
     position: relative;
-    top: -50px;
+    top: -40px;
     transform: scale(0.8);
     background: url("https://www.blissfullemon.com/wp-content/uploads/2018/09/HauntedHouseBackground.png");
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 700px 600px;
-    width: 800px;
-    height: 600px;
+    background-size: 550px 450px;
+    width: 650px;
+    height: 450px;
     margin: 0px auto;
     display: grid;
   }
@@ -27,17 +27,18 @@ html {
   
   .errorcode {
     position: relative;
-    top: -200px;
+    top: -70px;
     font-family: 'Creepster', cursive;
     color: white;
     text-align: center;
     font-size: 6em;
     letter-spacing: 0.1em;
+    margin: 0px;
   }
   
   .errortext {
     position: relative;
-    top: -260px;
+    top: -75px;
     color: #FBD130;
     text-align: center;
     text-transform: uppercase;
@@ -109,37 +110,25 @@ html {
   
   @keyframes flyBat1 {
     0% { opacity: 1; transform: scale(0.5)}
-    25% { opacity: 1; transform: scale(0.5) translate(-400px, -330px) }
-    50% { opacity: 1; transform: scale(0.5) translate(400px, -800px) }
-    75% { opacity: 1; transform: scale(0.5) translate(600px, 100px) }
-    100% { opacity: 1; transform: scale(0.5) translate(100px, 300px) }
+    25% { opacity: 1; transform: scale(0.5) translate(-500px, -330px) }
+    50% { opacity: 1; transform: scale(0.5) translate(400px, -600px) }
+    75% { opacity: 1; transform: scale(0.5) translate(400px, 50px) }
+    100% { opacity: 1; transform: scale(0.5) translate(0px, -300px) }
   }
   
   @keyframes flyBat2 {
     0% { opacity: 1; transform: scale(0.3)}
-    25% { opacity: 1; transform: scale(0.3) translate(200px, -330px) }
-    50% { opacity: 1; transform: scale(0.3) translate(-300px, -800px) }
-    75% { opacity: 1; transform: scale(0.3) translate(-400px, 100px) }
-    100% { opacity: 1; transform: scale(0.3) translate(100px, 300px) }
+    25% { opacity: 1; transform: scale(0.3) translate(500px, -330px) }
+    50% { opacity: 1; transform: scale(0.3) translate(400px, -600px) }
+    75% { opacity: 1; transform: scale(0.3) translate(-800px, -700px) }
+    100% { opacity: 1; transform: scale(0.3) translate(0px, -300px) }
   }
   
   @keyframes flyBat3 {
-    0% { opacity: 1; transform: scale(0.4)}
-    25% { opacity: 1; transform: scale(0.4) translate(-350px, -330px) }
-    50% { opacity: 1; transform: scale(0.4) translate(400px, -800px) }
-    75% { opacity: 1; transform: scale(0.4) translate(-600px, 100px) }
-    100% { opacity: 1; transform: scale(0.4) translate(100px, 300px) }
+    0% { opacity: 1; transform: scale(0.3)}
+    25% { opacity: 1; transform: scale(0.3) translate(-1000px, -1000px) }
+    50% { opacity: 1; transform: scale(0.3) translate(-200px, -1100px) }
+    75% { opacity: 1; transform: scale(0.3) translate(-200px, -800px) }
+    100% { opacity: 1; transform: scale(0.3) translate(0px, -300px) }
   }
   
-  /*@media only screen and (max-width: 850px) {
-    .maincontainer {
-      transform: scale(0.6);
-      width: 600px;
-      height: 400px;
-      background-size: 600px 400px;
-    }
-    
-    .errortext {
-      font-size: 1em;
-    }
-  }*/

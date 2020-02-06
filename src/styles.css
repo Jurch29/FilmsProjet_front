@@ -1,5 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
-
+@font-face {
+    font-family: 'Combo';
+    src: url('./assets/fonts/Combo.ttf')  format('truetype');
+}
+@font-face {
+    font-family: 'Creepster';
+    src: url('./assets/fonts/Creepster.ttf')  format('truetype');
+}
 html, body { 
     min-height: 100vh;
     height: auto;

@@ -38,10 +38,12 @@ body{
 	color: #C0D7DD; 
 	font-size: 280px;
 	display: inline-block;
-	font-family: 'Anton', sans-serif;
-	font-family: 'Combo', cursive;
+	font-family: 'Anton',cursive;
+	font-family: 'Combo',cursive;
 }
-
+.error .p.first{
+  margin-right: 25px;
+}
 
 .con {
   position: relative;
@@ -154,7 +156,10 @@ body{
 
 
 /* page-ms */
-.page-ms {transform: translateY(-50px);}
+.page-ms {
+  transform: translateY(-50px);
+  margin-top:40px;
+}
 
 .error p.page-msg {
 	text-align: center;
