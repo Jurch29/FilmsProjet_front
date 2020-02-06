@@ -20,10 +20,10 @@ export class SidenavComponent implements OnInit, OnDestroy {
   mobileQuery: MediaQueryList;
   show: string;
   subscriptionlightMode: any;
-
+  lightMode : boolean;
+  
   @ViewChild('snav', {static: false}) public sidenav: MatSidenav;
   
-  lightMode : boolean;
 
   _mobileQueryListener: () => void;
   currentUser:User = this.authenticationService.currentUserValue;

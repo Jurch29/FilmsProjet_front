@@ -233,7 +233,7 @@ let carts: CartItem[] = [
 const trailers : Trailer[] = [
     {
         trailer_id : 1,
-        trailer_path : "https://www.youtube.com/embed/0ZD711IkW1g?rel=0&showinfo=0&controls=0&iv_load_policy=3&modestbranding=1"
+        trailer_path : "https://www.youtube.com/embed/0ZD711IkW1g"
     }, {
         trailer_id : 2,
         trailer_path : "https://www.youtube.com/embed/A1rWh7fyfPQ?rel=0&showinfo=0&controls=0&iv_load_policy=3&modestbranding=1"
@@ -431,8 +431,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             return ok({
                 id: user.id,
                 username: user.username,
-                firstName: user.firstname,
-                lastName: user.lastname,
+                firstname: user.firstname,
+                lastname: user.lastname,
                 role: user.role,
                 token: `fake-jwt-token.${user.id}`
             });

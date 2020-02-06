@@ -20,6 +20,11 @@ mat-spinner{
 app-movie-preview{
     display: inline-block !important;
 }
+
+
+.mat-grid-tile .mat-figure {
+    position: relative !important;
+}
 .dark .mat-sidenav-container {
     background-color: #222222 !important;
   }

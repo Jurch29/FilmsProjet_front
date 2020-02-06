@@ -1,10 +1,14 @@
 .movieCardContainer{
     display: block;
-    color: white;
+    color: black;
     width: 100vw;
     height: 50vh;
     text-align: left;
     position: relative;
+    background-color: grey;
+}
+.movieCardContainer.dark{
+    color: white;
     background-color: black;
 }
 .playercontainer{
@@ -27,7 +31,7 @@
     position: relative;
     left: 35px;
     width: calc(40vw - 35px);
-    height: 40vh;
+    height: 50vh;
 }
 .actionContainer p{
         display: block;

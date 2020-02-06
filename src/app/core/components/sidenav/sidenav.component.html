@@ -1,8 +1,8 @@
 <div [class.dark]="!lightMode" class="example-container" [class.example-is-mobile]="mobileQuery.matches">
-  <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 40 : 0">
-    <mat-sidenav #snav [class.dark]="!lightMode" [mode]="mobileQuery.matches ? 'over' : 'side'"
+  <mat-sidenav-container  [class.dark]="!lightMode" class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 40 : 0">
+    <mat-sidenav [class.dark]="!lightMode" #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
       [fixedInViewport]="mobileQuery.matches" fixedTopGap="40">
-      <mat-nav-list>
+      <mat-nav-list [class.dark]="!lightMode">
         <a [class.dark]="!lightMode" mat-list-item routerLink="/home">
           <mat-icon>home</mat-icon><span class="distanceLogo">Accueil</span>
         </a>

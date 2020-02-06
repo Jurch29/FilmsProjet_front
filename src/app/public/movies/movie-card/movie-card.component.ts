@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component,OnInit,OnDestroy } from '@angular/core';
 import { NumberOfItemsInCartService } from 'src/app/core/service/number-of-items-in-cart.service';
 import { MovieService } from 'src/app/core/service/movie-service.service';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -10,6 +10,7 @@ import { Movie } from 'src/app/shared/models/movie';
 import { first } from 'rxjs/operators';
 import { AuthenticationService } from 'src/app/core/service/authentication.service';
 import { CartService } from 'src/app/core/service/cart.service';
+import { LightmodeService } from 'src/app/core/service/lightmode.service';
 
 
 @Component({
@@ -17,9 +18,9 @@ import { CartService } from 'src/app/core/service/cart.service';
   templateUrl: './movie-card.component.html',
   styleUrls: ['./movie-card.component.css']
 })
-export class MovieCardComponent {
+export class MovieCardComponent implements OnInit,OnDestroy{
   infobulecontainer : any;
-
+  lightMode:any;
   private id : number;
   private date : string;
   private duration : number;
@@ -30,9 +31,20 @@ export class MovieCardComponent {
   private categories : Category[];
   private synopsis : string ;
   private trailers : Trailer[];
+  subscriptionlightMode: any;
 
-  constructor(private movieService : MovieService, private authenticationService : AuthenticationService, private cartService : CartService, private numberofitemsincartService : NumberOfItemsInCartService, private sanitizer: DomSanitizer) { }
+  constructor(private lightmodeService: LightmodeService,private movieService : MovieService, private authenticationService : AuthenticationService, private cartService : CartService, private numberofitemsincartService : NumberOfItemsInCartService, private sanitizer: DomSanitizer) { }
 
+ 
+  ngOnInit() {
+    this.subscriptionlightMode = this.lightmodeService.getLightModeEventMessage().subscribe(dataTransmited =>{
+      this.lightMode = dataTransmited;
+    });
+  }
+  
+  ngOnDestroy(): void {
+    this.subscriptionlightMode.unsubscribe();
+  }
   setProperties(movie : Movie, container) {
     this.id = movie.movie_id;
     this.date = this.formatDate(movie.movie_date);

@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialogRef, MatDialog } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs/operators';
 
 import { AuthenticationService } from '../../../core/service/authentication.service';
-import { NavbarComponent } from 'src/app/core/components/navbar/navbar.component';
 import { CartService } from 'src/app/core/service/cart.service';
 import { NumberOfItemsInCartService } from 'src/app/core/service/number-of-items-in-cart.service';
 

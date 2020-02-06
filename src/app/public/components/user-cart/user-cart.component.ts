@@ -5,7 +5,6 @@ import { User } from 'src/app/shared/models/user';
 import { NavbarComponent } from 'src/app/core/components/navbar/navbar.component';
 import { CartService } from 'src/app/core/service/cart.service';
 import { NumberOfItemsInCartService } from 'src/app/core/service/number-of-items-in-cart.service';
-import { CartItem } from 'src/app/shared/models/cart-item';
 
 @Component({
   selector: 'app-user-cart',

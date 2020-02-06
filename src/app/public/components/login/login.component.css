@@ -10,6 +10,13 @@
 .alertError{
     color: red;
 }
+.activation-container{
+    text-align: center;
+}
+.activation-container .mat-form-field{
+    width:305px;
+    padding-top: 20px;
+}
 
 mat-spinner{
     display: block;

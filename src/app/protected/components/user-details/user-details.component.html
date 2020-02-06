@@ -1,5 +1,5 @@
 <div class="userDetailsContainer">
-    <mat-grid-list [class.dark]="!lightMode">
+    <mat-grid-list cols="1" [class.dark]="!lightMode">
         <mat-grid-tile>
             <mat-form-field appearance="outline">
                 <mat-label>Nom</mat-label>
@@ -49,13 +49,17 @@
                 <mat-error *ngIf="email.errors"></mat-error>
             </mat-form-field>
         </mat-grid-tile>
-        <mat-grid-tile>
-            <mat-form-field appearance="outline">
-                <button color="primary" routerLink="/userCartHistory">Changer Votre mot de passe</button>
-            </mat-form-field>
+        <mat-grid-tile class="buttons">
+            <button mat-raised-button (click)="changePassword()">Changer Votre mot de passe</button>
+        </mat-grid-tile>
+        <mat-grid-tile class="buttons">
+            <button color="primary" mat-raised-button class="save" (click)="changeUserDetails()">Sauvegarder les modifcations</button>
+        </mat-grid-tile>
+        <mat-grid-tile class="buttons">
+            <button color="primary" mat-raised-button routerLink="/userCartHistory">Historique des commandes</button>
+        </mat-grid-tile>
+        <mat-grid-tile class="buttons">
+            <button color="primary" mat-raised-button routerLink="/userCommentHistory">Historique des commentaires</button>
         </mat-grid-tile>
     </mat-grid-list>
-    <button color="primary" (click)="changeUserDetails()">Sauvegarder les modifcations</button>
-    <button color="primary" routerLink="/userCartHistory">Historique des commandes</button>
-    <button color="primary" routerLink="/userCommentHistory">Historique des commentaires</button>
 </div>
