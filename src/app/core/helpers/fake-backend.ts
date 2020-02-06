@@ -434,7 +434,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 firstname: user.firstname,
                 lastname: user.lastname,
                 role: user.role,
-                email:user.email,
+                email: user.email,
                 token: `fake-jwt-token.${user.id}`
             });
         }
@@ -501,7 +501,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
         function activate() {
             const user_id = request.params.get('user_id');
-            const activation_code = request.params.get('activation_code');
+            const activation_code = request.params.get('user_activation_code');
 
             const activation = activations.find(x => x.user_id === parseInt(user_id) && x.user_activation_code === activation_code);
             if (activation) {

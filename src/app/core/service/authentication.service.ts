@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
 import { User } from '../../shared/models/user';
+import { UserActivation } from '../../shared/models/user-activation';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
@@ -20,8 +21,8 @@ export class AuthenticationService {
         return this.currentUserSubject.value;
     }
 
-    validateUser(user_id : number, activation_code : string) {
-        let params = new HttpParams().set("user_id",user_id.toString()).set("activation_code", activation_code); //Create new HttpParams
+    validateUser(userActivation: UserActivation) {
+        let params = new HttpParams().set("user_id",userActivation.user_id.toString()).set("user_activation_code", userActivation.user_activation_code); //Create new HttpParams
         return this.http.get<any>(`${environment.apiUrl}/auth/activation`, {params: params});
     }
 

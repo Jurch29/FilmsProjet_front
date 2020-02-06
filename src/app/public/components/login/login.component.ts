@@ -7,6 +7,7 @@ import { first } from 'rxjs/operators';
 import { AuthenticationService } from '../../../core/service/authentication.service';
 import { CartService } from 'src/app/core/service/cart.service';
 import { NumberOfItemsInCartService } from 'src/app/core/service/number-of-items-in-cart.service';
+import { UserActivation } from 'src/app/shared/models/user-activation';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,8 @@ export class LoginComponent implements OnInit {
   returnUrl: string;
   error = '';
   isUserToActivate = false;
-
+  userActivation : UserActivation = new UserActivation;
+  
   userlogin = new FormControl('', [Validators.required]);
   passwd = new FormControl('', [Validators.required]);
   activationcode = new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]);
@@ -125,7 +127,11 @@ export class LoginComponent implements OnInit {
     }
     this.loading = true;
     this.error = '';
-    this.authenticationService.validateUser(this.user_id, this.activationcode.value)
+    
+    this.userActivation.user_id = this.user_id;
+    this.userActivation.user_activation_code = this.activationcode.value;
+
+    this.authenticationService.validateUser(this.userActivation)
     .pipe().subscribe(
       data => {
         this.loading = false;
