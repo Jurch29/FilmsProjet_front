@@ -1,7 +1,7 @@
 <div [class.dark]="!lightMode" class="movieCardContainer">
     <div class="actionContainer">
         <div class="playercontainer">
-            <iframe [src]="sanitizer.bypassSecurityTrustResourceUrl(trailers[0].trailerPath)" allowfullscreen></iframe>
+            <iframe [src]="sanitizer.bypassSecurityTrustResourceUrl(trailer)" allowfullscreen></iframe>
         </div>
         <p class="title">
             {{title}}

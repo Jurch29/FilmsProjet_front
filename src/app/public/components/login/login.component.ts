@@ -85,7 +85,7 @@ export class LoginComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
-          this.user_id = data.id;
+          this.user_id = data.userId;
           if (data.toActivate) {
             this.isUserToActivate = true;
             this.loading = false;

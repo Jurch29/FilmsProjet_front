@@ -9,7 +9,7 @@ export class Movie {
         movieTitle : string;
         moviePrice : number;
         movieImagePath : string;
-        movieTrailerPath : String;
+        movieTrailerPath : string;
         movieFilePath : string;
         movieDate : Date;
         movieDuration : number;

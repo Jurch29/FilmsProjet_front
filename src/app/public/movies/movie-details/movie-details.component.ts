@@ -53,8 +53,8 @@ export class MovieDetailsComponent implements OnInit,OnDestroy {
     this.actors = this.movie.actors;
     this.realisators = this.movie.authors;
     this.categories = this.movie.categories;
-    console.log(this.movie.trailers);
-    this.trailers = this.movie.trailers;
+    this.trailer = this.movie.movieTrailerPath;
+    
     this.movieService.getSynopsis(this.movie.movieId).pipe(first()).subscribe(data => this.synopsis = data.synopsis);
   }
   formatDate(date : Date) {
