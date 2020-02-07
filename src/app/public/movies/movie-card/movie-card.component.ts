@@ -32,6 +32,7 @@ export class MovieCardComponent implements OnInit,OnDestroy{
   private synopsis : string ;
   private trailers : Trailer[];
   subscriptionlightMode: any;
+  queryToDetails: string;
 
   constructor(private lightmodeService: LightmodeService,private movieService : MovieService, private authenticationService : AuthenticationService, private cartService : CartService, private numberofitemsincartService : NumberOfItemsInCartService, private sanitizer: DomSanitizer) { }
 
@@ -55,7 +56,6 @@ export class MovieCardComponent implements OnInit,OnDestroy{
     this.realisators = movie.authors;
     this.categories = movie.categories;
     this.trailers = movie.trailers;
-    
     this.movieService.getSynopsis(movie.movieId).pipe(first()).subscribe(data => this.synopsis = data.synopsis);
     this.infobulecontainer = container;
   }
@@ -105,4 +105,5 @@ export class MovieCardComponent implements OnInit,OnDestroy{
   close() {
     this.infobulecontainer.clear();
   }
+ 
 }

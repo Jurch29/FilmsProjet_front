@@ -13,7 +13,7 @@ import { MovieDetailsComponent } from './movies/movie-details/movie-details.comp
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'movies', component: MoviesComponent },
-  { path: 'nowMoreMovie', component: MovieDetailsComponent},
+  { path: 'nowMoreMovie/:movieID', component: MovieDetailsComponent},
   { path: 'register', component : RegisterComponent, canActivate: [AnonymousGuard]},
   { path: 'userCart', component : UserCartComponent},
   { path: 'unauthorized', component : ForbiddenComponent}
