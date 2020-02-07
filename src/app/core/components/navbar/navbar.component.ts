@@ -60,16 +60,16 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {
     if (window.innerWidth < 400) this.SmallSettingsNoButtons = true;
     if (this.currentUser != null) {
-      this.userService.getById(this.currentUser.id).pipe(first()).subscribe(user => {
+      this.userService.getById(this.currentUser.userId).pipe(first()).subscribe(user => {
         this.userFromApi = user;
       });
-      this.cartService.getUserCart(this.currentUser.id)
+      this.cartService.getUserCart(this.currentUser.userId)
       .pipe()
       .subscribe(
         data => {
           let numberOfItems = 0;
           for (let item of data) {
-            numberOfItems += item.movie_user_cart_count;
+            numberOfItems += item.movieUserCartCount;
           }
           this.numberOfItemsService.ChangeNumberOfItemsInCartMessage(numberOfItems);
         },

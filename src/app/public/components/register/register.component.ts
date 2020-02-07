@@ -96,12 +96,12 @@ export class RegisterComponent implements OnInit , OnDestroy{
       return;
     }
 
-    this.user.lastname = this.lastname.value;
-    this.user.firstname = this.firstname.value;
-    this.user.username = this.username.value;
-    this.user.email = this.email.value;
-    this.user.password = this.passwd.value;
-    this.user.role = [Role.User];
+    this.user.userLastname = this.lastname.value;
+    this.user.userFirstname = this.firstname.value;
+    this.user.userLogin = this.username.value;
+    this.user.userEmail = this.email.value;
+    this.user.userPassword = this.passwd.value;
+    this.user.roles = [Role.User];
 
     this.authenticationService.register(this.user).pipe(first())
     .subscribe(

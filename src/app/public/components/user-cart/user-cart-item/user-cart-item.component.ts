@@ -26,10 +26,10 @@ export class UserCartItemComponent implements OnInit {
     .pipe()
     .subscribe(
       movie => {
-        this.movieTitle = movie.movie_title;
-        this.unitCost = movie.movie_price;
+        this.movieTitle = movie.movieTitle;
+        this.unitCost = movie.moviePrice;
         this.totalCost = this.unitCost * this.numberOfItems;
-        this.moviePreviewImage["background-image"] = "url(" + movie.movie_image_path + ")";
+        this.moviePreviewImage["background-image"] = "url(" + movie.movieImagePath + ")";
       },
       error => {
         console.log(error);

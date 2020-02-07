@@ -25,7 +25,7 @@ export class UserCartComponent implements OnInit {
   }
 
   buy(){
-    this.cartService.buyCart(this.authenticationService.currentUserValue.id)
+    this.cartService.buyCart(this.authenticationService.currentUserValue.userId)
     .pipe()
     .subscribe(
       data => {
@@ -46,13 +46,13 @@ export class UserCartComponent implements OnInit {
     this.items = false;
     this.authenticationService.currentUser.subscribe(data => {
       if (data != undefined) {
-        this.cartService.getUserCart(data.id)
+        this.cartService.getUserCart(data.userId)
         .pipe()
         .subscribe(
           data => {
             let numberOfItems = 0;
             for (let item of data) {
-              numberOfItems += item.movie_user_cart_count;
+              numberOfItems += item.movieUserCartCount;
             }
             this.numberofitemsincartService.ChangeNumberOfItemsInCartMessage(numberOfItems);
             let i = 0;
@@ -61,7 +61,7 @@ export class UserCartComponent implements OnInit {
               this.items = true;
               this.componentRef = this.container.createComponent(this.componentFactory, 0);
               this.componentList[i++] = this.componentRef;
-              this.componentRef.instance.setProperties(element.movie_id, element.movie_user_cart_count);
+              this.componentRef.instance.setProperties(element.embeddedKeyMovieUser.movieId, element.movieUserCartCount);
             }
           },
           error => {

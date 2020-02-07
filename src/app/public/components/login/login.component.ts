@@ -100,7 +100,7 @@ export class LoginComponent implements OnInit {
                 data => {
                   let numberOfItems = 0;
                   for (let item of data) {
-                    numberOfItems += item.movie_user_cart_count;
+                    numberOfItems += item.movieUserCartCount;
                   }
                   this.numberOfItemsService.ChangeNumberOfItemsInCartMessage(numberOfItems);
                 },

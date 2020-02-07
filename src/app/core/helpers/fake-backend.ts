@@ -20,15 +20,17 @@ import { Synopsis } from 'src/app/shared/models/synopsis';
 import { OrderHistory } from 'src/app/shared/models/order-history';
 import { Order } from 'src/app/shared/models/order';
 import { OrderItem } from 'src/app/shared/models/order-item';
+import { Image } from 'src/app/shared/models/image';
+import { EmbeddedKeyMovieUser } from 'src/app/shared/models/embeddedKeyMovieUser';
 
 /*
  * MARIADB
  */
 
 const users: User[] = [
-    { id: 1, email: "j@j", username: 'ju', password: 'j', firstname: 'Admin', lastname: 'User', role: [Role.Admin] },
-    { id: 2, email: "jacqou@jacot.fr", username: 'peter', password: 'a', firstname: 'Normal', lastname: 'User', role: [Role.User] },
-    { id: 3, email: "a@a", username: 'anthal', password: 'a', firstname: 'Normal', lastname: 'User', role: [Role.User] }
+    { userId: 1, userEmail: "j@j", userLogin: 'ju', userPassword: 'j', userFirstname: 'Admin', userLastname: 'User', roles: [Role.Admin], userIsDeleted: false, userLastConnection: "18/11/1992"},
+    { userId: 2, userEmail: "jacqou@jacot.fr", userLogin: 'peter', userPassword: 'a', userFirstname: 'Normal', userLastname: 'User', roles: [Role.User], userIsDeleted: false, userLastConnection: "18/11/1992" },
+    { userId: 3, userEmail: "a@a", userLogin: 'anthal', userPassword: 'a', userFirstname: 'Normal', userLastname: 'User', roles: [Role.User], userIsDeleted: false, userLastConnection: "18/11/1992" }
 ];
 
 let activations: UserActivation[] = [
@@ -36,213 +38,244 @@ let activations: UserActivation[] = [
     { user_id: 3, user_activation_code: 'jeveuxpasser' }
 ];
 
-const movies: Movie[] = [
-    {
-        movie_id: 1,
-        movie_title: "Deadpool",
-        movie_price: 10,
-        movie_image_path: "https://upload.wikimedia.org/wikipedia/en/2/23/Deadpool_%282016_poster%29.png",
-        movie_file_path: "PicturesFolder/Preview/BDA_Deadpool.jpg",
-        movie_date: new Date("10/02/2016"),
-        movie_duration: 108,
-        movie_mark: 4.1,
-        movie_is_deleted: false
-    }, {
-        movie_id: 2,
-        movie_title: "The Dark Knight",
-        movie_price: 3,
-        movie_image_path: "http://culturaddict.com/wp-content/uploads/2016/07/TDK1.jpg",
-        movie_file_path: "PicturesFolder/Preview/BDA_BatmanTheDarkNight.jpg",
-        movie_date: new Date("2008-08-13"),
-        movie_duration: 153,
-        movie_mark: 4.5,
-        movie_is_deleted: false
-    }, {
-        movie_id: 3,
-        movie_title: "Elysium",
-        movie_price: 5,
-        movie_image_path: "https://4.bp.blogspot.com/-V-rf6RaIruI/WJwwBeC5ssI/AAAAAAAAi-k/uMMSK5N8N9o022w5vIuMg2_C6jOsSAV0gCLcB/s1600/01.jpg",
-        movie_file_path: "PicturesFolder/Preview/BDA_Elysium.jpg",
-        movie_date: new Date("2013-08-14"),
-        movie_duration: 110,
-        movie_mark: 3.9,
-        movie_is_deleted: false
-    }
-];
-
-const movieCategory: MovieCategory[] = [
-    {
-        moviecategory_movie_id: 1,
-        moviecategory_category_id: 1
-    },
-    {
-        moviecategory_movie_id: 1,
-        moviecategory_category_id: 2
-    },
-    {
-        moviecategory_movie_id: 1,
-        moviecategory_category_id: 3
-    },
-    {
-        moviecategory_movie_id: 2,
-        moviecategory_category_id: 1
-    },
-    {
-        moviecategory_movie_id: 2,
-        moviecategory_category_id: 2
-    },
-    {
-        moviecategory_movie_id: 2,
-        moviecategory_category_id: 3
-    },
-    {
-        moviecategory_movie_id: 3,
-        moviecategory_category_id: 3
-    }
-];
-
-const categorys: Category[] = [
-    {
-        category_id: 1,
-        category_title: "Super-heros"
-    }, {
-        category_id: 2,
-        category_title: "Comedie"
-    }, {
-        category_id: 3,
-        category_title: "Action"
-    }
-];
-
-const movieAuthor: MovieAuthor[] = [
-    {
-        movieauthor_movie_id: 1,
-        movieauthor_author_id: 1
-    }, {
-        movieauthor_movie_id: 2,
-        movieauthor_author_id: 2
-    }, {
-        movieauthor_movie_id: 3,
-        movieauthor_author_id: 3
-    }
-];
-
-const movieActor: MovieActor[] = [
-    {
-        movieactor_movie_id: 1,
-        movieactor_actor_id: 1
-    }, {
-        movieactor_movie_id: 1,
-        movieactor_actor_id: 2
-    }, {
-        movieactor_movie_id: 1,
-        movieactor_actor_id: 3
-    }, {
-        movieactor_movie_id: 2,
-        movieactor_actor_id: 4
-    }, {
-        movieactor_movie_id: 2,
-        movieactor_actor_id: 5
-    }, {
-        movieactor_movie_id: 2,
-        movieactor_actor_id: 6
-    }, {
-        movieactor_movie_id: 2,
-        movieactor_actor_id: 7
-    }, {
-        movieactor_movie_id: 2,
-        movieactor_actor_id: 8
-    }, {
-        movieactor_movie_id: 3,
-        movieactor_actor_id: 9
-    }
-];
+const images: Image[] = [
+    {image_id: 1, imagePath: "imageofthepath"},
+    {image_id: 2, imagePath: "imageofthepath"},
+    {image_id: 3, imagePath: "imageofthepath"},
+    {image_id: 4, imagePath: "imageofthepath"},
+    {image_id: 5, imagePath: "imageofthepath"}
+]
 
 const authors: Author[] = [
     {
         author_id: 1,
-        author_lastname: "Trou",
-        author_firstname: "Brad"
+        authorLastName: "Trou",
+        authorFirstName: "Brad"
     }, {
         author_id: 2,
-        author_lastname: "La Belle",
-        author_firstname: "Angelina"
+        authorLastName: "La Belle",
+        authorFirstName: "Angelina"
     }, {
         author_id: 3,
-        author_lastname: "Blomkamp",
-        author_firstname: "Neill"
+        authorLastName: "Blomkamp",
+        authorFirstName: "Neill"
     }
 ];
 
 const actors: Actor[] = [
     {
         actor_id: 1,
-        actor_lastname: "Reynolds",
-        actor_firstname: "Ryan"
+        actorLastName: "Reynolds",
+        actorFirstName: "Ryan"
     }, {
         actor_id: 2,
-        actor_lastname: "Baccarin",
-        actor_firstname: "Morena"
+        actorLastName: "Baccarin",
+        actorFirstName: "Morena"
     }, {
         actor_id: 3,
-        actor_lastname: "T. J.",
-        actor_firstname: "Miller"
+        actorLastName: "T. J.",
+        actorFirstName: "Miller"
     }, {
         actor_id: 4,
-        actor_lastname: "Pratt",
-        actor_firstname: "Chris"
+        actorLastName: "Pratt",
+        actorFirstName: "Chris"
     }, {
         actor_id: 5,
-        actor_lastname: "Saldana",
-        actor_firstname: "Zoe"
+        actorLastName: "Saldana",
+        actorFirstName: "Zoe"
     }, {
         actor_id: 6,
-        actor_lastname: "Bautista",
-        actor_firstname: "David"
+        actorLastName: "Bautista",
+        actorFirstName: "David"
     }, {
         actor_id: 7,
-        actor_lastname: "Gunn",
-        actor_firstname: "James"
+        actorLastName: "Gunn",
+        actorFirstName: "James"
     }, {
         actor_id: 8,
-        actor_lastname: "Diesel",
-        actor_firstname: "Vin"
+        actorLastName: "Diesel",
+        actorFirstName: "Vin"
     }, {
         actor_id: 9,
-        actor_lastname: "Demon",
-        actor_firstname: "Matt"
+        actorLastName: "Demon",
+        actorFirstName: "Matt"
     }
 ];
 
-let carts: CartItem[] = [
+const categorys: Category[] = [
     {
-        user_id: 2,
-        movie_id: 1,
-        movie_user_cart_count: 3
+        category_id: 1,
+        categoryTitle: "Super-heros"
     }, {
-        user_id: 2,
-        movie_id: 2,
-        movie_user_cart_count: 1
+        category_id: 2,
+        categoryTitle: "Comedie"
     }, {
-        user_id: 3,
-        movie_id: 1,
-        movie_user_cart_count: 1
+        category_id: 3,
+        categoryTitle: "Action"
     }
 ];
 
 const trailers : Trailer[] = [
     {
         trailer_id : 1,
-        trailer_path : "https://www.youtube.com/embed/0ZD711IkW1g"
+        trailerPath : "https://www.youtube.com/embed/0ZD711IkW1g"
     }, {
         trailer_id : 2,
-        trailer_path : "https://www.youtube.com/embed/A1rWh7fyfPQ?rel=0&showinfo=0&controls=0&iv_load_policy=3&modestbranding=1"
+        trailerPath : "https://www.youtube.com/embed/A1rWh7fyfPQ?rel=0&showinfo=0&controls=0&iv_load_policy=3&modestbranding=1"
     }, {
         trailer_id : 3,
-        trailer_path : "https://www.youtube.com/embed/EXeTwQWrcwY?rel=0&showinfo=0&controls=0&iv_load_policy=3&modestbranding=1"
+        trailerPath : "https://www.youtube.com/embed/EXeTwQWrcwY?rel=0&showinfo=0&controls=0&iv_load_policy=3&modestbranding=1"
     }, {
         trailer_id : 4,
-        trailer_path : "https://www.youtube.com/embed/oIBtePb-dGY?rel=0&showinfo=0&controls=0&iv_load_policy=3&modestbranding=1"
+        trailerPath : "https://www.youtube.com/embed/oIBtePb-dGY?rel=0&showinfo=0&controls=0&iv_load_policy=3&modestbranding=1"
+    }
+];
+
+const movies: Movie[] = [
+    {
+        movieId: 1,
+        movieTitle: "Deadpool",
+        moviePrice: 10,
+        movieImagePath: "https://upload.wikimedia.org/wikipedia/en/2/23/Deadpool_%282016_poster%29.png",
+        movieFilePath: "PicturesFolder/Preview/BDA_Deadpool.jpg",
+        movieDate: new Date("10/02/2016"),
+        movieDuration: 108,
+        movieMark: 4.1,
+        movieIsDeleted: false,
+        movieTrailerPath: "URL",
+        actors: actors,
+        authors: authors,
+        categories: categorys,
+        images: images,
+        trailers: trailers
+    }, {
+        movieId: 1,
+        movieTitle: "Deadpool",
+        moviePrice: 10,
+        movieImagePath: "http://culturaddict.com/wp-content/uploads/2016/07/TDK1.jpg",
+        movieFilePath: "PicturesFolder/Preview/BDA_Deadpool.jpg",
+        movieDate: new Date("10/02/2016"),
+        movieDuration: 108,
+        movieMark: 4.1,
+        movieIsDeleted: false,
+        movieTrailerPath: "URL",
+        actors: actors,
+        authors: authors,
+        categories: categorys,
+        images: images,
+        trailers: trailers
+    }, {
+        movieId: 1,
+        movieTitle: "Deadpool",
+        moviePrice: 10,
+        movieImagePath: "https://4.bp.blogspot.com/-V-rf6RaIruI/WJwwBeC5ssI/AAAAAAAAi-k/uMMSK5N8N9o022w5vIuMg2_C6jOsSAV0gCLcB/s1600/01.jpg",
+        movieFilePath: "PicturesFolder/Preview/BDA_Deadpool.jpg",
+        movieDate: new Date("10/02/2016"),
+        movieDuration: 108,
+        movieMark: 4.1,
+        movieIsDeleted: false,
+        movieTrailerPath: "URL",
+        actors: actors,
+        authors: authors,
+        categories: categorys,
+        images: images,
+        trailers: trailers
+    }
+];
+
+const movieCategory: MovieCategory[] = [
+    {
+        movie_id: 1,
+        category_id: 1
+    },
+    {
+        movie_id: 1,
+        category_id: 2
+    },
+    {
+        movie_id: 1,
+        category_id: 3
+    },
+    {
+        movie_id: 2,
+        category_id: 1
+    },
+    {
+        movie_id: 2,
+        category_id: 2
+    },
+    {
+        movie_id: 2,
+        category_id: 3
+    },
+    {
+        movie_id: 3,
+        category_id: 3
+    }
+];
+
+const movieAuthor: MovieAuthor[] = [
+    {
+        movie_id: 1,
+        author_id: 1
+    }, {
+        movie_id: 2,
+        author_id: 2
+    }, {
+        movie_id: 3,
+        author_id: 3
+    }
+];
+
+const movieActor: MovieActor[] = [
+    {
+        movie_id: 1,
+        actor_id: 1
+    }, {
+        movie_id: 1,
+        actor_id: 2
+    }, {
+        movie_id: 1,
+        actor_id: 3
+    }, {
+        movie_id: 2,
+        actor_id: 4
+    }, {
+        movie_id: 2,
+        actor_id: 5
+    }, {
+        movie_id: 2,
+        actor_id: 6
+    }, {
+        movie_id: 2,
+        actor_id: 7
+    }, {
+        movie_id: 2,
+        actor_id: 8
+    }, {
+        movie_id: 3,
+        actor_id: 9
+    }
+];
+
+let embeddedKeyMovieUser: EmbeddedKeyMovieUser[] = [
+    {
+        movieId: 1,
+        userId: 3
+    }, {
+        movieId: 3,
+        userId: 2
+    }
+
+]
+
+let carts: CartItem[] = [
+    {
+        embeddedKeyMovieUser: embeddedKeyMovieUser[0],
+        movieUserCartCount: 2
+    }, {
+        embeddedKeyMovieUser: embeddedKeyMovieUser[1],
+        movieUserCartCount: 2
     }
 ];
 
@@ -385,10 +418,10 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function getCategorysByMovieId() {
-            let moviecategorys = movieCategory.filter(x => x.moviecategory_movie_id === idFromUrl());
+            let moviecategorys = movieCategory.filter(x => x.movie_id === idFromUrl());
             const categoryz = new Array<Category>();
             moviecategorys.forEach(element => {
-                categoryz.push(categorys.find(x => x.category_id === element.moviecategory_category_id));
+                categoryz.push(categorys.find(x => x.category_id === element.category_id));
             });
             return ok(categoryz);
         }
@@ -398,10 +431,10 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function getAuthorsByMovieId() {
-            let movieauthors = movieAuthor.filter(x => x.movieauthor_movie_id === idFromUrl());
+            let movieauthors = movieAuthor.filter(x => x.movie_id === idFromUrl());
             const authorz = new Array<Author>();
             movieauthors.forEach(element => {
-                authorz.push(authors.find(x => x.author_id === element.movieauthor_author_id));
+                authorz.push(authors.find(x => x.author_id === element.author_id));
             });
             return ok(authorz);
         }
@@ -411,63 +444,63 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function getActorsByMovieId() {
-            const movieactors = movieActor.filter(x => x.movieactor_movie_id === idFromUrl());
+            const movieactors = movieActor.filter(x => x.movie_id === idFromUrl());
             let actorz = new Array<Actor>();
             movieactors.forEach(element => {
-                actorz.push(actors.find(x => x.actor_id === element.movieactor_actor_id));
+                actorz.push(actors.find(x => x.actor_id === element.actor_id));
             });
             return ok(actorz);
         }
 
         function authenticate() {
             const { username, password } = body;
-            const user = users.find(x => x.username === username && x.password === password);
+            const user = users.find(x => x.userLogin === username && x.userPassword === password);
             if (!user) return error('Login ou mot de passe incorrect');
 
-            const activation = activations.find(x => x.user_id === user.id);
+            const activation = activations.find(x => x.user_id === user.userId);
             if (activation)
-                return ok({ toActivate: true, id: user.id });
+                return ok({ toActivate: true, id: user.userId });
 
             return ok({
-                id: user.id,
-                username: user.username,
-                firstname: user.firstname,
-                lastname: user.lastname,
-                role: user.role,
-                email: user.email,
-                token: `fake-jwt-token.${user.id}`
+                userId: user.userId,
+                userLogin: user.userLogin,
+                userFirstname: user.userFirstname,
+                userLastname: user.userLastname,
+                roles: user.roles,
+                userEmail: user.userEmail,
+                token: `fake-jwt-token.${user.userId}`
             });
         }
 
         function registerate() {
             let newUser = new User();
-            newUser.username = body.username;
-            newUser.lastname = body.lastname;
-            newUser.firstname = body.firstname;
-            newUser.password = body.password;
-            newUser.email = body.email;
-            newUser.role = body.role;
+            newUser.userLogin = body.userLogin;
+            newUser.userLastname = body.userLastname;
+            newUser.userFirstname = body.userFirstname;
+            newUser.userPassword = body.userPassword;
+            newUser.userEmail = body.userEmail;
+            newUser.roles = body.roles;
             let maxId = 0;
             let found = {
                 username: false,
                 email: false
             };
             for (let user of users) {
-                if (maxId < user.id) {
-                    maxId = user.id;
+                if (maxId < user.userId) {
+                    maxId = user.userId;
                 }
-                if (user.username == newUser.username) {
+                if (user.userLogin == newUser.userLogin) {
                     found.username = true;
                 }
-                if (user.email == newUser.email) {
+                if (user.userEmail == newUser.userEmail) {
                     found.email = true;
                 }
             }
             if (!found.username && !found.email) {
-                newUser.id = maxId + 1;
+                newUser.userId = maxId + 1;
                 users.push(newUser);
                 let activation = new UserActivation();
-                activation.user_id = newUser.id;
+                activation.user_id = newUser.userId;
                 activation.user_activation_code = 'CodeX1';
                 activations.push(activation);
                 return ok(found);
@@ -484,9 +517,9 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             if (!isLoggedIn()) return unauthorized();
 
             // only admins can access other user records
-            if (!isAdmin() && currentUser().id !== idFromUrl()) return unauthorized();
+            if (!isAdmin() && currentUser().userId !== idFromUrl()) return unauthorized();
 
-            const user = users.find(x => x.id === idFromUrl());
+            const user = users.find(x => x.userId === idFromUrl());
             return ok(user);
         }
 
@@ -495,7 +528,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function getMovieById() {
-            const movie = movies.find(x => x.movie_id === idFromUrl());
+            const movie = movies.find(x => x.movieId === idFromUrl());
             return ok(movie);
         }
 
@@ -516,7 +549,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         function getUserCart() {
             let user_id = idFromUrl();
             let cart = carts.filter(function (element) {
-                return element.user_id == user_id;
+                return element.embeddedKeyMovieUser.userId == user_id;
             });
             return ok(cart);
         }
@@ -524,21 +557,23 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         function addItemToCart() {
             const user_id = request.params.get('user_id');
             const movie_id = request.params.get('movie_id');
-            if (!users.find(x => x.id === parseInt(user_id))) {
+            if (!users.find(x => x.userId === parseInt(user_id))) {
                 return error("Utilisateur inconnu");
             }
-            if (!movies.find(x => x.movie_id === parseInt(movie_id))) {
+            if (!movies.find(x => x.movieId === parseInt(movie_id))) {
                 return error("Film inconnu");
             }
-            let cart = carts.find(x => x.user_id === parseInt(user_id) && x.movie_id === parseInt(movie_id));
+            let cart = carts.find(x => x.embeddedKeyMovieUser.userId === parseInt(user_id) && x.embeddedKeyMovieUser.movieId === parseInt(movie_id));
             if (cart) {
-                cart.movie_user_cart_count = cart.movie_user_cart_count + 1;
+                cart.movieUserCartCount = cart.movieUserCartCount + 1;
             } else {
+                let embeddedKeyMovieUser = new EmbeddedKeyMovieUser();
+                embeddedKeyMovieUser.userId = parseInt(user_id);
+                embeddedKeyMovieUser.movieId = parseInt(movie_id);
                 carts.push(
                     {
-                        user_id : parseInt(user_id),
-                        movie_id : parseInt(movie_id),
-                        movie_user_cart_count : 1
+                        embeddedKeyMovieUser,
+                        movieUserCartCount : 1
                     }
                 )
             }
@@ -547,12 +582,12 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
         function buyCart() {
             const user_id = idFromUrl();
-            let user = users.find(x => x.id === user_id);
+            let user = users.find(x => x.userId === user_id);
             if (!user) {
                 return error("Utilisateur introuvable");
             }
             const userCart = carts.filter(function (element) {
-                return element.user_id == user_id;
+                return element.embeddedKeyMovieUser.userId == user_id;
             });
             if (!userCart) {
                 return error("Panier vide");
@@ -562,17 +597,17 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             order.items = new Array<OrderItem>();
             for (let cartItem of userCart) {
                 let orderItem : OrderItem = new OrderItem();
-                orderItem.movie_id = cartItem.movie_id;
-                let movie = movies.find(x => x.movie_id === orderItem.movie_id);
+                orderItem.movie_id = cartItem.embeddedKeyMovieUser.movieId;
+                let movie = movies.find(x => x.movieId === orderItem.movie_id);
                 if (!movie) {
                     return error("Film introuvable");
                 }
-                orderItem.movie_price = movie.movie_price;
-                orderItem.count = cartItem.movie_user_cart_count;
+                orderItem.movie_price = movie.moviePrice;
+                orderItem.count = cartItem.movieUserCartCount;
                 order.items.push(orderItem);
             }
             carts = carts.filter(function (element) {
-                return element.user_id != user_id;
+                return element.embeddedKeyMovieUser.userId != user_id;
             });
             return ok({});
         }
@@ -597,13 +632,13 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function isAdmin() {
-            return isLoggedIn() && currentUser().role === [Role.Admin];
+            return isLoggedIn() && currentUser().roles === [Role.Admin];
         }
 
         function currentUser() {
             if (!isLoggedIn()) return;
             const id = parseInt(headers.get('Authorization').split('.')[1]);
-            return users.find(x => x.id === id);
+            return users.find(x => x.userId === id);
         }
 
         function idFromUrl() {

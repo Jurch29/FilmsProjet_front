@@ -1,6 +1,6 @@
 <div [class.dark]="!lightMode" class="movieCardContainer">
     <div class="playercontainer">
-        <iframe [src]="sanitizer.bypassSecurityTrustResourceUrl(trailers[0].trailer_path)" allowfullscreen></iframe>
+        <iframe [src]="sanitizer.bypassSecurityTrustResourceUrl(trailers[0].trailerPath)" allowfullscreen></iframe>
     </div>
     <div class="actionContainer">
         <p class="title">
@@ -13,13 +13,13 @@
             {{duration}}min
         </p>
         <p class="realisators">
-            Par :<span *ngFor="let realisator of (realisators) let isLast=last">{{realisator.author_firstname}} {{realisator.author_lastname}}{{isLast ? '' : ', '}} </span>
+            Par :<span *ngFor="let realisator of (realisators) let isLast=last">{{realisator.authorFirstName}} {{realisator.authorLastName}}{{isLast ? '' : ', '}} </span>
         </p>
         <p class="actors">
-            Avec :<span *ngFor="let actor of (actors) let isLast=last">{{actor.actor_firstname}} {{actor.actor_lastname}}{{isLast ? '' : ', '}} </span>
+            Avec :<span *ngFor="let actor of (actors) let isLast=last">{{actor.actorFirstName}} {{actor.actorLastName}}{{isLast ? '' : ', '}} </span>
         </p>
         <p class="categories">
-            Catégorie :<span *ngFor="let category of (categories) let isLast=last">{{category.category_title}}{{isLast ? '' : ', '}} </span>
+            Catégorie :<span *ngFor="let category of (categories) let isLast=last">{{category.categoryTitle}}{{isLast ? '' : ', '}} </span>
         </p>
         <p class="synopsis">
             {{synopsis}}

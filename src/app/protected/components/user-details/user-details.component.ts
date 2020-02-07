@@ -25,10 +25,10 @@ export class UserDetailsComponent implements OnInit,OnDestroy {
       this.lightMode = dataTransmited;
     });
     console.log(this.authenticationService.currentUserValue)
-    this.lastname.setValue(this.authenticationService.currentUserValue.lastname);
-    this.firstname.setValue(this.authenticationService.currentUserValue.firstname);
-    this.username.setValue(this.authenticationService.currentUserValue.username);
-    this.email.setValue(this.authenticationService.currentUserValue.email);
+    this.lastname.setValue(this.authenticationService.currentUserValue.userLastname);
+    this.firstname.setValue(this.authenticationService.currentUserValue.userFirstname);
+    this.username.setValue(this.authenticationService.currentUserValue.userLogin);
+    this.email.setValue(this.authenticationService.currentUserValue.userEmail);
   }
 
 

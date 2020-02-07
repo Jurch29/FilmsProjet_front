@@ -46,16 +46,17 @@ export class MovieCardComponent implements OnInit,OnDestroy{
     this.subscriptionlightMode.unsubscribe();
   }
   setProperties(movie : Movie, container) {
-    this.id = movie.movie_id;
-    this.date = this.formatDate(movie.movie_date);
-    this.duration = movie.movie_duration;
-    this.title = movie.movie_title;
-    this.rating = movie.movie_mark;
-    this.movieService.getAuthorsByMovieId(movie.movie_id).pipe(first()).subscribe(data => this.realisators = data);
-    this.movieService.getActorByMovieId(movie.movie_id).pipe(first()).subscribe(data => this.actors = data);
-    this.movieService.getCategorysByMovieId(movie.movie_id).pipe(first()).subscribe(data => this.categories = data);
-    this.movieService.getTrailersByMovieId(movie.movie_id).pipe(first()).subscribe(data => this.trailers = data);
-    this.movieService.getSynopsis(movie.movie_id).pipe(first()).subscribe(data => this.synopsis = data.synopsis);
+    this.id = movie.movieId;
+    this.date = this.formatDate(movie.movieDate);
+    this.duration = movie.movieDuration;
+    this.title = movie.movieTitle;
+    this.rating = movie.movieMark;
+    this.actors = movie.actors;
+    this.realisators = movie.authors;
+    this.categories = movie.categories;
+    this.trailers = movie.trailers;
+    
+    this.movieService.getSynopsis(movie.movieId).pipe(first()).subscribe(data => this.synopsis = data.synopsis);
     this.infobulecontainer = container;
   }
 
@@ -79,17 +80,18 @@ export class MovieCardComponent implements OnInit,OnDestroy{
   }
 
   addToCart(){
-    this.cartService.addItemToCart(this.authenticationService.currentUserValue.id, this.id)
+    console.log(this.authenticationService.currentUserValue);
+    this.cartService.addItemToCart(this.authenticationService.currentUserValue.userId, this.id)
     .pipe()
     .subscribe(
       data => {
-        this.cartService.getUserCart(this.authenticationService.currentUserValue.id)
+        this.cartService.getUserCart(this.authenticationService.currentUserValue.userId)
         .pipe()
         .subscribe(
           data => {
             let numberOfItems = 0;
             for (let item of data) {
-              numberOfItems += item.movie_user_cart_count;
+              numberOfItems += item.movieUserCartCount;
             }
             this.numberofitemsincartService.ChangeNumberOfItemsInCartMessage(numberOfItems);
           },

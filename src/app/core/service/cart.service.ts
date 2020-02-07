@@ -15,6 +15,7 @@ export class CartService {
   }
 
   addItemToCart(user_id : number, movie_id : number) {
+    console.log(user_id + ' : ' + movie_id);
     let params = new HttpParams().set("user_id", user_id.toString()).set("movie_id", movie_id.toString());
     return this.http.get<any>(`${environment.apiUrl}/user/cart/add`, {params : params});
   }
