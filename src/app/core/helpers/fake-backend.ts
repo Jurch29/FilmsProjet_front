@@ -570,7 +570,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
             const activation = activations.find(x => x.user_id === user.userId);
             if (activation)
-                return ok({ toActivate: true, id: user.userId });
+                return ok({ toActivate: true, userId: user.userId });
 
             return ok({
                 userId: user.userId,
