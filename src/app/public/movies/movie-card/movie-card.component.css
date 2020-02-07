@@ -30,13 +30,13 @@
     display: block;
     position: relative;
     left: 35px;
-    width: calc(40vw - 35px);
+    width: calc(40vw - 70px);
     height: 50vh;
 }
 .actionContainer p{
         display: block;
-        word-wrap: wrap;
-        word-break: break-all;
+        word-wrap: break-word;
+        word-break: break-word;
         margin: 0px;
         padding: 0px;
         width: 100%;

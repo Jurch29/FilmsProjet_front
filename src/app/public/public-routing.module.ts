@@ -7,11 +7,13 @@ import { UserCartComponent } from './components/user-cart/user-cart.component';
 import { AnonymousGuard } from '../core/helpers/anonymous.guard';
 import { ForbiddenComponent } from './components/forbidden/forbidden.component';
 import { MoviesComponent } from './movies/movies/movies.component';
+import { MovieDetailsComponent } from './movies/movie-details/movie-details.component';
 
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'movies', component: MoviesComponent },
+  { path: 'nowMoreMovie', component: MovieDetailsComponent},
   { path: 'register', component : RegisterComponent, canActivate: [AnonymousGuard]},
   { path: 'userCart', component : UserCartComponent},
   { path: 'unauthorized', component : ForbiddenComponent}

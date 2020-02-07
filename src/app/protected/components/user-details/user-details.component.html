@@ -49,7 +49,7 @@
                 <mat-error *ngIf="email.errors"></mat-error>
             </mat-form-field>
         </mat-grid-tile>
-        <mat-grid-tile class="buttons">
+        <mat-grid-tile class="buttons"  [class.dark]="lightMode">
             <button mat-raised-button (click)="changePassword()">Changer Votre mot de passe</button>
         </mat-grid-tile>
         <mat-grid-tile class="buttons">

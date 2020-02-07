@@ -7,6 +7,9 @@
 button{
     width: 230px;
 }
+.buttons.dark button{
+    background-color: grey;
+}
 .save {
    background-color: green !important
 }

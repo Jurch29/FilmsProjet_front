@@ -38,7 +38,20 @@ export class MoviePreviewComponent implements OnInit {
       }
     );
   }
-
+  formatDate(date : Date) {
+    let monthNames = [
+      "Janvier", "Février", "Mars",
+      "Avril", "Mai", "Juin", "Juillet",
+      "Âout", "Septembre", "Octobre",
+      "Novembre", "Décembre"
+    ];
+  
+    let day = ("0" + date.getDate()).slice(-2);
+    let monthIndex = date.getMonth();
+    let year = date.getFullYear();
+  
+    return day + ' ' + monthNames[monthIndex] + ' ' + year;
+  }
   ngOnDestroy() {
     this.subscriptionlightMode.unsubscribe();
   }
