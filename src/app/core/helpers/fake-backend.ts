@@ -49,12 +49,12 @@ const images: Image[] = [
 const authors: Author[] = [
     {
         author_id: 1,
-        authorLastName: "Trou",
-        authorFirstName: "Brad"
+        authorLastName: "Miller",
+        authorFirstName: "Tim"
     }, {
         author_id: 2,
-        authorLastName: "La Belle",
-        authorFirstName: "Angelina"
+        authorLastName: "Nolan",
+        authorFirstName: "Christopher"
     }, {
         author_id: 3,
         authorLastName: "Blomkamp",
@@ -77,28 +77,40 @@ const actors: Actor[] = [
         actorFirstName: "Miller"
     }, {
         actor_id: 4,
-        actorLastName: "Pratt",
-        actorFirstName: "Chris"
+        actorLastName: "Bale",
+        actorFirstName: "Christian"
     }, {
         actor_id: 5,
-        actorLastName: "Saldana",
-        actorFirstName: "Zoe"
+        actorLastName: "Ledger",
+        actorFirstName: "Health"
     }, {
         actor_id: 6,
-        actorLastName: "Bautista",
-        actorFirstName: "David"
+        actorLastName: "Caine",
+        actorFirstName: "Michael"
     }, {
         actor_id: 7,
-        actorLastName: "Gunn",
-        actorFirstName: "James"
+        actorLastName: "Oldman",
+        actorFirstName: "Gary"
     }, {
         actor_id: 8,
-        actorLastName: "Diesel",
-        actorFirstName: "Vin"
+        actorLastName: "Freeman",
+        actorFirstName: "Morgan"
     }, {
         actor_id: 9,
         actorLastName: "Demon",
         actorFirstName: "Matt"
+    }, {
+        actor_id: 10,
+        actorLastName: "Foster",
+        actorFirstName: "Jodie"
+    }, {
+        actor_id: 11,
+        actorLastName: "Copley",
+        actorFirstName: "Sharlito"
+    }, {
+        actor_id: 12,
+        actorLastName: "Braga",
+        actorFirstName: "Alice"
     }
 ];
 
@@ -112,22 +124,25 @@ const categorys: Category[] = [
     }, {
         category_id: 3,
         categoryTitle: "Action"
+    }, {
+        category_id: 4,
+        categoryTitle: "Fantasy"
+    }, {
+        category_id: 5,
+        categoryTitle: "Science-Fiction"
+    }, {
+        category_id: 6,
+        categoryTitle: "Drame"
+    }, {
+        category_id: 7,
+        categoryTitle: "Thriller"
     }
 ];
 
 const trailers : Trailer[] = [
     {
         trailer_id : 1,
-        trailerPath : "https://www.youtube.com/embed/0ZD711IkW1g"
-    }, {
-        trailer_id : 2,
         trailerPath : "https://www.youtube.com/embed/A1rWh7fyfPQ?rel=0&showinfo=0&controls=0&iv_load_policy=3&modestbranding=1"
-    }, {
-        trailer_id : 3,
-        trailerPath : "https://www.youtube.com/embed/EXeTwQWrcwY?rel=0&showinfo=0&controls=0&iv_load_policy=3&modestbranding=1"
-    }, {
-        trailer_id : 4,
-        trailerPath : "https://www.youtube.com/embed/oIBtePb-dGY?rel=0&showinfo=0&controls=0&iv_load_policy=3&modestbranding=1"
     }
 ];
 
@@ -137,49 +152,145 @@ const movies: Movie[] = [
         movieTitle: "Deadpool",
         moviePrice: 10,
         movieImagePath: "https://upload.wikimedia.org/wikipedia/en/2/23/Deadpool_%282016_poster%29.png",
+        movieTrailerPath: "https://www.youtube.com/embed/0ZD711IkW1g?rel=0&showinfo=0&controls=0&iv_load_policy=3&modestbranding=1",
         movieFilePath: "PicturesFolder/Preview/BDA_Deadpool.jpg",
         movieDate: new Date("10/02/2016"),
         movieDuration: 108,
         movieMark: 4.1,
         movieIsDeleted: false,
-        movieTrailerPath: "URL",
-        actors: actors,
-        authors: authors,
-        categories: categorys,
-        images: images,
-        trailers: trailers
+        actors: [
+            {
+                actor_id: 1,
+                actorLastName: "Reynolds",
+                actorFirstName: "Ryan"
+            }, {
+                actor_id: 2,
+                actorLastName: "Baccarin",
+                actorFirstName: "Morena"
+            }, {
+                actor_id: 3,
+                actorLastName: "T. J.",
+                actorFirstName: "Miller"
+            }
+        ],
+        authors: [
+            {
+                author_id: 1,
+                authorLastName: "Miller",
+                authorFirstName: "Tim"
+            }
+        ],
+        categories: [
+            {
+                category_id: 4,
+                categoryTitle: "Fantasy"
+            }, {
+                category_id: 5,
+                categoryTitle: "Science-Fiction"
+            }
+        ],
+        images: [],
+        trailers: []
     }, {
         movieId: 2,
         movieTitle: "Batman : The Dark Night",
         moviePrice: 10,
         movieImagePath: "http://culturaddict.com/wp-content/uploads/2016/07/TDK1.jpg",
+        movieTrailerPath: "https://www.youtube.com/embed/EXeTwQWrcwY?rel=0&showinfo=0&controls=0&iv_load_policy=3&modestbranding=1",
         movieFilePath: "PicturesFolder/Preview/BDA_TheDarkNight.jpg",
         movieDate: new Date("08/13/2008"),
         movieDuration: 153,
         movieMark: 5,
         movieIsDeleted: false,
-        movieTrailerPath: "URL",
-        actors: actors,
-        authors: authors,
-        categories: categorys,
-        images: images,
-        trailers: trailers
+        actors: [
+            {
+                actor_id: 4,
+                actorLastName: "Bale",
+                actorFirstName: "Christian"
+            }, {
+                actor_id: 5,
+                actorLastName: "Ledger",
+                actorFirstName: "Health"
+            }, {
+                actor_id: 6,
+                actorLastName: "Caine",
+                actorFirstName: "Michael"
+            }, {
+                actor_id: 7,
+                actorLastName: "Oldman",
+                actorFirstName: "Gary"
+            }, {
+                actor_id: 8,
+                actorLastName: "Freeman",
+                actorFirstName: "Morgan"
+            }
+        ],
+        authors: [
+            {
+                author_id: 2,
+                authorLastName: "Nolan",
+                authorFirstName: "Christopher"
+            }
+        ],
+        categories: [
+            {
+                category_id: 6,
+                categoryTitle: "Drame"
+            }, {
+                category_id: 7,
+                categoryTitle: "Thriller"
+            }
+        ],
+        images: [],
+        trailers: []
     }, {
         movieId: 3,
         movieTitle: "Elysium",
         moviePrice: 10,
         movieImagePath: "https://4.bp.blogspot.com/-V-rf6RaIruI/WJwwBeC5ssI/AAAAAAAAi-k/uMMSK5N8N9o022w5vIuMg2_C6jOsSAV0gCLcB/s1600/01.jpg",
+        movieTrailerPath: "https://www.youtube.com/embed/oIBtePb-dGY?rel=0&showinfo=0&controls=0&iv_load_policy=3&modestbranding=1",
         movieFilePath: "PicturesFolder/Preview/BDA_Elysium.jpg",
         movieDate: new Date("08/14/2013"),
         movieDuration: 109,
         movieMark: 3.4,
         movieIsDeleted: false,
-        movieTrailerPath: "URL",
-        actors: actors,
-        authors: authors,
-        categories: categorys,
-        images: images,
-        trailers: trailers
+        actors: [
+            {
+                actor_id: 9,
+                actorLastName: "Demon",
+                actorFirstName: "Matt"
+            }, {
+                actor_id: 10,
+                actorLastName: "Foster",
+                actorFirstName: "Jodie"
+            }, {
+                actor_id: 11,
+                actorLastName: "Copley",
+                actorFirstName: "Sharlito"
+            }, {
+                actor_id: 12,
+                actorLastName: "Braga",
+                actorFirstName: "Alice"
+            }
+        ],
+        authors: [
+            {
+                author_id: 3,
+                authorLastName: "Blomkamp",
+                authorFirstName: "Neill"
+            }
+        ],
+        categories: [
+            {
+                category_id: 5,
+                categoryTitle: "Science-Fiction"
+            }, {
+                category_id: 6,
+                categoryTitle: "Drame"
+            }
+        ],
+        images: [],
+        trailers: []
     }
 ];
 

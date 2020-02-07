@@ -5,7 +5,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Author } from 'src/app/shared/models/author';
 import { Actor } from 'src/app/shared/models/actor';
 import { Category } from 'src/app/shared/models/category';
-import { Trailer } from 'src/app/shared/models/trailer';
 import { Movie } from 'src/app/shared/models/movie';
 import { first } from 'rxjs/operators';
 import { AuthenticationService } from 'src/app/core/service/authentication.service';
@@ -30,7 +29,7 @@ export class MovieCardComponent implements OnInit,OnDestroy{
   private actors : Actor[];
   private categories : Category[];
   private synopsis : string ;
-  private trailers : Trailer[];
+  private trailer : string;
   subscriptionlightMode: any;
 
   constructor(private lightmodeService: LightmodeService,private movieService : MovieService, private authenticationService : AuthenticationService, private cartService : CartService, private numberofitemsincartService : NumberOfItemsInCartService, private sanitizer: DomSanitizer) { }
@@ -48,13 +47,13 @@ export class MovieCardComponent implements OnInit,OnDestroy{
   setProperties(movie : Movie, container) {
     this.id = movie.movieId;
     this.date = this.formatDate(movie.movieDate);
+    this.trailer = movie.movieTrailerPath;
     this.duration = movie.movieDuration;
     this.title = movie.movieTitle;
     this.rating = movie.movieMark;
     this.actors = movie.actors;
     this.realisators = movie.authors;
     this.categories = movie.categories;
-    this.trailers = movie.trailers;
     
     this.movieService.getSynopsis(movie.movieId).pipe(first()).subscribe(data => this.synopsis = data.synopsis);
     this.infobulecontainer = container;
@@ -73,10 +72,6 @@ export class MovieCardComponent implements OnInit,OnDestroy{
     let year = date.getFullYear();
   
     return day + ' ' + monthNames[monthIndex] + ' ' + year;
-  }
-
-  trailer(trailer : string) {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(trailer);
   }
 
   addToCart(){
