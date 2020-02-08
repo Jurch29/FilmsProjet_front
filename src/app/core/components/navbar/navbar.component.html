@@ -8,12 +8,20 @@
     </div>
     <span class="spacer"></span>
     <div class="search-container">
-        <mat-form-field>
-            <input matInput placeholder="Search" [(ngModel)]="textValue" id="textValue" (input)="initiateSearch()" (keyup.enter)="initiateSearch()">
-        </mat-form-field>
-            <button mat-button (click)="openFilterBar()">
+        <div *ngIf="showSearchBar">
+            <mat-form-field>
+                <input matInput placeholder="Search" [(ngModel)]="textValue" id="textValue" (input)="initiateSearch()" (keyup.enter)="initiateSearch()">
+            </mat-form-field>
+            <button  mat-button (click)="openFilterBar()">
                 <mat-icon>search</mat-icon>
             </button>
+        </div>
+        <div *ngIf="!showSearchBar">
+            <button mat-button routerLink="/movies">
+                Aller sur la page des films 
+                <mat-icon>movie</mat-icon>
+            </button>
+        </div>
     </div>
     <span class="spacer"></span>
     <button mat-button class="sunandcart" *ngIf="!lightModeEvent"(click)="ChangeWebMode()">

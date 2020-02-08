@@ -26,6 +26,7 @@ export class NavbarComponent implements OnInit {
   showMenu = false;
   filterBarOpened : boolean = false;
   SmallSettingsNoButtons: boolean = false;
+  showSearchBar: boolean;
 
   constructor(public dialog : MatDialog, private userService : UserService, private router : Router,
     private authenticationService : AuthenticationService, private lightmodeService : LightmodeService,
@@ -58,6 +59,12 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.router.events.subscribe((val) => {
+      if(this.router.url === '/movies')
+        this.showSearchBar = true;
+      else
+        this.showSearchBar = false;
+    });
     if (window.innerWidth < 400) this.SmallSettingsNoButtons = true;
     if (this.currentUser != null) {
       this.userService.getById(this.currentUser.userId).pipe(first()).subscribe(user => {
