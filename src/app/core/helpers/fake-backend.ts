@@ -126,7 +126,7 @@ const categorys: Category[] = [
         categoryTitle: "Action"
     }, {
         category_id: 4,
-        categoryTitle: "Fantasy"
+        categoryTitle: "Fantasie"
     }, {
         category_id: 5,
         categoryTitle: "Science-Fiction"
