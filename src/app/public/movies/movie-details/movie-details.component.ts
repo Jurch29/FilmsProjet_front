@@ -31,6 +31,7 @@ export class MovieDetailsComponent implements OnInit,OnDestroy {
   private trailers: Trailer[];
   subscriptionlightMode: any;
   movie: any;
+  safeContent: any;
  
   constructor(private lightmodeService: LightmodeService, private authenticationService: AuthenticationService, private cartService: CartService, private numberofitemsincartService: NumberOfItemsInCartService, private sanitizer: DomSanitizer, private movieService: MovieService, private route: ActivatedRoute) { }
  
@@ -58,6 +59,7 @@ export class MovieDetailsComponent implements OnInit,OnDestroy {
     this.categories = this.movie.categories;
     this.trailer = this.movie.movieTrailerPath;
     
+    this.safeContent =  this.sanitizer.bypassSecurityTrustResourceUrl(this.movie.movieTrailerPath);
     this.movieService.getSynopsis(this.movie.movieId).pipe(first()).subscribe(data => this.synopsis = data.synopsis);
 
     this.lightMode = this.lightmodeService.getLightModeEventMessage();

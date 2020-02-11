@@ -32,6 +32,7 @@ export class MovieCardComponent implements OnInit,OnDestroy{
   private trailer : string;
   subscriptionlightMode: any;
   queryToDetails: string;
+  safeContent: any;
 
   constructor(private lightmodeService: LightmodeService,private movieService : MovieService, private authenticationService : AuthenticationService, private cartService : CartService, private numberofitemsincartService : NumberOfItemsInCartService, private sanitizer: DomSanitizer) { }
 
@@ -55,7 +56,7 @@ export class MovieCardComponent implements OnInit,OnDestroy{
     this.actors = movie.actors;
     this.realisators = movie.authors;
     this.categories = movie.categories;
-    
+    this.safeContent =  this.sanitizer.bypassSecurityTrustResourceUrl(this.trailer);
     this.movieService.getSynopsis(movie.movieId).pipe(first()).subscribe(data => this.synopsis = data.synopsis);
     this.infobulecontainer = container;
   }

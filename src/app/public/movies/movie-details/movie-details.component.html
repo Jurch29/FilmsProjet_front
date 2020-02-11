@@ -44,7 +44,7 @@
             </button>
         </div>
         <div class="playercontainer">
-            <iframe [src]="sanitizer.bypassSecurityTrustResourceUrl(trailer)" allowfullscreen></iframe>
+            <iframe [src]="safeContent" allowfullscreen></iframe>
         </div>
     </div>
     <div class="closebtn">
