@@ -1,6 +1,6 @@
-<div class="container">
+<div  class="container">
 	<div class="error">
-		<p class="p first">4</p>
+		<p [class.dark]="!lightMode" class="p first">4</p>
 		<span class="dracula">
 			<div class="con">
 				<div class="hair"></div>
@@ -13,10 +13,10 @@
 				<div class="blod blod2"></div>
 			</div>
 		</span>
-		<p class="p">4</p>
+		<p [class.dark]="!lightMode" class="p">4</p>
 
 		<div class="page-ms">
-			<p class="page-msg"> Oops, la page que vous cherchez n'existe pas. </p>
+			<p [class.dark]="!lightMode" class="page-msg"> Oops, la page que vous cherchez n'existe pas. </p>
 			<button class="go-back" routerLink="/home">Acceuil</button>
 		</div>
 	</div>

@@ -34,12 +34,7 @@ export class MovieDetailsComponent implements OnInit,OnDestroy {
   movie: any;
  
   constructor(private lightmodeService: LightmodeService, private authenticationService: AuthenticationService, private cartService: CartService, private numberofitemsincartService: NumberOfItemsInCartService, private sanitizer: DomSanitizer, private movieService: MovieService, private route: ActivatedRoute) { }
-  onRate($event:{oldValue:number, newValue:number, starRating:StarRatingComponent}) {
-    alert(`Old Value:${$event.oldValue}, 
-      New Value: ${$event.newValue}, 
-      Checked Color: ${$event.starRating.checkedcolor}, 
-      Unchecked Color: ${$event.starRating.uncheckedcolor}`);
-  }
+ 
   ngOnInit() {
     this.route.params.pipe(first()).subscribe(data => this.id = data.movieID)
 
@@ -47,9 +42,7 @@ export class MovieDetailsComponent implements OnInit,OnDestroy {
       this.movie = data;
       this.setupMoviedetails();
     });
-    this.subscriptionlightMode = this.lightmodeService.getLightModeEventMessage().subscribe(dataTransmited =>{
-      this.lightMode = dataTransmited;
-    });
+    
   }
   setupMoviedetails(){
     this.rating = this.movie.movieMark;
@@ -62,6 +55,13 @@ export class MovieDetailsComponent implements OnInit,OnDestroy {
     this.trailer = this.movie.movieTrailerPath;
     
     this.movieService.getSynopsis(this.movie.movieId).pipe(first()).subscribe(data => this.synopsis = data.synopsis);
+
+    this.subscriptionlightMode = this.lightmodeService.getLightModeEventMessage().subscribe(
+      dataTransmited => {
+        this.lightMode = dataTransmited;
+      }
+    );
+
   }
   formatDate(date : Date) {
     let monthNames = [
