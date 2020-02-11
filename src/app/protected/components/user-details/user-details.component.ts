@@ -1,4 +1,4 @@
-import { Component, OnInit,OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LightmodeService } from 'src/app/core/service/lightmode.service';
 import { FormControl, Validators } from '@angular/forms';
 import { AuthenticationService } from 'src/app/core/service/authentication.service';
@@ -21,19 +21,19 @@ export class UserDetailsComponent implements OnInit,OnDestroy {
   constructor(private authenticationService : AuthenticationService,private lightmodeService : LightmodeService) { }
 
   ngOnInit() {
-    this.subscriptionlightMode = this.lightmodeService.getLightModeEventMessage().subscribe(dataTransmited =>{
-      this.lightMode = dataTransmited;
-    });
-    console.log(this.authenticationService.currentUserValue)
+    
     this.lastname.setValue(this.authenticationService.currentUserValue.userLastname);
     this.firstname.setValue(this.authenticationService.currentUserValue.userFirstname);
     this.username.setValue(this.authenticationService.currentUserValue.userLogin);
     this.email.setValue(this.authenticationService.currentUserValue.userEmail);
+  
+    this.subscriptionlightMode =  this.lightmodeService.getLightModeEventMessage().subscribe(value =>
+      this.lightMode = value
+    );
   }
-
-
-  ngOnDestroy(): void {
+  ngOnDestroy(){
     this.subscriptionlightMode.unsubscribe();
   }
+
   changeUserDetails(){}
 }

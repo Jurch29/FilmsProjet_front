@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LightmodeService {
 
-  private LightModeEvent = new Subject<boolean>();
+  private LightModeEvent = new BehaviorSubject<boolean>(false);
   constructor() { }
 
   ChangeLightModeEventMessage(LightmodeState: boolean) {
     this.LightModeEvent.next(LightmodeState);
   }
+
   getLightModeEventMessage(): Observable<boolean>{
     return this.LightModeEvent.asObservable(); 
   }

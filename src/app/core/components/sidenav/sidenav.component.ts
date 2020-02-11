@@ -51,9 +51,11 @@ export class SidenavComponent implements OnInit, OnDestroy {
     this.subscriptionOpenSideNav = this.opensidenavService.getOpenSidenavEventMessage().subscribe(dataTransmited =>{
       this.toggleSideNav(dataTransmited);
     });
-    this.subscriptionlightMode = this.lightmodeService.getLightModeEventMessage().subscribe(dataTransmited =>{
-      this.lightMode = dataTransmited;
-    });
+
+    this.subscriptionlightMode =  this.lightmodeService.getLightModeEventMessage().subscribe(value =>
+      this.lightMode = value
+    );
+   
     this.authenticationService.currentUser.subscribe(dataTransmited =>
       this.currentUser =dataTransmited
       );

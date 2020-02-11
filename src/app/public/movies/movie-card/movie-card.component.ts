@@ -1,4 +1,4 @@
-import { Component,OnInit,OnDestroy } from '@angular/core';
+import { Component,OnInit, OnDestroy } from '@angular/core';
 import { NumberOfItemsInCartService } from 'src/app/core/service/number-of-items-in-cart.service';
 import { MovieService } from 'src/app/core/service/movie-service.service';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -37,14 +37,14 @@ export class MovieCardComponent implements OnInit,OnDestroy{
 
  
   ngOnInit() {
-    this.subscriptionlightMode = this.lightmodeService.getLightModeEventMessage().subscribe(dataTransmited =>{
-      this.lightMode = dataTransmited;
-    });
+    this.subscriptionlightMode =  this.lightmodeService.getLightModeEventMessage().subscribe(value =>
+      this.lightMode = value
+    );
   }
-  
-  ngOnDestroy(): void {
+  ngOnDestroy(){
     this.subscriptionlightMode.unsubscribe();
   }
+  
   setProperties(movie : Movie, container) {
     this.id = movie.movieId;
     this.date = this.formatDate(movie.movieDate);

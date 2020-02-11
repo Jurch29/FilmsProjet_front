@@ -11,7 +11,6 @@ import { AuthenticationService } from 'src/app/core/service/authentication.servi
 import { CartService } from 'src/app/core/service/cart.service';
 import { NumberOfItemsInCartService } from 'src/app/core/service/number-of-items-in-cart.service';
 import { DomSanitizer } from '@angular/platform-browser';
-import { RatingModule, StarRatingComponent } from 'ng-starrating';
 
 @Component({
   selector: 'app-movie-details',
@@ -42,7 +41,12 @@ export class MovieDetailsComponent implements OnInit,OnDestroy {
       this.movie = data;
       this.setupMoviedetails();
     });
-    
+    this.subscriptionlightMode =  this.lightmodeService.getLightModeEventMessage().subscribe(value =>
+      this.lightMode = value
+    );
+  }
+  ngOnDestroy(){
+    this.subscriptionlightMode.unsubscribe();
   }
   setupMoviedetails(){
     this.rating = this.movie.movieMark;
@@ -56,11 +60,7 @@ export class MovieDetailsComponent implements OnInit,OnDestroy {
     
     this.movieService.getSynopsis(this.movie.movieId).pipe(first()).subscribe(data => this.synopsis = data.synopsis);
 
-    this.subscriptionlightMode = this.lightmodeService.getLightModeEventMessage().subscribe(
-      dataTransmited => {
-        this.lightMode = dataTransmited;
-      }
-    );
+    this.lightMode = this.lightmodeService.getLightModeEventMessage();
 
   }
   formatDate(date : Date) {
@@ -80,8 +80,5 @@ export class MovieDetailsComponent implements OnInit,OnDestroy {
 
   trailer(trailer : string) {
     return this.sanitizer.bypassSecurityTrustResourceUrl(trailer);
-  }
-  ngOnDestroy(): void {
-    this.subscriptionlightMode.unsubscribe();
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ComponentFactory, ComponentRef, ComponentFactoryResolver, ViewChild, ViewContainerRef, HostListener } from '@angular/core';
+import { Component, OnInit, ComponentFactory, ComponentRef, ComponentFactoryResolver, ViewChild, ViewContainerRef, HostListener, OnDestroy } from '@angular/core';
 import { MovieCardComponent } from '../movie-card/movie-card.component';
 import { LightmodeService } from 'src/app/core/service/lightmode.service';
 import { Movie } from 'src/app/shared/models/movie';
@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   templateUrl: './movie-preview.component.html',
   styleUrls: ['./movie-preview.component.css']
 })
-export class MoviePreviewComponent implements OnInit {
+export class MoviePreviewComponent implements OnInit,OnDestroy {
   private componentFactory: ComponentFactory<any>;
   someProp: any;
   private componentRef: ComponentRef<any>;
@@ -26,18 +26,20 @@ export class MoviePreviewComponent implements OnInit {
   constructor(private route: Router,private movieService: MovieService, private lightmodeService: LightmodeService, private resolver: ComponentFactoryResolver) {
     this.componentFactory = resolver.resolveComponentFactory(MovieCardComponent);
   }
-
+ 
   ngOnInit() {
     this.movieService.getAllMovies().pipe(first()).subscribe(data => {
        this.Movies = data;
        console.log(this.Movies);
       }
     );
-    this.subscriptionlightMode = this.lightmodeService.getLightModeEventMessage().subscribe(
-      dataTransmited => {
-        this.lightMode = dataTransmited;
-      }
+
+    this.subscriptionlightMode =  this.lightmodeService.getLightModeEventMessage().subscribe(value =>
+      this.lightMode = value
     );
+  }
+  ngOnDestroy(){
+    this.subscriptionlightMode.unsubscribe();
   }
   formatDate(date : Date) {
     let monthNames = [
@@ -52,9 +54,6 @@ export class MoviePreviewComponent implements OnInit {
     let year = date.getFullYear();
   
     return day + ' ' + monthNames[monthIndex] + ' ' + year;
-  }
-  ngOnDestroy() {
-    this.subscriptionlightMode.unsubscribe();
   }
   
   infobule(movie: Movie) {

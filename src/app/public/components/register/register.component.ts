@@ -16,7 +16,7 @@ import { LightmodeService } from 'src/app/core/service/lightmode.service';
 @Directive({
   selector: '[appBlockCopyPaste]'
 })
-export class RegisterComponent implements OnInit , OnDestroy{
+export class RegisterComponent implements OnInit,OnDestroy {
   user: User;
 
   loading = false;
@@ -57,16 +57,16 @@ export class RegisterComponent implements OnInit , OnDestroy{
 
   ngOnInit() {
     this.hide = true;
-    this.subscriptionlightMode = this.lightmodeService.getLightModeEventMessage().subscribe(dataTransmited =>{
-      this.lightMode = dataTransmited;
-    });
     this.TestSize();
+  
+    this.subscriptionlightMode =  this.lightmodeService.getLightModeEventMessage().subscribe(value =>
+      this.lightMode = value
+    );
   }
-
-  ngOnDestroy(): void {
+  ngOnDestroy(){
     this.subscriptionlightMode.unsubscribe();
   }
-
+  
   TestSize(){
     
     if(window.innerWidth<=775){
