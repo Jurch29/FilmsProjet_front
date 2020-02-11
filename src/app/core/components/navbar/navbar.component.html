@@ -6,7 +6,7 @@
             <span>EZ movie</span>
         </button>
     </div>
-    <span class="spacer"></span>
+    <span *ngIf="!SmallSettingsNoButtons || showSearchBar" class="spacer"></span>
     <div class="search-container">
         <div *ngIf="showSearchBar">
             <mat-form-field>
@@ -16,9 +16,9 @@
                 <mat-icon>search</mat-icon>
             </button>
         </div>
-        <div *ngIf="!showSearchBar">
-            <button mat-button routerLink="/movies">
-                Aller sur la page des films 
+        <div [class.SmallSettings]="!SmallSettingsNoButtons" *ngIf="!showSearchBar">
+            <button class="SmallSettings" mat-button routerLink="/movies">
+                <span *ngIf="!SmallSettingsNoButtons" >Aller sur la page des films </span>
                 <mat-icon>movie</mat-icon>
             </button>
         </div>

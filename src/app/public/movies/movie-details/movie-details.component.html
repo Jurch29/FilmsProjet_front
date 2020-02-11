@@ -1,8 +1,5 @@
 <div [class.dark]="!lightMode" class="movieCardContainer">
     <div class="actionContainer">
-        <div class="playercontainer">
-            <iframe [src]="sanitizer.bypassSecurityTrustResourceUrl(trailer)" allowfullscreen></iframe>
-        </div>
         <p class="title">
             {{title}}
         </p>
@@ -13,25 +10,30 @@
             {{duration}}min
         </p>
         <p class="realisators">
-            Par :<span *ngFor="let realisator of (realisators) let isLast=last">{{realisator.authorFirstName}} {{realisator.authorLastName}}{{isLast ? '' : ', '}} </span>
+            Par :<span *ngFor="let realisator of (realisators) let isLast=last">{{realisator.authorFirstName}}
+                {{realisator.authorLastName}}{{isLast ? '' : ', '}} </span>
         </p>
         <p class="actors">
-            Avec :<span *ngFor="let actor of (actors) let isLast=last">{{actor.actorFirstName}} {{actor.actorLastName}}{{isLast ? '' : ', '}} </span>
+            Avec :<span *ngFor="let actor of (actors) let isLast=last">{{actor.actorFirstName}}
+                {{actor.actorLastName}}{{isLast ? '' : ', '}} </span>
         </p>
         <p class="categories">
-            Catégorie :<span *ngFor="let category of (categories) let isLast=last">{{category.categoryTitle}}{{isLast ? '' : ', '}} </span>
+            Catégorie :<span
+                *ngFor="let category of (categories) let isLast=last">{{category.categoryTitle}}{{isLast ? '' : ', '}}
+            </span>
         </p>
         <p class="synopsis">
             {{synopsis}}
         </p>
         <div>
             <div class="rating">
-                <star-rating [value]=(rating) checkedcolor="gold" uncheckedcolor="grey" size="15px" readonly="true">
+                <star-rating [value]=(rating) checkedcolor="gold" uncheckedcolor="grey" size="12px" readonly="true">
                 </star-rating>
             </div>
             <div class="rating">{{rating}}/5</div>
         </div>
-        <button *ngIf="authenticationService.currentUserValue" mat-raised-button color="primary" class="addCartButton" (click)="addToCart()">
+        <button *ngIf="authenticationService.currentUserValue" mat-raised-button color="primary" class="addCartButton"
+            (click)="addToCart()">
             <span>Ajouter au panier</span>
             <mat-icon>add_shopping_cart</mat-icon>
         </button>
@@ -40,6 +42,9 @@
                 <mat-icon>arrow_back</mat-icon>
                 <span>Retour</span>
             </button>
+        </div>
+        <div class="playercontainer">
+            <iframe [src]="sanitizer.bypassSecurityTrustResourceUrl(trailer)" allowfullscreen></iframe>
         </div>
     </div>
     <div class="closebtn">

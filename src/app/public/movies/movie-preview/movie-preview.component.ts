@@ -1,9 +1,10 @@
-import { Component, OnInit, ComponentFactory, ComponentRef, ComponentFactoryResolver, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, ComponentFactory, ComponentRef, ComponentFactoryResolver, ViewChild, ViewContainerRef, HostListener } from '@angular/core';
 import { MovieCardComponent } from '../movie-card/movie-card.component';
 import { LightmodeService } from 'src/app/core/service/lightmode.service';
 import { Movie } from 'src/app/shared/models/movie';
 import { MovieService } from 'src/app/core/service/movie-service.service';
 import { first } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-movie-preview',
@@ -20,14 +21,14 @@ export class MoviePreviewComponent implements OnInit {
 
   @ViewChild("infobulecontainer", { static: false, read: ViewContainerRef }) containerinfobule;
   Movies: Movie[];
+  infoBulleMovieId: number;
 
-  constructor(private movieService: MovieService, private lightmodeService: LightmodeService, private resolver: ComponentFactoryResolver) {
+  constructor(private route: Router,private movieService: MovieService, private lightmodeService: LightmodeService, private resolver: ComponentFactoryResolver) {
     this.componentFactory = resolver.resolveComponentFactory(MovieCardComponent);
   }
 
   ngOnInit() {
     this.movieService.getAllMovies().pipe(first()).subscribe(data => {
-       //console.log("data : "+JSON.stringify(data));
        this.Movies = data;
        console.log(this.Movies);
       }
@@ -57,9 +58,26 @@ export class MoviePreviewComponent implements OnInit {
   }
   
   infobule(movie: Movie) {
-    this.containerinfobule.clear();
-    this.componentRef = this.containerinfobule.createComponent(this.componentFactory, 0);
-    this.componentRef.instance.setProperties(movie, this.containerinfobule);
+    if(window.innerWidth < 900){
+      this.route.navigate(["/nowMoreMovie/",movie.movieId]);
+    }else{
+      this.componentRef = null;
+      this.infoBulleMovieId = movie.movieId;
+      this.containerinfobule.clear();
+      this.componentRef = this.containerinfobule.createComponent(this.componentFactory, 0);
+      this.componentRef.instance.setProperties(movie, this.containerinfobule);
+    }
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    if (window.innerWidth < 900) {
+      if(this.componentRef !=null){
+        this.componentRef = null;
+        this.containerinfobule.clear();
+        this.route.navigate(["/nowMoreMovie/",this.infoBulleMovieId]);
+      }
+    }
   }
 
   image(url : string) {

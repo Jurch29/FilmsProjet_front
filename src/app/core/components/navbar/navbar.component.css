@@ -64,17 +64,35 @@ button{
     .search-container mat-form-field{
         width: 33vw;
     }
+
+    .search-container .SmallSettings{
+        padding-left:10px !important;
+    }
     .SmallSettings{
         font-size: 10px;
         padding:0px;
     }
     button{
+        font-size: 10px;
         min-width: 20px;
-        padding: 0px 5px;
-        margin-right: 5px;
+        padding: 0px 3px;
+        margin-right: 0px;
     }
     button.sunandcart{
         text-align: center;
-        margin-right: 10px !important;
+        margin-right: 15px !important;
+        height: 30px;
+    }
+    .mat-badge-medium.mat-badge-above .mat-badge-content{
+        top:-6px;
+    }
+    .mat-badge-medium .mat-badge-content{
+        width: 15px;
+        height: 15px;
+        font-size: 10px;
+        line-height: 15px;
+    }
+    .material-icons{
+        font-size: 20px;
     }
 }

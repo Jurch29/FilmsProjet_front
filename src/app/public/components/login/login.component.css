@@ -30,4 +30,7 @@ mat-spinner{
     .login-container > *{
         width: 67vw;
     }
+    .activation-container .mat-form-field{
+        width: 100%;
+    }
 }

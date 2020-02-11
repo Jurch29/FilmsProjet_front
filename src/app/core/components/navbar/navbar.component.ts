@@ -55,7 +55,7 @@ export class NavbarComponent implements OnInit {
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
-    if (event.innerWidth < 400) this.SmallSettingsNoButtons = true;
+    if (window.innerWidth < 500) this.SmallSettingsNoButtons = true;
   }
 
   ngOnInit() {
@@ -65,7 +65,7 @@ export class NavbarComponent implements OnInit {
       else
         this.showSearchBar = false;
     });
-    if (window.innerWidth < 400) this.SmallSettingsNoButtons = true;
+    if (window.innerWidth < 500) this.SmallSettingsNoButtons = true;
     if (this.currentUser != null) {
       this.userService.getById(this.currentUser.userId).pipe(first()).subscribe(user => {
         this.userFromApi = user;

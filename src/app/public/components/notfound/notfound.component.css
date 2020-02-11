@@ -183,3 +183,83 @@ button.go-back {
 	margin-top: 20px;
 }
 button:hover {box-shadow: 0 0 20px 0 #C0D7DD;}
+
+@media(max-width : 500px){
+
+  .error .p{
+    font-size: 50px;
+  }
+  .dracula{
+    margin-top: 10%;
+    width: 80px;
+    height: 80px;
+  }
+  .hair{
+    width: 50px;
+    height: 50px;
+  }
+  .hair-r{
+    width: 50px;
+    height: 50px;
+  }
+  .head {
+    width: 50px;
+    height: 50px;
+  }
+
+  .eye {
+    width: 8px; height:8px;
+    top: 15px; left: 30px;
+  }
+  .eye-r{left: 16%;}
+  .mouth {
+    width: 35px; 
+    height: 10px;
+    top: 30px;
+    left: 9%;
+  }
+  
+.mouth::after{
+  border-left: 3px solid transparent;
+  border-right: 3px solid transparent;
+  border-top: 7px solid #FFFFFF;
+  left: 5px;
+  
+}
+.mouth::before{
+  border-left: 3px solid transparent;
+  border-right: 3px solid transparent;
+  border-top: 7px solid #FFFFFF;
+  left: 25px;
+}
+
+  .blod {
+    width: 6px;
+    height: 15px;
+    top: 35px; 
+    left: 12.5px; 
+  }
+  .blod::after{
+    width: 1px;
+  }
+  .blod2 {
+    top: 35px;
+    left: 33px;
+    width: 8px;
+    height: 8px;
+  }
+  .blod2.blod::after {
+    height : 5px;
+  }
+  .error p.page-msg {
+    font-size: 20px;
+    padding-top: 25px;
+  }
+  button.go-back{  
+    font-size: 20px;
+  }
+  @keyframes blod {
+    0%   {opacity: 1;}  
+    100%   {background:red; opacity: 0; top:150px;}
+  }
+}

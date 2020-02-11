@@ -5,6 +5,7 @@
     height: 50vh;
     text-align: left;
     position: relative;
+    overflow-y: scroll;
     background-color: grey;
 }
 .movieCardContainer.dark{

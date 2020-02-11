@@ -132,3 +132,69 @@ html {
     100% { opacity: 1; transform: scale(0.3) translate(0px, -300px) }
   }
   
+
+@media(max-width:930px){
+  .maincontainer{
+    width:450px;
+    height:250px ;
+    margin: auto;
+    background-size:350px 250px;
+    top: 30%;
+  }
+  .foregroundimg{
+    top:-255px;
+    width: 65%;
+    left:75px;
+  }
+  .errorcode{
+    top: -20px;
+    font-size: 55px;
+  }
+  .errortext{
+    top:0px;
+  }
+
+  .bat:nth-child(1) {
+    top: 100px;
+    left: 35px;
+  }
+  
+  .bat:nth-child(2) {
+    top: 50px;
+    left: 30px;
+  }
+  
+  .bat:nth-child(3) {
+    top: 10px;
+    left: 0px;
+  }
+   
+  @keyframes flyBat1 {
+    0% { opacity: 1; transform: scale(0.5)}
+    25% { opacity: 1; transform: scale(0.5) translate(-200px, -330px) }
+    50% { opacity: 1; transform: scale(0.5) translate(400px, -300px) }
+    75% { opacity: 1; transform: scale(0.5) translate(400px, 50px) }
+    100% { opacity: 1; transform: scale(0.5) translate(0px, -300px) }
+  }
+  
+  @keyframes flyBat2 {
+    0% { opacity: 1; transform: scale(0.3)}
+    25% { opacity: 1; transform: scale(0.3) translate(500px, -330px) }
+    50% { opacity: 1; transform: scale(0.3) translate(400px, -600px) }
+    75% { opacity: 1; transform: scale(0.3) translate(-800px, -700px) }
+    100% { opacity: 1; transform: scale(0.3) translate(0px, -300px) }
+  }
+  
+  @keyframes flyBat3 {
+    0% { opacity: 1; transform: scale(0.3)}
+    25% { opacity: 1; transform: scale(0.3) translate(-200px, -200px) }
+    50% { opacity: 1; transform: scale(0.3) translate(-200px, -200px) }
+    75% { opacity: 1; transform: scale(0.3) translate(-200px, -400px) }
+    100% { opacity: 1; transform: scale(0.3) translate(0px, -300px) }
+  }
+}
+@media(max-width:400px){
+  .maincontainer{
+    left: -35px;
+  }
+}
