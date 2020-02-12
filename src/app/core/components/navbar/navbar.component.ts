@@ -62,10 +62,14 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit() {
     this.router.events.subscribe((val) => {
-      if(this.router.url === '/movies')
+      if(this.router.url === '/movies'){
         this.showSearchBar = true;
-      else
+        if(this.filterBarOpened){
+          this.openFilterBar()
+        }
+      }else{
         this.showSearchBar = false;
+      }
     });
     if (window.innerWidth < 500) this.SmallSettingsNoButtons = true;
     if (this.currentUser != null) {
