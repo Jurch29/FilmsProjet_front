@@ -7,7 +7,7 @@
         </button>
     </div>
     <span *ngIf="!SmallSettingsNoButtons || showSearchBar" class="spacer"></span>
-    <div class="search-container">
+    <div [class.search-container]="showSearchBar">
         <div *ngIf="showSearchBar">
             <mat-form-field>
                 <input matInput placeholder="Search" [(ngModel)]="textValue" id="textValue" (input)="initiateSearch()" (keyup.enter)="initiateSearch()">

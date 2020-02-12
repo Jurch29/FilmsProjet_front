@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
 
   loading = false;
   submitted = false;
+  isForgetPassword = false;
   returnUrl: string;
   error = '';
   isUserToActivate = false;
@@ -25,12 +26,16 @@ export class LoginComponent implements OnInit {
   
   userlogin = new FormControl('', [Validators.required]);
   passwd = new FormControl('', [Validators.required]);
+  emailForgetPassword = new FormControl('',[Validators.required,Validators.email]);
   activationcode = new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z0-9]+')]);
   hide: boolean;
 
   groupControl = new FormGroup({
     userlogin: this.userlogin,
     passwd: this.passwd,
+  });
+  emailForgetPasswordGroupControl = new FormGroup({
+    emailForgetPassword: this.emailForgetPassword
   });
 
   activationGroupControl = new FormGroup({
@@ -63,17 +68,34 @@ export class LoginComponent implements OnInit {
   getErrorLoginMessage() {
     return this.userlogin.hasError('required') ? 'Champ recquis' : '';
   }
-
-  checkValidationBeforeSubmit() {
-    Object.keys(this.groupControl.controls).forEach(field => {
-      const control = this.groupControl.get(field);
+  getErrorEmailForgetPassword(){
+    if(this.emailForgetPassword.hasError('required'))return 'Champ recquis' ;
+    else if(this.emailForgetPassword.hasError('email'))return 'Email invalide';
+    return '';
+  }
+  forgetPassword(){
+    this.isForgetPassword = true;
+  }
+  register(){
+    this.dialogRef.close();
+      this.router.navigate(['/register']);
+  }
+  sendEmailForggetPassword(){
+    this.checkValidationBeforeSubmit(this.emailForgetPasswordGroupControl);
+    if(this.emailForgetPasswordGroupControl.invalid){
+      return;
+    }
+  }
+  checkValidationBeforeSubmit(groupControl) {
+    Object.keys(groupControl.controls).forEach(field => {
+      const control = groupControl.get(field);
       control.markAsTouched({ onlySelf: true });
     });
   }
 
   login() {
     this.submitted = true;
-    this.checkValidationBeforeSubmit();
+    this.checkValidationBeforeSubmit(this.groupControl);
     if (this.groupControl.invalid) {
       this.submitted = false;
       return;
@@ -121,6 +143,7 @@ export class LoginComponent implements OnInit {
   }
 
   activate() {
+    this.checkValidationBeforeSubmit(this.activationGroupControl);
     if (this.activationGroupControl.invalid){
       this.submitted = false;
       return;

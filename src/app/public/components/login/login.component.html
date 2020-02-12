@@ -1,22 +1,26 @@
-<div *ngIf="!isUserToActivate" class="login-container">
+<div *ngIf="!isUserToActivate && !isForgetPassword" class="login-container">
   <mat-form-field>
     <input matInput placeholder="Entrer votre login" [formControl]="userlogin" required>
     <mat-error *ngIf="userlogin.invalid">{{getErrorLoginMessage()}}</mat-error>
   </mat-form-field>
-  <br/>
   <mat-form-field>
-  <input matInput placeholder="Entrer votre mot de passe" [formControl]="passwd" required [type]="hide ? 'password' : 'text'"> 
-  <mat-error *ngIf="passwd.invalid">{{getErrorLoginMessage()}}</mat-error>
-    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Cacher le mot de passe'" [attr.aria-pressed]="hide">
+    <input matInput placeholder="Entrer votre mot de passe" [formControl]="passwd" required
+      [type]="hide ? 'password' : 'text'">
+    <mat-error *ngIf="passwd.invalid">{{getErrorLoginMessage()}}</mat-error>
+    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Cacher le mot de passe'"
+      [attr.aria-pressed]="hide">
       <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
     </button>
   </mat-form-field>
-  <br/>
-  <button mat-button color="primary" *ngIf="!loading" (click)="login()">Connexion</button>
-  <div *ngIf="error" class="alertError">{{error}}</div>
-  <mat-spinner *ngIf="loading" diameter="30"></mat-spinner>
+  <div>
+    <button class="forgetPasswordButton" (click)="forgetPassword()">Mot de passe oublié ?</button>
+    <button class="registerbutton" mat-button color="primary" (click)="register()">S'inscrire</button>
+    <button class="loginbutton" mat-button color="primary" *ngIf="!loading" (click)="login()">Connexion</button>
+    <div *ngIf="error" class="alertError">{{error}}</div>
+    <mat-spinner *ngIf="loading" diameter="30"></mat-spinner>
+  </div>
 </div>
-<div *ngIf="isUserToActivate" class="activation-container">
+<div *ngIf="isUserToActivate && !isForgetPassword" class="activation-container">
   <label>Vous avez reçu un mail contenant un code afin d'activer votre compte</label>
   <mat-form-field class="activation-field">
     <input matInput placeholder="Entrer votre code d'activation" [formControl]="activationcode" required>
@@ -25,4 +29,18 @@
   <button mat-button color="primary" *ngIf="!loading" (click)="activate()">Valider code</button>
   <div *ngIf="error" class="alertError">{{error}}</div>
   <mat-spinner *ngIf="loading" diameter="30"></mat-spinner>
+</div>
+<div *ngIf="isForgetPassword" class="forgetPassword-container">
+  <p class="header">Veuillez entrer votre email ci-dessous. Vous recevrez un email contenant un nouveau mot de passe
+    temporaire</p>
+  <mat-form-field class="forgetPassword-field">
+    <input matInput placeholder="Email" [formControl]="emailForgetPassword" required>
+    <mat-error *ngIf="emailForgetPassword.invalid">{{getErrorEmailForgetPassword()}}</mat-error>
+  </mat-form-field>
+  <div class="parentButtonSendEmail">
+    <button class="sendEmailForggetPassword" mat-button color="primary"
+      (click)="sendEmailForggetPassword()">Envoyer</button>
+    <div *ngIf="error" class="alertError">{{error}}</div>
+    <mat-spinner *ngIf="loading" diameter="30"></mat-spinner>
+  </div>
 </div>
