@@ -1,6 +1,11 @@
 .filterbarContainer{
     text-align: center;
-
+    background-color:lightgray;
+    color: black;
+}
+.filterbarContainer.dark{
+    background-color:#666;
+    color: white;
 }
 .filterbarContainer mat-form-field{
     padding-left: 10px;
