@@ -85,6 +85,7 @@ export class LoginComponent implements OnInit {
     if(this.emailForgetPasswordGroupControl.invalid){
       return;
     }
+    //to do
   }
   checkValidationBeforeSubmit(groupControl) {
     Object.keys(groupControl.controls).forEach(field => {

@@ -61,5 +61,6 @@
         <mat-grid-tile class="buttons">
             <button color="primary" mat-raised-button routerLink="/userCommentHistory">Historique des commentaires</button>
         </mat-grid-tile>
+        <mat-spinner *ngIf="loading" diameter="30"></mat-spinner>
     </mat-grid-list>
 </div>

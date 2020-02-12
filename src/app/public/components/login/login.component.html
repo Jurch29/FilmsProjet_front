@@ -24,7 +24,9 @@
   <label>Vous avez reçu un mail contenant un code afin d'activer votre compte</label>
   <mat-form-field class="activation-field">
     <input matInput placeholder="Entrer votre code d'activation" [formControl]="activationcode" required>
-    <mat-error *ngIf="activationcode.invalid">alphanumeric seulement</mat-error>
+    <mat-error *ngIf="activationcode.errors?.required">Champ requis</mat-error>
+    <mat-error *ngIf="activationcode.errors?.invalid">Alphanumeric seulement</mat-error>
+    <mat-error *ngIf="activationcode.errors"></mat-error>
   </mat-form-field>
   <button mat-button color="primary" *ngIf="!loading" (click)="activate()">Valider code</button>
   <div *ngIf="error" class="alertError">{{error}}</div>
