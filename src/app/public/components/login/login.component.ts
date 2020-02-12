@@ -68,18 +68,22 @@ export class LoginComponent implements OnInit {
   getErrorLoginMessage() {
     return this.userlogin.hasError('required') ? 'Champ recquis' : '';
   }
+
   getErrorEmailForgetPassword(){
     if(this.emailForgetPassword.hasError('required'))return 'Champ recquis' ;
     else if(this.emailForgetPassword.hasError('email'))return 'Email invalide';
     return '';
   }
+
   forgetPassword(){
     this.isForgetPassword = true;
   }
+
   register(){
     this.dialogRef.close();
       this.router.navigate(['/register']);
   }
+
   sendEmailForggetPassword(){
     this.checkValidationBeforeSubmit(this.emailForgetPasswordGroupControl);
     if(this.emailForgetPasswordGroupControl.invalid){
@@ -87,6 +91,7 @@ export class LoginComponent implements OnInit {
     }
     //to do
   }
+  
   checkValidationBeforeSubmit(groupControl) {
     Object.keys(groupControl.controls).forEach(field => {
       const control = groupControl.get(field);
