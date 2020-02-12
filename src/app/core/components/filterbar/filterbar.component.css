@@ -3,8 +3,11 @@
 
 }
 .filterbarContainer mat-form-field{
-    margin-left: 10px;
-    margin-top:10px;
+    padding-left: 10px;
+    padding-top:10px;
+}
+.OrderByscroll{
+    padding-right: 10px;
 }
 @media (max-width:839px){
     .filterbarContainer{

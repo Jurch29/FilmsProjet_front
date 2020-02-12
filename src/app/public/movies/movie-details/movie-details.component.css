@@ -62,9 +62,10 @@
 }
 .addCartButton{
     background-color: green !important;
+    display: block;
 }
 .rating{
-    display: inline-block;
+    display: inline-flex;
 }
 
 .closebtn{
@@ -82,9 +83,6 @@
 }
 .categories{
     font-size: 12px;
-}
-.ng-star-inserted{
-    display: inline-block!important;
 }
 .item {
     display: inline-block !important;

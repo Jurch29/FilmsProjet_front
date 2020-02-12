@@ -11,22 +11,25 @@
 .mat-expansion-panel-header{
     color: black;
 }
+.mat-expansion-panel-header{
+    padding:0px 5px;
+}
+.mat-expansion-panel-header-description,
+.mat-expansion-panel-header-title{
+    margin-right: 0px;
+}
+.mat-expansion-panel-header-title{
+    padding-left: 10px;
+}
+.mat-expansion-panel-header-title,
+.mat-expansion-panel-header-description div{
+    padding-right: 10px;
+}
 @media(max-width:600px){
     .cartContainerHistory{
         width: 100vw;
     }
     .mat-expansion-panel-header{
         height: 35px !important;
-        padding:0px 5px;
-    }
-    .mat-expansion-panel-header-description,
-    .mat-expansion-panel-header-title{
-        margin-right: 0px;
-        font-size: 10px;
-    
-    }
-    .mat-expansion-panel-header-title,
-    .mat-expansion-panel-header-description div{
-        padding-right: 10px;
     }
 }

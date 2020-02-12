@@ -13,6 +13,7 @@ import { OpensidenavService } from '../../service/opensidenav.service';
 import { NumberOfItemsInCartService } from '../../service/number-of-items-in-cart.service';
 import { OpenfilterbarService } from '../../service/openfilterbar.service';
 import { CartService } from '../../service/cart.service';
+import { MatInput } from '@angular/material';
 
 @Component({
   selector: 'app-navbar',
@@ -27,6 +28,7 @@ export class NavbarComponent implements OnInit {
   filterBarOpened : boolean = false;
   SmallSettingsNoButtons: boolean = false;
   showSearchBar: boolean;
+  textValue: any;
 
   constructor(public dialog : MatDialog, private userService : UserService, private router : Router,
     private authenticationService : AuthenticationService, private lightmodeService : LightmodeService,
@@ -41,7 +43,7 @@ export class NavbarComponent implements OnInit {
   }
 
   initiateSearch() {
-    console.log("searching");
+    console.log("searching"+this.textValue);
   }
 
   openFilterBar(){

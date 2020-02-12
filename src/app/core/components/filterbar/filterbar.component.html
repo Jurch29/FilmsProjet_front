@@ -1,5 +1,13 @@
 <div class="filterbarContainer">
     <span>Trier par :</span>
+    <mat-form-field class="OrderByscroll">
+        <mat-label>Date de publication</mat-label>
+        <mat-select class="filterscroll" (selectionChange)="onOrderByChange($event)" >
+            <mat-option >Date de publication</mat-option>
+            <mat-option value="Alphabetique">Alphabetique</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <span>Flitrer par :</span>
     <mat-form-field>
         <mat-label>Catégorie</mat-label>
         <mat-select class="filterscroll" (selectionChange)="onCategoryChange($event)" >

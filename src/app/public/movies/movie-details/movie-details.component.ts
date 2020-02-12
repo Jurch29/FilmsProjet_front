@@ -11,6 +11,8 @@ import { AuthenticationService } from 'src/app/core/service/authentication.servi
 import { CartService } from 'src/app/core/service/cart.service';
 import { NumberOfItemsInCartService } from 'src/app/core/service/number-of-items-in-cart.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ThrowStmt } from '@angular/compiler';
+import { StarRatingComponent } from 'ng-starrating';
 
 @Component({
   selector: 'app-movie-details',
@@ -23,7 +25,6 @@ export class MovieDetailsComponent implements OnInit,OnDestroy {
   private date: string;
   private duration: number;
   private title: string;
-  private rating: number;
   private realisators: Author[];
   private actors: Actor[];
   private categories: Category[];
@@ -32,6 +33,11 @@ export class MovieDetailsComponent implements OnInit,OnDestroy {
   subscriptionlightMode: any;
   movie: any;
   safeContent: any;
+  ratingValueUsers: number;
+  readonly: boolean;
+  ratingValueCritique: number;
+  DidBuy: boolean;
+  ratingValueCurrentUser: number;
  
   constructor(private lightmodeService: LightmodeService, private authenticationService: AuthenticationService, private cartService: CartService, private numberofitemsincartService: NumberOfItemsInCartService, private sanitizer: DomSanitizer, private movieService: MovieService, private route: ActivatedRoute) { }
  
@@ -50,7 +56,7 @@ export class MovieDetailsComponent implements OnInit,OnDestroy {
     this.subscriptionlightMode.unsubscribe();
   }
   setupMoviedetails(){
-    this.rating = this.movie.movieMark;
+    this.ratingValueCritique = this.movie.movieMark;
     this.date = this.formatDate(this.movie.movieDate);
     this.duration = this.movie.movieDuration;
     this.title = this.movie.movieTitle;
@@ -58,12 +64,12 @@ export class MovieDetailsComponent implements OnInit,OnDestroy {
     this.realisators = this.movie.authors;
     this.categories = this.movie.categories;
     this.trailer = this.movie.movieTrailerPath;
-    
+    this.readonly = true;
+    this.DidBuy = true;
+    this.ratingValueUsers = this.movie.movieMark -1;
+    this.ratingValueCurrentUser = 2;
     this.safeContent =  this.sanitizer.bypassSecurityTrustResourceUrl(this.movie.movieTrailerPath);
     this.movieService.getSynopsis(this.movie.movieId).pipe(first()).subscribe(data => this.synopsis = data.synopsis);
-
-    this.lightMode = this.lightmodeService.getLightModeEventMessage();
-
   }
   formatDate(date : Date) {
     let monthNames = [
@@ -78,6 +84,32 @@ export class MovieDetailsComponent implements OnInit,OnDestroy {
     let year = date.getFullYear();
   
     return day + ' ' + monthNames[monthIndex] + ' ' + year;
+  }
+
+  addToCart(){
+    this.cartService.addItemToCart(this.authenticationService.currentUserValue.userId, this.id)
+    .pipe()
+    .subscribe(
+      data => {
+        this.cartService.getUserCart(this.authenticationService.currentUserValue.userId)
+        .pipe()
+        .subscribe(
+          data => {
+            let numberOfItems = 0;
+            for (let item of data) {
+              numberOfItems += item.movieUserCartCount;
+            }
+            this.numberofitemsincartService.ChangeNumberOfItemsInCartMessage(numberOfItems);
+          },
+          error => console.log(error)
+        );
+      },
+      error => console.log(error)
+    );
+  }
+  
+  onRate($event:{oldValue:number, newValue:number, starRating:StarRatingComponent}) {
+    this.ratingValueCurrentUser=$event.newValue;
   }
 
   trailer(trailer : string) {

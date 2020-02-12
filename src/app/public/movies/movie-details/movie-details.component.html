@@ -27,10 +27,27 @@
         </p>
         <div>
             <div class="rating">
-                <star-rating [value]=(rating) checkedcolor="gold" uncheckedcolor="grey" size="12px" readonly="true">
+                <span>Note des critiques : </span>
+                <star-rating [value]=(ratingValueCritique) checkedcolor="gold" uncheckedcolor="grey" size="12px" [readonly]="readonly">
                 </star-rating>
             </div>
-            <div class="rating">{{rating}}/5</div>
+            <div class="rating">{{ratingValueCritique}}/5</div>
+        </div>
+        <div>
+            <div class="rating">
+                <span>Note des utilisateurs : </span>
+                <star-rating [value]=(ratingValueUsers) checkedcolor="gold" uncheckedcolor="grey" size="12px" [readonly]="readonly">
+                </star-rating>
+            </div>
+            <div class="rating">{{ratingValueUsers}}/5</div>
+        </div>
+        <div *ngIf="DidBuy">
+            <div class="rating">
+                <span>Votre note : </span>
+                <star-rating [value]=(ratingValueCurrentUser) (rate)="onRate($event)" checkedcolor="gold" uncheckedcolor="grey" size="12px" [readonly]="false">
+                </star-rating>
+            </div>
+            <div class="rating">{{ratingValueCurrentUser}}/5</div>
         </div>
         <button *ngIf="authenticationService.currentUserValue" mat-raised-button color="primary" class="addCartButton"
             (click)="addToCart()">

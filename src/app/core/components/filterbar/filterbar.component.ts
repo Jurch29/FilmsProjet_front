@@ -21,18 +21,17 @@ export class FilterbarComponent implements OnInit {
     this.movieService.getAllAuthors().pipe(first()).subscribe(data => this.authors = data);
     this.movieService.getAllCategorys().pipe(first()).subscribe(data => this.categorys = data);
     this.movieService.getAllActors().pipe(first()).subscribe(data => this.actors = data);
-
+  }
+  onOrderByChange(event){
+      console.log("event = "+event.value);//If undefined means choose no selection
   }
   onAuthorChange(event){
-    if(event.value != undefined)
-      console.log("event = "+event.value);
+      console.log("event = "+event.value);//If undefined means choose no selection
   }
   onCategoryChange(event){
-    if(event.value != undefined)
-      console.log("event = "+event.value);
+      console.log("event = "+event.value);//If undefined means choose no selection
   }
   onActorChange(event){
-    if(event.value != undefined)
-     console.log("event = "+event.value);
+     console.log("event = "+event.value);//If undefined means choose no selection
   }
 }
