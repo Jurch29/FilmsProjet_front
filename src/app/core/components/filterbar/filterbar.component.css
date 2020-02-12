@@ -9,8 +9,19 @@
 .OrderByscroll{
     padding-right: 10px;
 }
+@media (max-width:921px){
+    .filterbarContainer mat-form-field{
+        width: 18vw !important;
+    }
+}
 @media (max-width:839px){
     .filterbarContainer{
        font-size: 10px;
+    }
+    
+}
+@media (max-width:500px){
+    .filterbarContainer mat-form-field{
+        width: 14vw !important;
     }
 }
