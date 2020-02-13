@@ -1,5 +1,6 @@
 <div class="cartContainer">
   <div *ngIf="currentUser" #itemcontainer></div>
+  <span *ngIf="items" class="cost">Coût total : {{totalCost}} €</span>
   <button *ngIf="items && currentUser" mat-raised-button color="primary" class="BuyButton" (click)="buy()"><span>Payer</span>
     <mat-icon>payment</mat-icon></button>
   <button *ngIf="items && !currentUser" mat-raised-button color="primary" class="LoginRegister" (click)="login()">Se connecter</button>

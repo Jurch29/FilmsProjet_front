@@ -19,6 +19,7 @@ export class UserCartComponent implements OnInit {
   private componentFactory : ComponentFactory<any>;
   currentUser : User;
   private componentList : any[];
+  private totalCost : number;
   
   constructor(private navbar : NavbarComponent, private authenticationService : AuthenticationService, private cartService : CartService, private numberofitemsincartService : NumberOfItemsInCartService, private resolver : ComponentFactoryResolver) { 
     this.componentFactory = this.resolver.resolveComponentFactory(UserCartItemComponent);
@@ -56,12 +57,13 @@ export class UserCartComponent implements OnInit {
             }
             this.numberofitemsincartService.ChangeNumberOfItemsInCartMessage(numberOfItems);
             let i = 0;
+            this.totalCost = 0;
             this.componentList = new Array();
             for (let element of data) {
               this.items = true;
               this.componentRef = this.container.createComponent(this.componentFactory, 0);
               this.componentList[i++] = this.componentRef;
-              this.componentRef.instance.setProperties(element.embeddedKeyMovieUser.movieId, element.movieUserCartCount);
+              this.componentRef.instance.setProperties(element.embeddedKeyMovieUser.movieId, element.movieUserCartCount, this);
             }
           },
           error => {
@@ -83,5 +85,9 @@ export class UserCartComponent implements OnInit {
       this.items = false;
       return false;
     }
+  }
+
+  addToTotalCost(cost : number) {
+    this.totalCost += cost;
   }
 }
