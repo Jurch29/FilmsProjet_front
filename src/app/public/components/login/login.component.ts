@@ -8,6 +8,7 @@ import { AuthenticationService } from '../../../core/service/authentication.serv
 import { CartService } from 'src/app/core/service/cart.service';
 import { NumberOfItemsInCartService } from 'src/app/core/service/number-of-items-in-cart.service';
 import { UserActivation } from 'src/app/shared/models/user-activation';
+import { UserService } from 'src/app/core/service/user.service';
 
 @Component({
   selector: 'app-login',
@@ -44,7 +45,7 @@ export class LoginComponent implements OnInit {
 
   user_id: number;
 
-  constructor(public dialogRef: MatDialogRef<LoginComponent>,
+  constructor(public userservice: UserService,public dialogRef: MatDialogRef<LoginComponent>,
     private route: ActivatedRoute,
     private router: Router,
     private authenticationService: AuthenticationService,
@@ -85,7 +86,16 @@ export class LoginComponent implements OnInit {
     if(this.emailForgetPasswordGroupControl.invalid){
       return;
     }
-    //to do
+    this.userservice.forgetPasswordEmailOnly(this.emailForgetPassword.value)
+    .pipe(first())
+    .subscribe(
+      data => {
+        console.log(data)
+      },
+      error => {
+        console.log(error);
+      });
+      this.dialogRef.close();
   }
   checkValidationBeforeSubmit(groupControl) {
     Object.keys(groupControl.controls).forEach(field => {
