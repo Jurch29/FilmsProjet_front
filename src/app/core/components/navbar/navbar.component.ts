@@ -100,11 +100,11 @@ export class NavbarComponent implements OnInit {
     let dialogRef;
     if (this.lightModeEvent)
       dialogRef = this.dialog.open(LoginComponent, {
-        width: '350px'
+        width: '380px'
       });
     else
       dialogRef = this.dialog.open(LoginComponent, {
-        width: '350px',
+        width: '380px',
         panelClass: 'dark'
       });
 

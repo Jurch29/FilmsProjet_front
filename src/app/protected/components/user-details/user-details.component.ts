@@ -53,11 +53,11 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
     let dialogRef;
     if (this.lightMode)
       dialogRef = this.dialog.open(ChangePasswordComponent, {
-        width: '350px'
+        width: '380px'
       });
     else
       dialogRef = this.dialog.open(ChangePasswordComponent, {
-        width: '350px',
+        width: '380px',
         panelClass: 'dark'
       });
   }
