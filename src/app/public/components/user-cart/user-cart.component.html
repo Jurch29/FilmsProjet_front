@@ -1,10 +1,10 @@
 <div class="cartContainer">
-  <div *ngIf="currentUser" #itemcontainer></div>
+  <div *ngIf="getUser" #itemcontainer></div>
   <div class="parentCost">
     <span *ngIf="items" class="cost">Coût total : {{totalCost}} €</span>
   </div>
-  <button *ngIf="items && currentUser" mat-raised-button color="primary" class="BuyButton" (click)="buy()"><span>Payer</span>
+  <button *ngIf="items && getUser" mat-raised-button color="primary" class="BuyButton" (click)="buy()"><span>Payer</span>
     <mat-icon>payment</mat-icon></button>
-  <button *ngIf="items && !currentUser" mat-raised-button color="primary" class="LoginRegister" (click)="login()">Se connecter</button>
-  <button *ngIf="items && !currentUser" mat-raised-button color="primary" class="LoginRegister" routerLink="/register">S'inscrire</button>
+  <button *ngIf="items && !getUser" mat-raised-button color="primary" class="LoginRegister" (click)="login()">Se connecter</button>
+  <button *ngIf="items && !getUser" mat-raised-button color="primary" class="LoginRegister" routerLink="/register">S'inscrire</button>
 </div>
