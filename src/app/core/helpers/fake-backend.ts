@@ -28,7 +28,7 @@ import { EmbeddedKeyMovieUser } from 'src/app/shared/models/embeddedKeyMovieUser
  */
 
 const users: User[] = [
-    { userId: 1, userEmail: "j@j", userLogin: 'ju', userPassword: 'j', userFirstname: 'Admin', userLastname: 'User', roles: [Role.Admin], userIsDeleted: false, userLastConnection: "18/11/1992"},
+    { userId: 1, userEmail: "j@j", userLogin: 'ju', userPassword: 'j', userFirstname: 'Admin', userLastname: 'User', roles: [Role.Admin], userIsDeleted: false, userLastConnection: "18/11/1992" },
     { userId: 2, userEmail: "jacqou@jacot.fr", userLogin: 'peter', userPassword: 'a', userFirstname: 'Normal', userLastname: 'User', roles: [Role.User], userIsDeleted: false, userLastConnection: "18/11/1992" },
     { userId: 3, userEmail: "a@a", userLogin: 'anthal', userPassword: 'a', userFirstname: 'Normal', userLastname: 'User', roles: [Role.User], userIsDeleted: false, userLastConnection: "18/11/1992" }
 ];
@@ -39,11 +39,11 @@ let activations: UserActivation[] = [
 ];
 
 const images: Image[] = [
-    {image_id: 1, imagePath: "imageofthepath"},
-    {image_id: 2, imagePath: "imageofthepath"},
-    {image_id: 3, imagePath: "imageofthepath"},
-    {image_id: 4, imagePath: "imageofthepath"},
-    {image_id: 5, imagePath: "imageofthepath"}
+    { image_id: 1, imagePath: "imageofthepath" },
+    { image_id: 2, imagePath: "imageofthepath" },
+    { image_id: 3, imagePath: "imageofthepath" },
+    { image_id: 4, imagePath: "imageofthepath" },
+    { image_id: 5, imagePath: "imageofthepath" }
 ]
 
 const authors: Author[] = [
@@ -139,10 +139,10 @@ const categorys: Category[] = [
     }
 ];
 
-const trailers : Trailer[] = [
+const trailers: Trailer[] = [
     {
-        trailer_id : 1,
-        trailerPath : "https://www.youtube.com/embed/A1rWh7fyfPQ?rel=0&showinfo=0&controls=0&iv_load_policy=3&modestbranding=1"
+        trailer_id: 1,
+        trailerPath: "https://www.youtube.com/embed/A1rWh7fyfPQ?rel=0&showinfo=0&controls=0&iv_load_policy=3&modestbranding=1"
     }
 ];
 
@@ -390,19 +390,19 @@ let carts: CartItem[] = [
     }
 ];
 
-const movieTrailer : MovieTrailer[] = [
+const movieTrailer: MovieTrailer[] = [
     {
-        movie_id : 1,
-        trailer_id : 1
+        movie_id: 1,
+        trailer_id: 1
     }, {
-        movie_id : 1,
-        trailer_id : 2
+        movie_id: 1,
+        trailer_id: 2
     }, {
-        movie_id : 2,
-        trailer_id : 3
+        movie_id: 2,
+        trailer_id: 3
     }, {
-        movie_id : 3,
-        trailer_id : 4
+        movie_id: 3,
+        trailer_id: 4
     }
 ];
 
@@ -410,38 +410,38 @@ const movieTrailer : MovieTrailer[] = [
  * **********
  */
 
- /*
- * MONGODB
- */
+/*
+* MONGODB
+*/
 
-const synopsises : Synopsis[] = [
+const synopsises: Synopsis[] = [
     {
-        movie_id : 1,
-        synopsis : "c'est le synopsis de deadpool là"
+        movie_id: 1,
+        synopsis: "c'est le synopsis de deadpool là"
     }, {
-        movie_id : 2,
-        synopsis : "c'est le synopsis de dark knight là"
+        movie_id: 2,
+        synopsis: "c'est le synopsis de dark knight là"
     }, {
-        movie_id : 3,
-        synopsis : "c'est le synopsis de elysium là"
+        movie_id: 3,
+        synopsis: "c'est le synopsis de elysium là"
     }
 ];
 
-const orders : OrderHistory[] = [
+const orders: OrderHistory[] = [
     {
-        user_id : 2,
-        orders : [
+        user_id: 2,
+        orders: [
             {
-                purchase_date : new Date('2017/12/10 18:48:06'),
-                items : [
+                purchase_date: new Date('2017/12/10 18:48:06'),
+                items: [
                     {
-                        movie_id : 3,
-                        movie_price : 3.66,
-                        count : 6
+                        movie_id: 3,
+                        movie_price: 3.66,
+                        count: 6
                     }, {
-                        movie_id : 2,
-                        movie_price : 3.03,
-                        count : 1
+                        movie_id: 2,
+                        movie_price: 3.03,
+                        count: 1
                     }
                 ]
             }
@@ -471,6 +471,16 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return authenticate();
                 case url.endsWith('/auth/signup') && method === 'POST':
                     return registerate();
+                case url.endsWith('/changeUserDetails') && method === 'POST':
+                    return changeUserInfo();
+                case url.endsWith('/changePassword') && method === 'POST':
+                    return changePassword();
+                case url.includes("/forgetPassword") && method === 'POST':
+                    return forgetPassword();
+                case url.includes("/forgetPasswordEmailOnly") && method === 'POST':
+                    return forgetPasswordEmailOnly();
+                case url.includes("/checkUserPassword") && method === 'POST':
+                    return checkUserPassword();
                 case url.includes("/auth/activation") && method === 'GET':
                     return activate();
                 case url.endsWith('/users') && method === 'GET':
@@ -633,7 +643,21 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             const user = users.find(x => x.userId === idFromUrl());
             return ok(user);
         }
-
+        function forgetPasswordEmailOnly(){
+            console.log(body.user_email);
+            //Send email forget password
+            return ok({});
+        }
+        function forgetPassword(){
+            console.log(body.user_id);
+            console.log(body.user_email);
+            let user = users.find(x => x.userId === parseInt(body.user_id));
+            if (!user) {
+                return error("Utilisateur introuvable");
+            }
+            //Send email forget password
+            return ok({});
+        }
         function getMovies() {
             return ok(movies);
         }
@@ -655,6 +679,64 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 return ok({ isActivated: true });
             }
             return ok({ isActivated: false });
+        }
+        function checkUserPassword(){
+            const user_id = body.user_id;
+            const user_newPassword = body.user_newPassword;
+            let user = users.find(x => x.userId === parseInt(user_id));
+            if (!user) {
+                return error({unknown : true})
+            }
+            if(user.userPassword != user_newPassword){
+                return error({unmatch : true})
+            }
+            user.userPassword = user_newPassword;
+            return ok({});
+
+        }
+        function changeUserInfo() {
+            const user_id = body.user_id;
+            const user_login = body.user_login;
+            const user_firstname = body.user_firstname;
+            const user_lastname = body.user_lastname;
+            const user_email = body.user_email;
+            let user = users.find(x => x.userId === parseInt(user_id));
+            if (!user) {
+                return error("Utilisateur introuvable");
+            }
+            user.userLogin = user_login;
+            user.userFirstname = user_firstname;
+            user.userLastname = user_lastname;
+            user.userEmail = user_email;
+            return ok({
+                userId: user.userId,
+                userLogin: user.userLogin,
+                userFirstname: user.userFirstname,
+                userLastname: user.userLastname,
+                roles: user.roles,
+                userEmail: user.userEmail,
+                token: `fake-jwt-token.${user.userId}`
+            });
+        }
+
+        function changePassword() {
+            const user_id = body.user_id;
+            const user_password = body.user_password;
+
+            let user = users.find(x => x.userId === parseInt(user_id));
+            if (!user) {
+                return error("Utilisateur introuvable");
+            }
+            user.userPassword = user_password;
+            return ok({
+                userId: user.userId,
+                userLogin: user.userLogin,
+                userFirstname: user.userFirstname,
+                userLastname: user.userLastname,
+                roles: user.roles,
+                userEmail: user.userEmail,
+                token: `fake-jwt-token.${user.userId}`
+            });
         }
 
         function getUserCart() {
@@ -684,7 +766,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 carts.push(
                     {
                         embeddedKeyMovieUser,
-                        movieUserCartCount : 1
+                        movieUserCartCount: 1
                     }
                 )
             }
@@ -703,11 +785,11 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             if (!userCart) {
                 return error("Panier vide");
             }
-            let order : Order = new Order();
+            let order: Order = new Order();
             order.purchase_date = new Date();
             order.items = new Array<OrderItem>();
             for (let cartItem of userCart) {
-                let orderItem : OrderItem = new OrderItem();
+                let orderItem: OrderItem = new OrderItem();
                 orderItem.movie_id = cartItem.embeddedKeyMovieUser.movieId;
                 let movie = movies.find(x => x.movieId === orderItem.movie_id);
                 if (!movie) {

@@ -195,7 +195,7 @@
     100% { opacity: 1; transform: scale(0.3) translate(0px, 0px) }
   }
 }
-@media(max-width:400px){
+@media(max-width:450px){
   .hauntedHouse{
     left: -35px;
   }

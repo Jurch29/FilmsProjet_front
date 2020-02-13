@@ -3,18 +3,21 @@ import { Validators, FormControl, FormGroup } from '@angular/forms';
 import { LightmodeService } from 'src/app/core/service/lightmode.service';
 import { MatDialogRef } from '@angular/material';
 import { AuthenticationService } from 'src/app/core/service/authentication.service';
+import { UserService } from 'src/app/core/service/user.service';
+import { first } from 'rxjs/operators';
+import { resolve } from 'url';
 
 @Component({
   selector: 'app-change-password',
   templateUrl: './change-password.component.html',
   styleUrls: ['./change-password.component.css']
 })
-export class ChangePasswordComponent implements OnInit,OnDestroy {
+export class ChangePasswordComponent implements OnInit, OnDestroy {
 
   oldPasswd = new FormControl('', [Validators.required]);
-  newPasswd = new FormControl('', [Validators.required,Validators.minLength(6)]);
+  newPasswd = new FormControl('', [Validators.required, Validators.minLength(6)]);
   confPasswd = new FormControl('', Validators.required);
-  
+
   subscriptionlightMode: any;
   lightMode: boolean;
   loading = false;
@@ -23,79 +26,105 @@ export class ChangePasswordComponent implements OnInit,OnDestroy {
   hide: boolean;
 
   groupControl = new FormGroup({
-    oldPasswd : this.oldPasswd,
-    newPasswd :this.newPasswd,
-    confPasswd : this.confPasswd
+    oldPasswd: this.oldPasswd,
+    newPasswd: this.newPasswd,
+    confPasswd: this.confPasswd
   });
 
-  emailForgetPassword = new FormControl('',[Validators.required,Validators.email]);
+  emailForgetPassword = new FormControl('', [Validators.required, Validators.email]);
 
   emailForgetPasswordGroupControl = new FormGroup({
     emailForgetPassword: this.emailForgetPassword
   });
+  error: any;
 
-  
+  constructor(private userservice: UserService, private authenticationService: AuthenticationService, public dialogRef: MatDialogRef<ChangePasswordComponent>, private lightmodeService: LightmodeService) { }
 
-  constructor(private authenticationService : AuthenticationService,public dialogRef: MatDialogRef<ChangePasswordComponent>, private lightmodeService : LightmodeService) { }
-  ngOnInit() {  
+  ngOnInit() {
     this.hide = true;
-    this.subscriptionlightMode =  this.lightmodeService.getLightModeEventMessage().subscribe(value =>
+    this.subscriptionlightMode = this.lightmodeService.getLightModeEventMessage().subscribe(value =>
       this.lightMode = value
     );
   }
-  ngOnDestroy(){
+
+  ngOnDestroy() {
     this.subscriptionlightMode.unsubscribe();
   }
-  changePassword(){
+  changePassword() {
     this.submitted = true;
     this.checkValidationBeforeSubmit(this.groupControl);
-    this.oldPasswdCheck();
-    if (this.groupControl.invalid){
-      this.submitted = false;
-      return;
-    }
-    this.authenticationService.currentUserValue.userPassword = this.newPasswd.value;
-    this.dialogRef.close();
+    this.oldPasswdCheck().then(data=>{
+      if (this.groupControl.invalid || !data) {
+        this.submitted = false;
+      } else {
+        this.userservice.changePassword(this.authenticationService.currentUserValue.userId, this.newPasswd.value)
+          .pipe(first())
+          .subscribe(
+            data => {
+              this.authenticationService.updateUser(data)
+            },
+            error => {
+              console.log(error);
+            });
+        this.dialogRef.close();
+      }
+    });
   }
 
-  sendEmailForggetPassword(){
+  sendEmailForggetPassword() {
     this.checkValidationBeforeSubmit(this.emailForgetPasswordGroupControl);
-    if(this.emailForgetPasswordGroupControl.invalid){
+    if (this.emailForgetPasswordGroupControl.invalid) {
       return;
     }
+    this.userservice.forgetPassword(this.authenticationService.currentUserValue.userId, this.emailForgetPassword.value)
+      .pipe(first())
+      .subscribe(
+        data => {
+          console.log(data);
+        },
+        error => {
+          console.log(error);
+        });
     this.dialogRef.close();
-    
-    //to do
   }
 
-  getErrorEmailForgetPassword(){
-    if(this.emailForgetPassword.hasError('required'))return 'Champ recquis' ;
-    else if(this.emailForgetPassword.hasError('email'))return 'Email invalide';
+  getErrorEmailForgetPassword() {
+    if (this.emailForgetPassword.hasError('required')) return 'Champ recquis';
+    else if (this.emailForgetPassword.hasError('email')) return 'Email invalide';
     return '';
   }
 
-  forgetPassword(){
+  forgetPassword() {
     this.isForgetPassword = true;
   }
-  checkValidationBeforeSubmit(group){
-    Object.keys(group.controls).forEach(field => { 
-      const control = group.get(field);           
-      control.markAsTouched({ onlySelf: true });      
+  checkValidationBeforeSubmit(group) {
+    Object.keys(group.controls).forEach(field => {
+      const control = group.get(field);
+      control.markAsTouched({ onlySelf: true });
     });
   }
-  oldPasswdCheck(){
-    console.log(this.authenticationService.currentUserValue.userPassword)
-    console.log(this.oldPasswd.value)
-    if(this.oldPasswd.value  != this.authenticationService.currentUserValue.userPassword)
-      this.oldPasswd.setErrors({ unmatch: true });
-    else
-      this.oldPasswd.setErrors(null);
+  oldPasswdCheck() {
+    return new Promise((resolve, reject) => {this.userservice.checkUserPassword(this.authenticationService.currentUserValue.userId, this.oldPasswd.value)
+      .pipe(first())
+      .subscribe(
+        data => {
+          this.oldPasswd.setErrors(null);
+          return  resolve(true);
+        },
+        error => {
+          if (error.unmatch == true)
+            this.oldPasswd.setErrors(error);
+          else
+            this.error = error;
+            return  resolve(false);
+        });
+      });
   }
   confPasswdCheck() {
-    if (this.newPasswd.value !== this.confPasswd.value) 
+    if (this.newPasswd.value !== this.confPasswd.value)
       this.confPasswd.setErrors({ unmatch: true });
     else
-    this.confPasswd.setErrors(null);
+      this.confPasswd.setErrors(null);
   }
 
 }

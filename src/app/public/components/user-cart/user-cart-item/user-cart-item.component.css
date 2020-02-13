@@ -6,6 +6,7 @@
 }
 .panel{
     background-color: lightgray !important;
+    box-shadow: 0px 0px 10px;
 }
 .cover {
     background-size: 134px 196px;
