@@ -16,17 +16,18 @@
 .LoginRegister{
     margin: 0px 10px;
 }
+.parentCost{
+    display: inline-block;
+    margin-right: 15px;
+}
 
 .cost{
     background-color: lightgray !important;
-    background-size: 134px 196px;
-    width: 134px;
-    height: 196px;
     border-radius: 4px;
     box-shadow: 0px 0px 10px;
     opacity: 1;
     padding: 10px;
-    margin-right: 100px;
+    font-size: 15px;
 }
 
 @media(max-width:820px){
@@ -37,5 +38,9 @@
 @media(max-width:600px){
     .cartContainer{
         width: 100vw;
+    }
+
+    .parentCost{
+        font-size: 13px;
     }
 }
