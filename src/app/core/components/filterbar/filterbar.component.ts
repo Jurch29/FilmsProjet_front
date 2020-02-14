@@ -53,15 +53,15 @@ export class FilterbarComponent implements OnInit, OnDestroy {
     );
   }
   displayAuthor(author: Author): string {
-    return author ? author.authorLastName+' '+ author.authorFirstName : '';
+    return author ?  author.authorFirstName +' '+ author.authorLastName: '';
   }
   displayActor(actor: Actor): string {
-    return actor ? actor.actorLastName+' '+actor.actorFirstName : '';
+    return actor ? actor.actorFirstName+' '+actor.actorLastName : '';
   }
 
   _filterActor(inputedValue: string): Actor[] {
-    if (inputedValue != null) {
-      const filterValue = inputedValue.toLowerCase();
+    if (inputedValue != null ) {
+      const filterValue = inputedValue.toString().toLowerCase();
       return this.actors.filter(item => {
         let value = `${item.actorFirstName} ${item.actorLastName}`
         if (value.toLowerCase().indexOf(filterValue) != -1) {
@@ -72,7 +72,7 @@ export class FilterbarComponent implements OnInit, OnDestroy {
   }
   _filterAuthor(inputedValue: string): Author[] {
     if (inputedValue != null) {
-      const filterValue = inputedValue.toLowerCase();
+      const filterValue = inputedValue.toString().toLowerCase();
       return this.authors.filter(item => {
         let value = `${item.authorFirstName} ${item.authorLastName}`
         if (value.toLowerCase().indexOf(filterValue) != -1) {

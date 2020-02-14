@@ -8,6 +8,10 @@
     src: url('./assets/fonts/Creepster.ttf')  format('truetype');
 }
 
+@font-face {
+    font-family: 'FontAwesome';
+    src: url('./assets/fonts/fa-solid-900.ttf')  format('truetype');
+}
 html, body { 
     min-height: 100vh;
     height: auto;

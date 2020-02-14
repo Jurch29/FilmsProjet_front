@@ -104,7 +104,8 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
     });
   }
   oldPasswdCheck() {
-    return new Promise((resolve, reject) => {this.userservice.checkUserPassword(this.authenticationService.currentUserValue.userId, this.oldPasswd.value)
+    return new Promise((resolve, reject) => {
+      this.userservice.checkUserPassword(this.authenticationService.currentUserValue.userId, this.oldPasswd.value)
       .pipe(first())
       .subscribe(
         data => {

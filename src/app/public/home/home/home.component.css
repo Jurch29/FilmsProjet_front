@@ -1,0 +1,138 @@
+.containerRow {
+  margin: 0;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+}
+
+.contain {
+  width: 100%;
+}
+
+.row {
+    transition: 450ms transform;
+    font-size: 0;
+    white-space: nowrap;
+    margin: 40px 0;
+    padding: 20px;
+    font-size: 15px;
+    width: 100%;
+    overflow-y:visible;
+    overflow-x:scroll;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px;
+    color: black;
+}
+.dark .row{
+    color: darkgray;
+}
+.row::-webkit-scrollbar {
+    display: none;
+    -ms-overflow-style: none;
+}
+.before, .after{
+    font-family: 'FontAwesome';
+    color: black;
+    background-color: transparent;
+    border: transparent;
+    font-size: 30px;
+    transition: 250ms all;
+    margin: 0px 10px;
+}
+.dark .before,.dark .after{
+    color: white;
+}
+.before:hover, .after:hover{
+    transform: scale(1.5);
+}
+.before::before{
+    content: "\f053";
+}
+.after::after{
+    content: "\f054";
+}
+.row__inner{
+    display: inline-block;
+}
+.row__inner {
+  position: relative;
+  display: inline-block;
+  width: 134px;
+  height: 196px;
+  margin-right: 30px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: 450ms all;
+  transform-origin: center left;
+  color: black;
+}
+
+.dark .row .row__inner {
+    color: #5b5b5b;
+}
+.row__inner:hover {
+    transform: scale(1.1);
+}
+
+.row__inner:hover ~ .row__inner {
+  transform: translate3d(10px, 0, 0);
+}
+.ng-star-inserted{
+    display: inline-block!important;
+}
+.row__inner .cover.fadein:hover {
+    transition: opacity 0s ease;
+    opacity: 1;
+}
+.row__inner:hover {
+    opacity: 1;
+}
+.row__inner .cover {
+    background-size: 134px 196px;
+    width: 134px;
+    height: 196px;
+    border-radius: 4px;
+    box-shadow: 0px 0px 10px;
+    cursor: pointer;
+    opacity: 0;
+}
+.row__inner .cover.fadein {
+    transition: opacity 200ms ease-in;
+    opacity: 1;
+}
+.row__inner .cover .overlay {
+    background: rgba(23,24,27,0.6);
+    text-align: center;
+    padding: 97px 0;
+    border: 2px solid rgba(23,24,27,0.6);
+    border-radius: 4px;
+    transition: border-color 0.25s ease;
+    opacity: 0;
+    position: relative;
+}
+  
+.row__inner .cover:hover .overlay {
+    border: 2px solid #2d75df;
+    transition: border-color 0.5s;
+    opacity: 1;
+}
+.row__inner .title {
+    height: auto;
+    margin: 6px 0 4px;
+    color: black;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-bottom: 2px;
+}
+.dark .row .row__inner .title{
+    color: white;
+}
+.row__inner .year {
+    font-size: 0.85em;
+    color: #5b5b5b;
+    display: inline;
+}
