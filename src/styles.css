@@ -3,6 +3,7 @@
     font-family: 'Combo';
     src: url('./assets/fonts/Combo.ttf')  format('truetype');
 }
+
 @font-face {
     font-family: 'Creepster';
     src: url('./assets/fonts/Creepster.ttf')  format('truetype');
@@ -12,6 +13,7 @@
     font-family: 'FontAwesome';
     src: url('./assets/fonts/fa-solid-900.ttf')  format('truetype');
 }
+
 html, body { 
     min-height: 100vh;
     height: auto;
@@ -19,40 +21,45 @@ html, body {
     font-family: Roboto, "Helvetica Neue", sans-serif; 
     background-color: #666666;
     color: white;
- }
+}
 
 body { 
      overflow: hidden;
 }
+
 mat-spinner{
     display: block;
     margin-left: auto;
     margin-right: auto;
 }
+
 app-movie-preview{
     display: inline-block !important;
 }
 
-
 .mat-grid-tile .mat-figure {
     position: relative !important;
 }
+
 .dark .mat-sidenav-container {
     background-color: #222222 !important;
-  }
+}
   
 .mat-toolbar{
     color: white;
     background-color: #333333;
 }
+
 .dark .mat-dialog-container{
     background-color: silver !important;
 }
+
 @media (max-width: 697px)  {
    p{
     font-size: 10px;
     }
 }
+
 @media(max-width:600px){
     .mat-list-base .mat-list-item .mat-list-item-content{
         padding:0px 10px !important;
