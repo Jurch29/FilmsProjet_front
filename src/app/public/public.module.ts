@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { SharedModule } from 'src/app/shared/shared.module'; 
+import { SharedModule } from 'src/app/shared/shared.module';
+import { DatePipe } from '@angular/common';
 
 import { PublicRoutingModule } from './public-routing.module';
 import { RegisterComponent } from './components/register/register.component';
@@ -21,6 +22,7 @@ import { MoviesModule } from './movies/movies.module';
     MoviesModule
   ],
   exports: [RegisterComponent, LoginComponent],
-  entryComponents: [LoginComponent,UserCartItemComponent]
+  entryComponents: [LoginComponent,UserCartItemComponent],
+  providers: [DatePipe]
 })
 export class PublicModule { }

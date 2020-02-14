@@ -20,7 +20,7 @@ import { ErrorInterceptor } from './error.interceptor';
 
         // Fourni le fake backend
         // Simplement commenter la ligne pour brancher sur un véritable backend
-        fakeBackendProvider
+        // fakeBackendProvider
     ]
 })
 export class HelpersModule { }
