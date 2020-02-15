@@ -2,6 +2,7 @@ import { Injectable, OnInit } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
 import { environment } from '../../../environments/environment';
 import { User } from '../../shared/models/user';
@@ -12,7 +13,7 @@ export class AuthenticationService {
     private currentUserSubject: BehaviorSubject<User>;
     public currentUser: Observable<User> = undefined;
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private router: Router) {
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
         this.currentUser = this.currentUserSubject.asObservable();
     }
@@ -47,5 +48,11 @@ export class AuthenticationService {
     logout() {
         localStorage.removeItem('currentUser');
         this.currentUserSubject.next(null);
+        //Si on est sur une page restricted on redirige vers home
+        var currentRouteConfig = this.router.config.find(f=>f.path == this.router.url.substr(1));
+        if(currentRouteConfig != null && currentRouteConfig.canActivate != null)  {
+            if (currentRouteConfig.canActivate[0].name === "AuthGuard")
+                this.router.navigate(['/'])
+        }
     }
 }
