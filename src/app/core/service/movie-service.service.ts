@@ -51,6 +51,6 @@ export class MovieService {
   }
 
   getSynopsis(id : number) {
-    return this.http.get<Synopsis>(`${environment.apiUrl}/synopsis/${id}`);
+    return this.http.get<Synopsis>(`${environment.apiUrl}/mdb/synopsis/${id}`);
   }
 }

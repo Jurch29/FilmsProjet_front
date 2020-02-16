@@ -416,14 +416,14 @@ const movieTrailer: MovieTrailer[] = [
 
 const synopsises: Synopsis[] = [
     {
-        movie_id: 1,
-        synopsis: "c'est le synopsis de deadpool là"
+        movieId: 1,
+        movieDescription: "c'est le synopsis de deadpool là"
     }, {
-        movie_id: 2,
-        synopsis: "c'est le synopsis de dark knight là"
+        movieId: 2,
+        movieDescription: "c'est le synopsis de dark knight là"
     }, {
-        movie_id: 3,
-        synopsis: "c'est le synopsis de elysium là"
+        movieId: 3,
+        movieDescription: "c'est le synopsis de elysium là"
     }
 ];
 
@@ -525,7 +525,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function getSynopsisByMovieId() {
-            let synopsis = synopsises.find(x => x.movie_id === idFromUrl());
+            let synopsis = synopsises.find(x => x.movieId === idFromUrl());
             return ok(synopsis);
         }
 

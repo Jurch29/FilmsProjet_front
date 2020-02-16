@@ -17,14 +17,17 @@ export class AuthenticationService {
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
         this.currentUser = this.currentUserSubject.asObservable();
     }
+
     public get currentUserValue(): User {
         return this.currentUserSubject.value;
     }
+
     updateUser(user : User) {
         localStorage.setItem('currentUser',JSON.stringify(user));
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
         this.currentUser = this.currentUserSubject.asObservable();
     }
+    
     validateUser(userActivation: UserActivation) {
         let params = new HttpParams().set("user_id",userActivation.user_id.toString()).set("user_activation_code", userActivation.user_activation_code); //Create new HttpParams
         return this.http.get<any>(`${environment.apiUrl}/auth/activation`, {params: params});
