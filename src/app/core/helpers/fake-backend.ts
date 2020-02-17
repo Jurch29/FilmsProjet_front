@@ -475,10 +475,10 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return changeUserInfo();
                 case url.endsWith('/changePassword') && method === 'POST':
                     return changePassword();
+                case url.includes("/credentialsRecovery") && method === 'POST':
+                        return forgetPasswordEmailOnly();
                 case url.includes("/forgetPassword") && method === 'POST':
                     return forgetPassword();
-                case url.includes("/forgetPasswordEmailOnly") && method === 'POST':
-                    return forgetPasswordEmailOnly();
                 case url.includes("/checkUserPassword") && method === 'POST':
                     return checkUserPassword();
                 case url.includes("/auth/activation") && method === 'GET':
@@ -643,11 +643,19 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             const user = users.find(x => x.userId === idFromUrl());
             return ok(user);
         }
+
         function forgetPasswordEmailOnly(){
             console.log(body.user_email);
             //Send email forget password
+            let user = users.find(x => x.userEmail === body.user_email);
+            console.log(user);
+            if (!user) {
+                return error("Aucun compte n'existe avec cette adresse mail.");
+            }
+            console.log("Send MAIL")
             return ok({});
         }
+
         function forgetPassword(){
             console.log(body.user_id);
             console.log(body.user_email);
@@ -658,6 +666,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             //Send email forget password
             return ok({});
         }
+
         function getMovies() {
             return ok(movies);
         }
@@ -680,6 +689,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             }
             return ok({ isActivated: false });
         }
+
         function checkUserPassword(){
             const user_id = body.user_id;
             const user_newPassword = body.user_newPassword;
@@ -692,8 +702,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             }
             user.userPassword = user_newPassword;
             return ok({});
-
         }
+
         function changeUserInfo() {
             const user_id = body.user_id;
             const user_login = body.user_login;

@@ -90,16 +90,19 @@ export class LoginComponent implements OnInit {
     if(this.emailForgetPasswordGroupControl.invalid){
       return;
     }
+    this.error = '';
+    this.loading = true;
     this.userservice.forgetPasswordEmailOnly(this.emailForgetPassword.value)
     .pipe(first())
     .subscribe(
       data => {
-        console.log(data)
+        //OK
+        this.dialogRef.close();
       },
       error => {
-        console.log(error);
+        this.error = error;
+        this.loading = false;
       });
-      this.dialogRef.close();
   }
   
   checkValidationBeforeSubmit(groupControl) {
