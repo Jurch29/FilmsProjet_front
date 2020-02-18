@@ -1,5 +1,5 @@
 <div class="cartContainer">
-  <div *ngIf="getUser" #itemcontainer></div>
+  <app-user-cart-item *ngFor="let item of this.cart" [cartItem]="item" [cart]="this"></app-user-cart-item>
   <div class="parentCost">
     <span *ngIf="items" class="cost">Coût total : {{totalCost}} €</span>
   </div>

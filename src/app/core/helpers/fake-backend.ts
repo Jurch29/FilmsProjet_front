@@ -194,7 +194,7 @@ const movies: Movie[] = [
     }, {
         movieId: 2,
         movieTitle: "Batman : The Dark Night",
-        moviePrice: 10,
+        moviePrice: 6.3,
         movieImagePath: "http://culturaddict.com/wp-content/uploads/2016/07/TDK1.jpg",
         movieTrailerPath: "https://www.youtube.com/embed/EXeTwQWrcwY?rel=0&showinfo=0&controls=0&iv_load_policy=3&modestbranding=1",
         movieFilePath: "PicturesFolder/Preview/BDA_TheDarkNight.jpg",
@@ -246,7 +246,7 @@ const movies: Movie[] = [
     }, {
         movieId: 3,
         movieTitle: "Elysium",
-        moviePrice: 10,
+        moviePrice: 5.36,
         movieImagePath: "https://4.bp.blogspot.com/-V-rf6RaIruI/WJwwBeC5ssI/AAAAAAAAi-k/uMMSK5N8N9o022w5vIuMg2_C6jOsSAV0gCLcB/s1600/01.jpg",
         movieTrailerPath: "https://www.youtube.com/embed/oIBtePb-dGY?rel=0&showinfo=0&controls=0&iv_load_policy=3&modestbranding=1",
         movieFilePath: "PicturesFolder/Preview/BDA_Elysium.jpg",
@@ -511,6 +511,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return getUserCart();
                 case url.match(/\/user\/cart\/add/) && method === 'GET':
                     return addItemToCart();
+                case url.match(/\/user\/cart\/merge/) && method === 'GET':
+                    return mergeItemsToCart();
                 case url.match(/\/user\/cart\/buy\/\d+$/) && method === 'GET':
                     return buyCart();
                 default:
@@ -780,6 +782,24 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     }
                 )
             }
+            return ok({});
+        }
+
+        function mergeItemsToCart() {
+            const user_id : number = parseInt(request.params.get('user_id'));
+            const items : CartItem[] = JSON.parse(request.params.get('local_cart'));
+            for (let localCartItem of items) {
+                let item = carts.find(x => x.embeddedKeyMovieUser.userId === user_id && x.embeddedKeyMovieUser.movieId === localCartItem.embeddedKeyMovieUser.movieId);
+                if (!item) {
+                    localCartItem.embeddedKeyMovieUser.userId = user_id;
+                    carts.push(localCartItem);
+                } else {
+                    item.movieUserCartCount += localCartItem.movieUserCartCount;
+                }
+            }
+            let reportCart = carts.filter(function (element) {
+                return element.embeddedKeyMovieUser.userId == user_id;
+            });
             return ok({});
         }
 

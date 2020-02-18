@@ -30,7 +30,6 @@ export class MoviePreviewComponent implements OnInit,OnDestroy {
   ngOnInit() {
     this.movieService.getAllMovies().pipe(first()).subscribe(data => {
        this.Movies = data;
-       console.log(this.Movies);
       }
     );
 

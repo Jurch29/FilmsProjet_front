@@ -5,25 +5,20 @@ import { User } from 'src/app/shared/models/user';
 import { NavbarComponent } from 'src/app/core/components/navbar/navbar.component';
 import { CartService } from 'src/app/core/service/cart.service';
 import { NumberOfItemsInCartService } from 'src/app/core/service/number-of-items-in-cart.service';
+import { CartItem } from 'src/app/shared/models/cart-item';
 
 @Component({
   selector: 'app-user-cart',
   templateUrl: './user-cart.component.html',
   styleUrls: ['./user-cart.component.css']
 })
-export class UserCartComponent implements OnInit {
-  @ViewChild("itemcontainer", { static : false,read: ViewContainerRef }) container;
-  
+export class UserCartComponent {
+  private cart : CartItem[];
   items : boolean = false;
-  private componentRef : ComponentRef<any>;
-  private componentFactory : ComponentFactory<any>;
   currentUser : User;
-  private componentList : any[];
   private totalCost : number;
   
-  constructor(private navbar : NavbarComponent, private authenticationService : AuthenticationService, private cartService : CartService, private numberofitemsincartService : NumberOfItemsInCartService, private resolver : ComponentFactoryResolver) { 
-    this.componentFactory = this.resolver.resolveComponentFactory(UserCartItemComponent);
-  }
+  constructor(private navbar : NavbarComponent, private authenticationService : AuthenticationService, private cartService : CartService, private numberofitemsincartService : NumberOfItemsInCartService) {}
 
   buy(){
     this.cartService.buyCart(this.authenticationService.currentUserValue.userId)
@@ -31,10 +26,8 @@ export class UserCartComponent implements OnInit {
     .subscribe(
       data => {
         this.items = false;
-        for (let component of this.componentList) {
-          component.destroy();
-        }
         this.numberofitemsincartService.ChangeNumberOfItemsInCartMessage(0);
+        this.cart = undefined;
       },
       error => {
         console.log(error);
@@ -45,32 +38,29 @@ export class UserCartComponent implements OnInit {
   ngOnInit() {
     this.currentUser = this.authenticationService.currentUserValue;
     this.items = false;
-    this.authenticationService.currentUser.subscribe(data => {
-      if (data != undefined) {
-        this.cartService.getUserCart(data.userId)
-        .pipe()
-        .subscribe(
-          data => {
-            let numberOfItems = 0;
-            for (let item of data) {
-              numberOfItems += item.movieUserCartCount;
+    this.authenticationService.currentUser
+    .pipe()
+    .subscribe(
+      user => {
+        if (user != undefined) {
+          this.cartService.mergeCarts(user.userId)
+          .then(
+            response => {
+              this.cartService.getUserCart(user.userId)
+              .subscribe(
+                data => {
+                  this.listCartItems(data);
+                }
+              );
+            });
+        } else {
+          this.cartService.getUserLocalCart()
+          .then(
+            (data : CartItem[]) => {
+              this.listCartItems(data);
             }
-            this.numberofitemsincartService.ChangeNumberOfItemsInCartMessage(numberOfItems);
-            let i = 0;
-            this.totalCost = 0;
-            this.componentList = new Array();
-            for (let element of data) {
-              this.items = true;
-              this.componentRef = this.container.createComponent(this.componentFactory, 0);
-              this.componentList[i++] = this.componentRef;
-              this.componentRef.instance.setProperties(element.embeddedKeyMovieUser.movieId, element.movieUserCartCount, this);
-            }
-          },
-          error => {
-            console.log(error);
-          }
-        );
-      }
+          );
+        }
     });
   }
 
@@ -82,12 +72,23 @@ export class UserCartComponent implements OnInit {
     if (this.authenticationService.currentUserValue) {
       return true;
     } else {
-      this.items = false;
       return false;
     }
   }
 
   addToTotalCost(cost : number) {
     this.totalCost += cost;
+  }
+
+  listCartItems(data : CartItem[]) {
+    let numberOfItems = 0;
+    this.totalCost = 0;
+    this.items = false;
+    for (let item of data) {
+      this.items = true;
+      numberOfItems += item.movieUserCartCount;
+    }
+    this.numberofitemsincartService.ChangeNumberOfItemsInCartMessage(numberOfItems);
+    this.cart = data;
   }
 }

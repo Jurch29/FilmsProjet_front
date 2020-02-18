@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MovieService } from 'src/app/core/service/movie-service.service';
 import { UserCartComponent } from '../user-cart.component';
+import { CartItem } from 'src/app/shared/models/cart-item';
 
 @Component({
   selector: 'app-user-cart-item',
@@ -14,16 +15,17 @@ export class UserCartItemComponent implements OnInit {
   totalCost : number ;
   moviePreviewImage = {
     "background-image": ""
-  } 
-  constructor(private movieService : MovieService) { }
+  }
+  @Input()
+  cartItem : CartItem;
+  @Input()
+  cart : UserCartComponent;
+
+  constructor(private movieService : MovieService) {}
 
   ngOnInit() {
-    
-  }
-
-  setProperties(movie_id : number, count : number, userCart : UserCartComponent) {
-    this.numberOfItems = count;
-    this.movieService.getMovieById(movie_id)
+    this.numberOfItems = this.cartItem.movieUserCartCount;
+    this.movieService.getMovieById(this.cartItem.embeddedKeyMovieUser.movieId)
     .pipe()
     .subscribe(
       movie => {
@@ -31,7 +33,7 @@ export class UserCartItemComponent implements OnInit {
         this.unitCost = movie.moviePrice;
         this.totalCost = this.unitCost * this.numberOfItems;
         this.moviePreviewImage["background-image"] = "url(" + movie.movieImagePath + ")";
-        userCart.addToTotalCost(this.totalCost);
+        this.cart.addToTotalCost(this.totalCost);
       },
       error => {
         console.log(error);

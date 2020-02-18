@@ -11,6 +11,7 @@ import { AuthenticationService } from 'src/app/core/service/authentication.servi
 import { CartService } from 'src/app/core/service/cart.service';
 import { LightmodeService } from 'src/app/core/service/lightmode.service';
 import { DatePipe } from '@angular/common';
+import { CartItem } from 'src/app/shared/models/cart-item';
 
 
 @Component({
@@ -71,30 +72,53 @@ export class MovieCardComponent implements OnInit,OnDestroy{
   }
 
   addToCart(){
-    console.log(this.authenticationService.currentUserValue);
-    this.cartService.addItemToCart(this.authenticationService.currentUserValue.userId, this.id)
-    .pipe()
-    .subscribe(
-      data => {
-        this.cartService.getUserCart(this.authenticationService.currentUserValue.userId)
-        .pipe()
-        .subscribe(
-          data => {
-            let numberOfItems = 0;
-            for (let item of data) {
-              numberOfItems += item.movieUserCartCount;
+    let user_id : number;
+    if (this.authenticationService.currentUserValue) {
+      user_id = this.authenticationService.currentUserValue.userId;
+    } else {
+      user_id = -1;
+    }
+    if (user_id != -1) {
+      this.cartService.addItemToCart(user_id, this.id)
+      .pipe()
+      .subscribe(
+        data => {
+          this.cartService.getUserCart(user_id)
+          .pipe()
+          .subscribe(
+            data => {
+              this.countItems(data);
+            },
+            error => console.log(error)
+          );
+        },
+        error => console.log(error)
+      );
+    } else {
+      this.cartService.addItemToLocalCart(this.id)
+      .then(
+        data => {
+          this.cartService.getUserLocalCart()
+          .then(
+            (data : CartItem[]) => {
+              this.countItems(data);
             }
-            this.numberofitemsincartService.ChangeNumberOfItemsInCartMessage(numberOfItems);
-          },
-          error => console.log(error)
-        );
-      },
-      error => console.log(error)
-    );
+          );
+        },
+        error => console.log(error)
+      );
+    }
   }
 
   close() {
     this.infobulecontainer.clear();
   }
- 
+
+  countItems(data : CartItem[]) {
+    let numberOfItems = 0;
+    for (let item of data) {
+      numberOfItems += item.movieUserCartCount;
+    }
+    this.numberofitemsincartService.ChangeNumberOfItemsInCartMessage(numberOfItems);
+  }
 }
