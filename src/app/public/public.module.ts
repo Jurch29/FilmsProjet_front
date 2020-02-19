@@ -12,9 +12,10 @@ import { NotfoundComponent } from './components/notfound/notfound.component';
 
 import { HomeModule } from './home/home.module';
 import { MoviesModule } from './movies/movies.module';
+import { PasswordresetComponent } from './components/passwordreset/passwordreset.component';
 
 @NgModule({
-  declarations: [RegisterComponent, LoginComponent, UserCartComponent, UserCartItemComponent, ForbiddenComponent, NotfoundComponent],
+  declarations: [RegisterComponent, LoginComponent, UserCartComponent, UserCartItemComponent, ForbiddenComponent, NotfoundComponent, PasswordresetComponent],
   imports: [
     SharedModule,
     PublicRoutingModule,
