@@ -48,6 +48,11 @@ export class AuthenticationService {
         return this.http.post<any>(`${environment.apiUrl}/auth/signup`, user);
     }
 
+    validatePasswordResetToken(token : string) {
+        let params = new HttpParams().set("token",token);
+        return this.http.get<any>(`${environment.apiUrl}/auth/ispasswordresettokenvalid`, {params: params});
+    }
+
     logout() {
         localStorage.removeItem('currentUser');
         this.currentUserSubject.next(null);
@@ -57,5 +62,7 @@ export class AuthenticationService {
             if (currentRouteConfig.canActivate[0].name === "AuthGuard")
                 this.router.navigate(['/'])
         }
+
+        //Loggout to server (?)
     }
 }
