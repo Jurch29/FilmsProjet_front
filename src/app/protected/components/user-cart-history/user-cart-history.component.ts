@@ -1,23 +1,28 @@
 import { Component, OnInit } from '@angular/core';
+import { OrderService } from 'src/app/core/service/order.service';
+import { AuthenticationService } from 'src/app/core/service/authentication.service';
+import { Order } from 'src/app/shared/models/order';
 
 @Component({
   selector: 'app-user-cart-history',
   templateUrl: './user-cart-history.component.html',
   styleUrls: ['./user-cart-history.component.css']
 })
-export class UserCartHistoryComponent implements OnInit {
-  movieTitle: string = "Avengers";
-  BuyDate : string ="08/12/2019";
-  NumberOfItems : number = 3;
-  TotalCost : string ="10.50€";
-  MoviePreviewImage = {
-    "background-image": ""
-  } 
-  constructor() { }
+export class UserCartHistoryComponent {
+  private orders : Order[];
+
+  constructor(private authenticationService : AuthenticationService, private orderService : OrderService) {}
 
   ngOnInit() {
-    this.MoviePreviewImage["background-image"] = "url(http://image.tmdb.org/t/p/w500/fF7vPzCF6kIsLuWEHCGPGl2xTw1.jpg)";
-
+    this.orderService.getUserOrders(this.authenticationService.currentUserValue.userId)
+    .pipe()
+    .subscribe(
+      data => {
+        this.orders = data
+      },
+      error =>  {
+        console.log(error);
+      }
+    );
   }
-
 }
