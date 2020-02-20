@@ -377,7 +377,6 @@ let embeddedKeyMovieUser: EmbeddedKeyMovieUser[] = [
         movieId: 3,
         userId: 2
     }
-
 ]
 
 let carts: CartItem[] = [

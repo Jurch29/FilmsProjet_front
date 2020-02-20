@@ -1,5 +1,4 @@
-import { Component, OnInit, ViewChild, ViewContainerRef, ComponentRef, ComponentFactoryResolver, ComponentFactory } from '@angular/core';
-import { UserCartItemComponent } from './user-cart-item/user-cart-item.component';
+import { Component } from '@angular/core';
 import { AuthenticationService } from 'src/app/core/service/authentication.service';
 import { User } from 'src/app/shared/models/user';
 import { NavbarComponent } from 'src/app/core/components/navbar/navbar.component';
@@ -18,7 +17,8 @@ export class UserCartComponent {
   currentUser : User;
   private totalCost : number;
   
-  constructor(private navbar : NavbarComponent, private authenticationService : AuthenticationService, private cartService : CartService, private numberofitemsincartService : NumberOfItemsInCartService) {}
+  constructor(private navbar : NavbarComponent, private authenticationService : AuthenticationService,
+              private cartService : CartService, private numberofitemsincartService : NumberOfItemsInCartService) {}
 
   buy(){
     this.cartService.buyCart(this.authenticationService.currentUserValue.userId)
@@ -53,7 +53,8 @@ export class UserCartComponent {
                 }
               );
             });
-        } else {
+        }
+        else {
           this.cartService.getUserLocalCart()
           .then(
             (data : CartItem[]) => {
