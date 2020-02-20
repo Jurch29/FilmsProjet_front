@@ -1,0 +1,7 @@
+<div>
+    Achat le : {{purchase_date}}
+</div>
+<app-user-cart-history-purchase-item *ngFor="let item of this.items" [item]="item" [order]="this"></app-user-cart-history-purchase-item>
+<div>
+    Cout total : {{totalCost}}
+</div>

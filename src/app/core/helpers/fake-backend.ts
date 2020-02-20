@@ -515,6 +515,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return mergeItemsToCart();
                 case url.match(/\/user\/cart\/buy\/\d+$/) && method === 'GET':
                     return buyCart();
+                case url.match(/\/user\/orders\/\d+$/) && method === 'GET':
+                    return getOrdersByUserId();
                 default:
                     return next.handle(request);
             }
@@ -815,11 +817,11 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             if (!userCart) {
                 return error("Panier vide");
             }
-            let order: Order = new Order();
+            let order : Order = new Order();
             order.purchase_date = new Date();
             order.items = new Array<OrderItem>();
             for (let cartItem of userCart) {
-                let orderItem: OrderItem = new OrderItem();
+                let orderItem : OrderItem = new OrderItem();
                 orderItem.movie_id = cartItem.embeddedKeyMovieUser.movieId;
                 let movie = movies.find(x => x.movieId === orderItem.movie_id);
                 if (!movie) {
@@ -829,10 +831,28 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 orderItem.count = cartItem.movieUserCartCount;
                 order.items.push(orderItem);
             }
+            let userOrderHistory : OrderHistory = orders.find(x => x.user_id === user_id);
+            if (!userOrderHistory) {
+                userOrderHistory = new OrderHistory();
+                userOrderHistory.user_id = user_id;
+                userOrderHistory.orders = new Array<Order>();
+                orders.push(userOrderHistory);
+            }
+            userOrderHistory.orders.push(order);
             carts = carts.filter(function (element) {
                 return element.embeddedKeyMovieUser.userId != user_id;
             });
             return ok({});
+        }
+
+        function getOrdersByUserId() {
+            const user_id : number = idFromUrl();
+            let userOrders = orders.find(x => x.user_id === user_id);
+            if (!userOrders) {
+                userOrders = new OrderHistory();
+                userOrders.orders = new Array<Order>();
+            }
+            return ok(userOrders.orders);
         }
 
         // helper functions

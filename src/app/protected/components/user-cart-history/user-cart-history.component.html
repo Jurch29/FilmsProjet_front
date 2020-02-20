@@ -1,17 +1,9 @@
 <div class="cartContainerHistory">
-    <mat-expansion-panel disabled="true" hideToggle class="panel">
-        <mat-expansion-panel-header>
-            <mat-panel-title>
-                {{movieTitle}}
-            </mat-panel-title>
-            <mat-panel-description class="description">
-                <div>
-                    Achat le : {{BuyDate}}
-                </div>
-                <div>
-                    Cout total : {{TotalCost}}
-                </div>
-            </mat-panel-description>
-        </mat-expansion-panel-header>
-    </mat-expansion-panel>
+    <div *ngIf="this.orders != undefined && this.orders.length != 0">
+        <h1>Commandes :</h1>
+        <app-user-cart-history-purchase *ngFor="let order of this.orders" [order]="order"></app-user-cart-history-purchase>
+    </div>
+    <div *ngIf="this.orders == undefined || this.orders.length == 0">
+        <p>Aucune commande pour le moment</p>
+    </div>
 </div>
