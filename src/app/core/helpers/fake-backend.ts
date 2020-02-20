@@ -510,7 +510,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return getUserCart();
                 case url.match(/\/user\/cart\/add/) && method === 'GET':
                     return addItemToCart();
-                case url.match(/\/user\/cart\/merge/) && method === 'GET':
+                case url.match(/\/user\/cartmerge/) && method === 'POST':
                     return mergeItemsToCart();
                 case url.match(/\/user\/cart\/buy\/\d+$/) && method === 'GET':
                     return buyCart();
@@ -787,8 +787,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function mergeItemsToCart() {
-            const user_id : number = parseInt(request.params.get('user_id'));
-            const items : CartItem[] = JSON.parse(request.params.get('local_cart'));
+            const user_id = body.userId;
+            const items = body.localCart;
             for (let localCartItem of items) {
                 let item = carts.find(x => x.embeddedKeyMovieUser.userId === user_id && x.embeddedKeyMovieUser.movieId === localCartItem.embeddedKeyMovieUser.movieId);
                 if (!item) {

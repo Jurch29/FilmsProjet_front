@@ -59,16 +59,18 @@ export class CartService {
     return this.http.get<any>(`${environment.apiUrl}/user/cart/buy/${user_id}`);
   }
 
-  mergeCarts(user_id : number) {
+  mergeCarts(userId : number) {
+    console.log("user"+userId);
     return new Promise((resolve, reject) => {
       let localCart : CartItem[] = JSON.parse(localStorage.getItem('userLocalCart'));
+      console.log(localCart);
       localStorage.removeItem('userLocalCart');
       if (localCart) {
-        let params = new HttpParams().set("user_id", user_id.toString()).set("local_cart", JSON.stringify(localCart));
-        this.http.get<any>(`${environment.apiUrl}/user/cart/merge`, {params : params})
+        return this.http.post<any>(`${environment.apiUrl}/user/cartmerge`, { userId, localCart })
         .pipe()
         .subscribe(
           data => {
+            console.log(data);
             return resolve();
           }
         );
