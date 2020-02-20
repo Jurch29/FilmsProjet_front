@@ -20,6 +20,8 @@ export class PasswordresetComponent implements OnInit {
   submitted = false;
   error: any;
   token : string;
+  email : string;
+  expiredToken: boolean = false;
 
   newPasswd = new FormControl('', [Validators.required, Validators.minLength(6)]);
   confPasswd = new FormControl('', Validators.required);
@@ -35,7 +37,7 @@ export class PasswordresetComponent implements OnInit {
   { 
     this.activatedRoute.queryParams.subscribe(params => {
       this.token = params['token'];
-      console.log(this.token); // Print the parameter to the console.
+      this.email = params['user_email'];
     });
   }
 
@@ -50,12 +52,19 @@ export class PasswordresetComponent implements OnInit {
     .pipe(first())
     .subscribe(
       data => {
-        console.log(data);
+        console.log(data.message);
+        if (data.message==="invalid token"){
+          this.router.navigate(['/']);
+        }
+        else if (data.message==="expired token"){
+          this.expiredToken = true;
+        }
       },
       error => {
         console.log(error);
       });
   }
+
   ngOnDestroy() {
     this.subscriptionlightMode.unsubscribe();
   }
@@ -78,7 +87,34 @@ export class PasswordresetComponent implements OnInit {
     this.submitted = true;
     this.checkValidationBeforeSubmit(this.groupControl);
     if (!this.groupControl.invalid){
-      console.log('BOOMM');
+      console.log(this.newPasswd.value);
+      this.authenticationService.resetPassword(this.token, this.newPasswd.value)
+      .pipe(first())
+      .subscribe(
+        data => {
+          console.log(data);
+          //ok
+          this.router.navigate(['/']);
+        },
+        error => {
+          console.log(error);
+        });
     }
   }
+
+  reSend(){
+    this.userservice.forgetPasswordEmailOnly(this.email)
+    .pipe(first())
+    .subscribe(
+      data => {
+        //OK
+        console.log(data);
+      },
+      error => {
+        console.log(error);
+        this.error = error;
+        this.loading = false;
+      });
+  }
+
 }

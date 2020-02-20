@@ -17,7 +17,9 @@ export class NotfoundComponent implements OnInit,OnDestroy {
       this.lightMode = value
     );
   }
+
   ngOnDestroy(){
     this.subscriptionlightMode.unsubscribe();
   }
+  
 }

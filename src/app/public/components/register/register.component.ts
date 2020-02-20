@@ -49,7 +49,6 @@ export class RegisterComponent implements OnInit,OnDestroy {
     passwd :this.passwd,
     passwdControl : this.passwdControl
   });
-
   
   constructor(private lightmodeService : LightmodeService, private authenticationService: AuthenticationService) {
     this.user = new User();
@@ -63,6 +62,7 @@ export class RegisterComponent implements OnInit,OnDestroy {
       this.lightMode = value
     );
   }
+
   ngOnDestroy(){
     this.subscriptionlightMode.unsubscribe();
   }
@@ -101,7 +101,7 @@ export class RegisterComponent implements OnInit,OnDestroy {
     this.user.userLogin = this.username.value;
     this.user.userEmail = this.email.value;
     this.user.userPassword = this.passwd.value;
-    this.user.roles = [Role.User];
+    this.user.roles = [Role.User]; //Pour sécuriser : mettre ce role dans le back
 
     this.authenticationService.register(this.user).pipe(first())
     .subscribe(
@@ -136,4 +136,5 @@ export class RegisterComponent implements OnInit,OnDestroy {
           else
           this.passwdControl.setErrors(null);
   }
+
 }

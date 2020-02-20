@@ -91,4 +91,5 @@ export class UserCartComponent {
     this.numberofitemsincartService.ChangeNumberOfItemsInCartMessage(numberOfItems);
     this.cart = data;
   }
+  
 }

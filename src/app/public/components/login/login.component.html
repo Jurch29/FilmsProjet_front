@@ -20,6 +20,7 @@
     <mat-spinner *ngIf="loading" diameter="30"></mat-spinner>
   </div>
 </div>
+
 <div *ngIf="isUserToActivate && !isForgetPassword" class="activation-container">
   <label>Vous avez reçu un mail contenant un code afin d'activer votre compte</label>
   <mat-form-field class="activation-field">
@@ -32,9 +33,9 @@
   <div *ngIf="error" class="alertError">{{error}}</div>
   <mat-spinner *ngIf="loading" diameter="30"></mat-spinner>
 </div>
+
 <div *ngIf="isForgetPassword" class="forgetPassword-container">
-  <p class="header">Veuillez entrer votre email ci-dessous. Vous recevrez un email contenant un nouveau mot de passe
-    temporaire</p>
+  <p class="header">Veuillez entrer votre email ci-dessous. Vous recevrez un email avec un lien vous permettant de réinitialiser votre mot de passe.</p>
   <mat-form-field class="forgetPassword-field">
     <input matInput placeholder="Email" [formControl]="emailForgetPassword" required>
     <mat-error *ngIf="emailForgetPassword.invalid">{{getErrorEmailForgetPassword()}}</mat-error>
