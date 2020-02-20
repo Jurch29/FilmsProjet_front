@@ -45,12 +45,17 @@ export class AuthenticationService {
     }
 
     register(user : User) {
+        console.log(user);
         return this.http.post<any>(`${environment.apiUrl}/auth/signup`, user);
     }
 
     validatePasswordResetToken(token : string) {
         let params = new HttpParams().set("token",token);
         return this.http.get<any>(`${environment.apiUrl}/auth/ispasswordresettokenvalid`, {params: params});
+    }
+
+    resetPassword(token : string, password : string){
+        return this.http.post<any>(`${environment.apiUrl}/auth/resetpassword`, { token, password })
     }
 
     logout() {

@@ -52,9 +52,11 @@ export class FilterbarComponent implements OnInit, OnDestroy {
       this.lightMode = value
     );
   }
+
   displayAuthor(author: Author): string {
     return author ?  author.authorFirstName +' '+ author.authorLastName: '';
   }
+
   displayActor(actor: Actor): string {
     return actor ? actor.actorFirstName+' '+actor.actorLastName : '';
   }
@@ -70,6 +72,7 @@ export class FilterbarComponent implements OnInit, OnDestroy {
       });
     }
   }
+
   _filterAuthor(inputedValue: string): Author[] {
     if (inputedValue != null) {
       const filterValue = inputedValue.toString().toLowerCase();
@@ -81,18 +84,23 @@ export class FilterbarComponent implements OnInit, OnDestroy {
       });
     }
   }
+
   ngOnDestroy(): void {
     this.subscriptionlightMode.unsubscribe();
   }
+
   onOrderByChange(event) {
     console.log("event = " + event.value);//If undefined means choose no selection
   }
+
   onCategoryChange(event) {
     console.log("event = " + event.value);//If undefined means choose no selection
   }
+
   onAuthorChange(event) {
     console.log("event = " + event.option.value.author_id);//If undefined means choose no selection
   }
+  
   onActorChange(event) {
     console.log("event = " + event.option.value.actor_id);//If undefined means choose no selection
   }

@@ -52,9 +52,11 @@ export class MovieDetailsComponent implements OnInit,OnDestroy {
       this.lightMode = value
     );
   }
+
   ngOnDestroy(){
     this.subscriptionlightMode.unsubscribe();
   }
+
   setupMoviedetails(){
     this.ratingValueCritique = this.movie.movieMark;
     this.date = this.formatDate(this.movie.movieDate);
@@ -71,6 +73,7 @@ export class MovieDetailsComponent implements OnInit,OnDestroy {
     this.safeContent =  this.sanitizer.bypassSecurityTrustResourceUrl(this.movie.movieTrailerPath);
     this.movieService.getSynopsis(this.movie.movieId).pipe(first()).subscribe(data => this.synopsis = data.movieDescription);
   }
+
   formatDate(date : Date) {
     let monthNames = [
       "Janvier", "Février", "Mars",
@@ -115,4 +118,5 @@ export class MovieDetailsComponent implements OnInit,OnDestroy {
   trailer(trailer : string) {
     return this.sanitizer.bypassSecurityTrustResourceUrl(trailer);
   }
+
 }

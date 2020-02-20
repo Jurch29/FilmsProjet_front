@@ -12,8 +12,8 @@ import { first } from 'rxjs/operators';
   templateUrl: './user-details.component.html',
   styleUrls: ['./user-details.component.css']
 })
-export class UserDetailsComponent implements OnInit, OnDestroy {
 
+export class UserDetailsComponent implements OnInit, OnDestroy {
 
   subscriptionlightMode: any;
   lightMode: boolean;
@@ -24,7 +24,6 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
   username = new FormControl('', Validators.required);
   email = new FormControl('', [Validators.required, Validators.email]);
 
-
   groupControl = new FormGroup({
     lastname: this.lastname,
     firstname: this.firstname,
@@ -32,7 +31,6 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
     email: this.email
   });
   error: any;
-
 
   constructor(public dialog: MatDialog, private userservice: UserService, private authenticationService: AuthenticationService, private lightmodeService: LightmodeService) { }
 
@@ -46,9 +44,11 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
       this.lightMode = value
     );
   }
+
   ngOnDestroy() {
     this.subscriptionlightMode.unsubscribe();
   }
+
   changePassword() {
     let dialogRef;
     if (this.lightMode)
@@ -68,6 +68,7 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
       control.markAsTouched({ onlySelf: true });
     });
   }
+
   changeUserDetails() {
     this.submitted = true;
     this.checkValidationBeforeSubmit();

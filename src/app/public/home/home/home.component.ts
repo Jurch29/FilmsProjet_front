@@ -11,13 +11,13 @@ export class HomeComponent implements OnInit,OnDestroy {
   lightMode: boolean;
   
 
-  constructor(private lightmodeService: LightmodeService) {
-   }
+  constructor(private lightmodeService: LightmodeService) {}
    ngOnInit(){
     this.subscriptionlightMode =  this.lightmodeService.getLightModeEventMessage().subscribe(value =>
       this.lightMode = value
     );
   }
+
   ngOnDestroy(){
     this.subscriptionlightMode.unsubscribe();
   }

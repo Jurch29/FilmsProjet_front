@@ -76,4 +76,5 @@ export class MoviePreviewComponent implements OnInit,OnDestroy {
       "background-image": "url(" + url + ")"
     };
   }
+
 }

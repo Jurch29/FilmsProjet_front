@@ -47,6 +47,7 @@ export class MovieCardComponent implements OnInit,OnDestroy{
       this.lightMode = value
     );
   }
+
   ngOnDestroy(){
     this.subscriptionlightMode.unsubscribe();
   }
@@ -121,4 +122,5 @@ export class MovieCardComponent implements OnInit,OnDestroy{
     }
     this.numberofitemsincartService.ChangeNumberOfItemsInCartMessage(numberOfItems);
   }
+
 }
