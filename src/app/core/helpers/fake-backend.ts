@@ -489,7 +489,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return getUserById();
                 case url.endsWith('/movies') && method === 'GET':
                     return getMovies();
-                case url.match(/\/movies\/\d+$/) && method === 'GET':
+                case url.match(/\/movie\/\d+$/) && method === 'GET':
                     return getMovieById();
                 case url.endsWith('/actors') && method === 'GET':
                     return getActors();
