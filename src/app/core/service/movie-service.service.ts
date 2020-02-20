@@ -19,7 +19,7 @@ export class MovieService {
   }
 
   getMovieById(id : number) {
-    return this.http.get<Movie>(`${environment.apiUrl}/movies/${id}`);
+    return this.http.get<Movie>(`${environment.apiUrl}/movie/movie/${id}`);
   }
 
   getActorByMovieId(id : number) {

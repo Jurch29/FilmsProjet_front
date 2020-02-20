@@ -13,6 +13,7 @@ import { NumberOfItemsInCartService } from 'src/app/core/service/number-of-items
 import { DomSanitizer } from '@angular/platform-browser';
 import { ThrowStmt } from '@angular/compiler';
 import { StarRatingComponent } from 'ng-starrating';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-movie-details',
@@ -39,7 +40,9 @@ export class MovieDetailsComponent implements OnInit,OnDestroy {
   DidBuy: boolean;
   ratingValueCurrentUser: number;
  
-  constructor(private lightmodeService: LightmodeService, private authenticationService: AuthenticationService, private cartService: CartService, private numberofitemsincartService: NumberOfItemsInCartService, private sanitizer: DomSanitizer, private movieService: MovieService, private route: ActivatedRoute) { }
+  constructor(private lightmodeService: LightmodeService, private authenticationService: AuthenticationService,
+              private cartService: CartService, private numberofitemsincartService: NumberOfItemsInCartService,
+              private sanitizer: DomSanitizer, private movieService: MovieService, private route: ActivatedRoute, public datepipe: DatePipe) { }
  
   ngOnInit() {
     this.route.params.pipe(first()).subscribe(data => this.id = data.movieID)
@@ -75,18 +78,8 @@ export class MovieDetailsComponent implements OnInit,OnDestroy {
   }
 
   formatDate(date : Date) {
-    let monthNames = [
-      "Janvier", "Février", "Mars",
-      "Avril", "Mai", "Juin", "Juillet",
-      "Âout", "Septembre", "Octobre",
-      "Novembre", "Décembre"
-    ];
-  
-    let day = ("0" + date.getDate()).slice(-2);
-    let monthIndex = date.getMonth();
-    let year = date.getFullYear();
-  
-    return day + ' ' + monthNames[monthIndex] + ' ' + year;
+    let formattedDate =this.datepipe.transform(date, 'dd MMMM yyyy');
+    return formattedDate;
   }
 
   addToCart(){
