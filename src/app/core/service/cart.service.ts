@@ -25,9 +25,8 @@ export class CartService {
     });
   }
 
-  addItemToCart(user_id : number, movie_id : number) {
-    let params = new HttpParams().set("user_id", user_id.toString()).set("movie_id", movie_id.toString());
-    return this.http.get<any>(`${environment.apiUrl}/user/cart/add`, {params : params});
+  addItemToCart(userId : number, movieId : number) {
+    return this.http.post<any>(`${environment.apiUrl}/user/additemtocart`, {movieId, userId});
   }
 
   addItemToLocalCart(movie_id : number) {
@@ -55,15 +54,14 @@ export class CartService {
     });
   }
 
-  buyCart(user_id : number) {
-    return this.http.get<any>(`${environment.apiUrl}/user/cart/buy/${user_id}`);
+  buyCart(userId : number) {
+    return this.http.post<any>(`${environment.apiUrl}/user/buycart`, { userId });
   }
 
   mergeCarts(userId : number) {
     console.log("user"+userId);
     return new Promise((resolve, reject) => {
       let localCart : CartItem[] = JSON.parse(localStorage.getItem('userLocalCart'));
-      console.log(localCart);
       localStorage.removeItem('userLocalCart');
       if (localCart) {
         return this.http.post<any>(`${environment.apiUrl}/user/cartmerge`, { userId, localCart })

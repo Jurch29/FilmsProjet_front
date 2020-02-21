@@ -508,11 +508,11 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return getSynopsisByMovieId();
                 case url.match(/\/user\/cart\/\d+$/) && method === 'GET':
                     return getUserCart();
-                case url.match(/\/user\/cart\/add/) && method === 'GET':
+                case url.match(/\/user\/additemtocart/) && method === 'POST':
                     return addItemToCart();
                 case url.match(/\/user\/cartmerge/) && method === 'POST':
                     return mergeItemsToCart();
-                case url.match(/\/user\/cart\/buy\/\d+$/) && method === 'GET':
+                case url.match(/\/user\/buycart/) && method === 'POST':
                     return buyCart();
                 case url.match(/\/user\/orders\/\d+$/) && method === 'GET':
                     return getOrdersByUserId();
@@ -761,8 +761,9 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function addItemToCart() {
-            const user_id = request.params.get('user_id');
-            const movie_id = request.params.get('movie_id');
+            const user_id = body.userId;
+            const movie_id = body.movieId;
+
             if (!users.find(x => x.userId === parseInt(user_id))) {
                 return error("Utilisateur inconnu");
             }
@@ -805,7 +806,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function buyCart() {
-            const user_id = idFromUrl();
+            const user_id = body.userId;
             let user = users.find(x => x.userId === user_id);
             if (!user) {
                 return error("Utilisateur introuvable");
