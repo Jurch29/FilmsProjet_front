@@ -428,7 +428,7 @@ const synopsises: Synopsis[] = [
 
 const orders: OrderHistory[] = [
     {
-        user_id: 2,
+        userId: 2,
         orders: [
             {
                 purchase_date: new Date('2017/12/10 18:48:06'),
@@ -831,10 +831,10 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 orderItem.count = cartItem.movieUserCartCount;
                 order.items.push(orderItem);
             }
-            let userOrderHistory : OrderHistory = orders.find(x => x.user_id === user_id);
+            let userOrderHistory : OrderHistory = orders.find(x => x.userId === user_id);
             if (!userOrderHistory) {
                 userOrderHistory = new OrderHistory();
-                userOrderHistory.user_id = user_id;
+                userOrderHistory.userId = user_id;
                 userOrderHistory.orders = new Array<Order>();
                 orders.push(userOrderHistory);
             }
@@ -847,7 +847,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
         function getOrdersByUserId() {
             const user_id : number = idFromUrl();
-            let userOrders = orders.find(x => x.user_id === user_id);
+            let userOrders = orders.find(x => x.userId === user_id);
             if (!userOrders) {
                 userOrders = new OrderHistory();
                 userOrders.orders = new Array<Order>();
