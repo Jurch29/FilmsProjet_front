@@ -20,7 +20,7 @@ export class UserCartComponent {
   constructor(private navbar : NavbarComponent, private authenticationService : AuthenticationService,
               private cartService : CartService, private numberofitemsincartService : NumberOfItemsInCartService) {}
 
-  buy(){
+  buy() {
     this.cartService.buyCart(this.authenticationService.currentUserValue.userId)
     .pipe()
     .subscribe(
@@ -36,6 +36,7 @@ export class UserCartComponent {
   }
 
   ngOnInit() {
+    this.cart = undefined;
     this.currentUser = this.authenticationService.currentUserValue;
     this.items = false;
     this.authenticationService.currentUser
@@ -65,7 +66,7 @@ export class UserCartComponent {
     });
   }
 
-  login(){
+  login() {
     this.navbar.openLoginDialog();
   }
 
@@ -79,6 +80,10 @@ export class UserCartComponent {
 
   addToTotalCost(cost : number) {
     this.totalCost += cost;
+  }
+
+  removeToTotalCost(cost : number) {
+    this.totalCost -= cost;
   }
 
   listCartItems(data : CartItem[]) {

@@ -16,6 +16,7 @@ export class AppComponent implements OnInit, OnDestroy{
   }
 
   ngOnInit(){
+    localStorage.removeItem('userLocalCart');
     this.subscriptionfilterbar = this.openFilterBarService.getOpenFilterBar().subscribe(dataTransmited =>{
       this.openfilterbar = dataTransmited;
     });

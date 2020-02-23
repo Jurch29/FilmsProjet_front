@@ -510,6 +510,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return getUserCart();
                 case url.match(/\/user\/additemtocart/) && method === 'POST':
                     return addItemToCart();
+                case url.match(/\/user\/removeitemtocart/) && method === 'POST':
+                    return removeItemToCart();
                 case url.match(/\/user\/cartmerge/) && method === 'POST':
                     return mergeItemsToCart();
                 case url.match(/\/user\/buycart/) && method === 'POST':
@@ -763,7 +765,6 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         function addItemToCart() {
             const user_id = body.userId;
             const movie_id = body.movieId;
-
             if (!users.find(x => x.userId === parseInt(user_id))) {
                 return error("Utilisateur inconnu");
             }
@@ -783,6 +784,29 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                         movieUserCartCount: 1
                     }
                 )
+            }
+            return ok({});
+        }
+
+        function removeItemToCart() {
+            const user_id = body.userId
+            const movie_id = body.movieId
+            if (!users.find(x => x.userId === parseInt(user_id))) {
+                return error("Utilisateur inconnu");
+            }
+            if (!movies.find(x => x.movieId === parseInt(movie_id))) {
+                return error("Film inconnu");
+            }
+            let cart = carts.find(x => x.embeddedKeyMovieUser.userId === parseInt(user_id) && x.embeddedKeyMovieUser.movieId === parseInt(movie_id));
+            if (!cart) {
+                return error({});
+            }
+            if (1 < cart.movieUserCartCount) {
+                cart.movieUserCartCount -= 1;
+            } else {
+                carts = carts.filter(function (element) {
+                    return (element.embeddedKeyMovieUser.userId != parseInt(user_id) || element.embeddedKeyMovieUser.movieId != parseInt(movie_id));
+                });
             }
             return ok({});
         }

@@ -54,12 +54,31 @@ export class CartService {
     });
   }
 
+  removeItemToCart(userId : number, movieId : number) {
+    return this.http.post<any>(`${environment.apiUrl}/user/removeitemtocart`, {movieId, userId});
+  }
+
+  removeItemToLocalCart(movie_id : number) {
+    return new Promise((resolve, reject) => {
+      let localCart : CartItem[] = JSON.parse(localStorage.getItem('userLocalCart'));
+      let item = localCart.find(x => x.embeddedKeyMovieUser.movieId === movie_id);
+      if (item.movieUserCartCount == 1) {
+        localCart = localCart.filter(function (element) {
+          return element.embeddedKeyMovieUser.movieId != movie_id;
+      });
+      } else {
+        item.movieUserCartCount -= 1;
+      }
+      localStorage.setItem('userLocalCart', JSON.stringify(localCart));
+      resolve();
+    });
+  }
+
   buyCart(userId : number) {
     return this.http.post<any>(`${environment.apiUrl}/user/buycart`, { userId });
   }
 
   mergeCarts(userId : number) {
-    console.log("user"+userId);
     return new Promise((resolve, reject) => {
       let localCart : CartItem[] = JSON.parse(localStorage.getItem('userLocalCart'));
       localStorage.removeItem('userLocalCart');
@@ -68,7 +87,6 @@ export class CartService {
         .pipe()
         .subscribe(
           data => {
-            console.log(data);
             return resolve();
           }
         );
