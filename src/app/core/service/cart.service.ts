@@ -74,6 +74,17 @@ export class CartService {
     });
   }
 
+  clearCart(userId : number) {
+    return this.http.post<any>(`${environment.apiUrl}/user/clearcart`, {userId});
+  }
+
+  clearLocalCart() {
+    return new Promise((resolve, reject) => {
+      localStorage.removeItem('userLocalCart');
+      resolve();
+    });
+  }
+
   buyCart(userId : number) {
     return this.http.post<any>(`${environment.apiUrl}/user/buycart`, { userId });
   }

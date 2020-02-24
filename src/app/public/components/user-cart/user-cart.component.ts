@@ -86,6 +86,30 @@ export class UserCartComponent {
     this.totalCost -= cost;
   }
 
+  removeItem() {
+    let user_id : number;
+    if (this.authenticationService.currentUserValue) {
+      user_id = this.authenticationService.currentUserValue.userId;
+    } else {
+      user_id = -1;
+    }
+    if (user_id != -1) {
+      this.cartService.clearCart(user_id)
+      .subscribe(
+        data => {
+          this.ngOnInit();
+        }
+      );
+    } else {
+      this.cartService.clearLocalCart()
+      .then(
+        data => {
+          this.ngOnInit();
+        }
+      );
+    }
+  }
+
   listCartItems(data : CartItem[]) {
     let numberOfItems = 0;
     this.totalCost = 0;

@@ -1,11 +1,17 @@
 <div class="cartContainer">
   <app-user-cart-item *ngFor="let item of this.cart" [cartItem]="item" [cart]="this"></app-user-cart-item>
-  <div class="parentCost">
-    <span *ngIf="items" class="cost">Coût total : {{totalCost}} €</span>
+  <div *ngIf="items">
+    <div class="parentCost">
+      <span class="cost">Coût total : {{totalCost}} €</span>
+    </div>
+    <button mat-raised-button color="warn" class="clearCart" (click)="removeItem()">Vider le panier<mat-icon>remove_shopping_cart</mat-icon></button>
+    <button *ngIf="getUser" mat-raised-button color="primary" class="BuyButton" (click)="buy()"><span>Payer</span>
+      <mat-icon>payment</mat-icon>
+    </button>
+    <button *ngIf="!getUser" mat-raised-button color="primary" class="LoginRegister" (click)="login()">Se connecter</button>
+    <button *ngIf="!getUser" mat-raised-button color="primary" class="LoginRegister" routerLink="/register">S'inscrire</button>
   </div>
-  <button *ngIf="items && getUser" mat-raised-button color="primary" class="BuyButton" (click)="buy()"><span>Payer</span>
-    <mat-icon>payment</mat-icon>
-  </button>
-  <button *ngIf="items && !getUser" mat-raised-button color="primary" class="LoginRegister" (click)="login()">Se connecter</button>
-  <button *ngIf="items && !getUser" mat-raised-button color="primary" class="LoginRegister" routerLink="/register">S'inscrire</button>
+  <div *ngIf="!items">
+    <p>Aucun article pour le moment</p>
+</div>
 </div>

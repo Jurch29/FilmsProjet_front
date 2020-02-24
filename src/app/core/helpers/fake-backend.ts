@@ -512,6 +512,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return addItemToCart();
                 case url.match(/\/user\/removeitemtocart/) && method === 'POST':
                     return removeItemToCart();
+                case url.match(/\/user\/clearcart/) && method === 'POST':
+                    return clearCart();
                 case url.match(/\/user\/cartmerge/) && method === 'POST':
                     return mergeItemsToCart();
                 case url.match(/\/user\/buycart/) && method === 'POST':
@@ -789,8 +791,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function removeItemToCart() {
-            const user_id = body.userId
-            const movie_id = body.movieId
+            const user_id = body.userId;
+            const movie_id = body.movieId;
             if (!users.find(x => x.userId === parseInt(user_id))) {
                 return error("Utilisateur inconnu");
             }
@@ -799,13 +801,29 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             }
             let cart = carts.find(x => x.embeddedKeyMovieUser.userId === parseInt(user_id) && x.embeddedKeyMovieUser.movieId === parseInt(movie_id));
             if (!cart) {
-                return error({});
+                return error('Panier vide');
             }
             if (1 < cart.movieUserCartCount) {
                 cart.movieUserCartCount -= 1;
             } else {
                 carts = carts.filter(function (element) {
                     return (element.embeddedKeyMovieUser.userId != parseInt(user_id) || element.embeddedKeyMovieUser.movieId != parseInt(movie_id));
+                });
+            }
+            return ok({});
+        }
+
+        function clearCart() {
+            const user_id = body.userId;
+            if (!users.find(x => x.userId === parseInt(user_id))) {
+                return error("Utilisateur inconnu");
+            }
+            let cart = carts.find(x => x.embeddedKeyMovieUser.userId === parseInt(user_id));
+            if (!cart) {
+                return error('Panier vide');
+            } else {
+                carts = carts.filter(function (element) {
+                    return element.embeddedKeyMovieUser.userId != parseInt(user_id);
                 });
             }
             return ok({});
