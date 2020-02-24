@@ -72,7 +72,7 @@ export class MovieDetailsComponent implements OnInit,OnDestroy {
     this.readonly = true;
     this.DidBuy = true;
     //this.ratingValueUsers   not set for now but to do
-     //this.ratingValueCurrentUser = 2;   not set for now but to do
+    //this.ratingValueCurrentUser = 2;   not set for now but to do
     this.safeContent =  this.sanitizer.bypassSecurityTrustResourceUrl(this.movie.movieTrailerPath);
     this.movieService.getSynopsis(this.movie.movieId).pipe(first()).subscribe(data => this.synopsis = data.movieDescription);
   }

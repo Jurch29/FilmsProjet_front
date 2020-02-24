@@ -67,7 +67,8 @@ export class NavbarComponent implements OnInit {
         if(this.filterBarOpened){
           this.openFilterBar()
         }
-      }else{
+      }
+      else{
         this.showSearchBar = false;
       }
     });

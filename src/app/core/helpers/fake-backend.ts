@@ -478,7 +478,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                         return forgetPasswordEmailOnly();
                 case url.includes("/forgetPassword") && method === 'POST':
                     return forgetPassword();
-                case url.includes("/checkUserPassword") && method === 'POST':
+                case url.includes("/checkuserpassword") && method === 'GET':
                     return checkUserPassword();
                 case url.includes("/auth/activation") && method === 'GET':
                     return activate();
@@ -696,16 +696,16 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function checkUserPassword(){
-            const user_id = body.user_id;
-            const user_newPassword = body.user_newPassword;
-            let user = users.find(x => x.userId === parseInt(user_id));
+            const userId = request.params.get('userId');
+            const password = request.params.get('password');
+
+            let user = users.find(x => x.userId === parseInt(userId));
             if (!user) {
                 return error({unknown : true})
             }
-            if(user.userPassword != user_newPassword){
+            if(user.userPassword != password){
                 return error({unmatch : true})
             }
-            user.userPassword = user_newPassword;
             return ok({});
         }
 

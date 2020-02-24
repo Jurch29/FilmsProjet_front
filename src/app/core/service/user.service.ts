@@ -1,6 +1,6 @@
 
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { environment } from '../../../environments/environment';
 import { User } from '../../shared/models/user';
@@ -34,7 +34,8 @@ export class UserService {
         return this.http.post<any>(`${environment.apiUrl}/auth/credentialsRecovery`, { user_email });
     }
     
-    checkUserPassword(user_id : number,user_newPassword :string) {
-        return this.http.post<any>(`${environment.apiUrl}/checkUserPassword`, { user_id, user_newPassword });
+    checkUserPassword(userId : number,password :string) {
+        let params = new HttpParams().set("userId",userId.toString()).set("password", password); //Create new HttpParams
+        return this.http.get<any>(`${environment.apiUrl}/user/checkuserpassword`, {params: params});
     }
 }
