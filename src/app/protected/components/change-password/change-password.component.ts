@@ -61,7 +61,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
           .pipe(first())
           .subscribe(
             data => {
-              this.authenticationService.updateUser(data)
+              console.log(data);
             },
             error => {
               console.log(error);

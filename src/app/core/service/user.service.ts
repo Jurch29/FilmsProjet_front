@@ -22,8 +22,8 @@ export class UserService {
         return this.http.post<any>(`${environment.apiUrl}/changeUserDetails`, { user_id,user_lastname,user_firstname,user_login, user_email });
     }
 
-    changePassword(user_id : number,user_password :string) {
-        return this.http.post<any>(`${environment.apiUrl}/changePassword`, { user_id, user_password });
+    changePassword(userId : number,password :string) {
+        return this.http.post<any>(`${environment.apiUrl}/user/changepassword`, { userId, password });
     }
 
     forgetPassword(user_id : number,user_email :string) {
@@ -35,7 +35,7 @@ export class UserService {
     }
     
     checkUserPassword(userId : number,password :string) {
-        let params = new HttpParams().set("userId",userId.toString()).set("password", password); //Create new HttpParams
+        let params = new HttpParams().set("userId",userId.toString()).set("password", password);
         return this.http.get<any>(`${environment.apiUrl}/user/checkuserpassword`, {params: params});
     }
 }

@@ -472,7 +472,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return registerate();
                 case url.endsWith('/changeUserDetails') && method === 'POST':
                     return changeUserInfo();
-                case url.endsWith('/changePassword') && method === 'POST':
+                case url.endsWith('/changepassword') && method === 'POST':
                     return changePassword();
                 case url.includes("/credentialsRecovery") && method === 'POST':
                         return forgetPasswordEmailOnly();
@@ -737,23 +737,15 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function changePassword() {
-            const user_id = body.user_id;
-            const user_password = body.user_password;
+            const user_id = body.userId;
+            const user_password = body.password;
 
             let user = users.find(x => x.userId === parseInt(user_id));
             if (!user) {
                 return error("Utilisateur introuvable");
             }
             user.userPassword = user_password;
-            return ok({
-                userId: user.userId,
-                userLogin: user.userLogin,
-                userFirstname: user.userFirstname,
-                userLastname: user.userLastname,
-                roles: user.roles,
-                userEmail: user.userEmail,
-                token: `fake-jwt-token.${user.userId}`
-            });
+            return ok({});
         }
 
         function getUserCart() {
