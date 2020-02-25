@@ -66,7 +66,7 @@ export class CartService {
         if (item.movieUserCartCount == count) {
           localCart = localCart.filter(function (element) {
             return element.embeddedKeyMovieUser.movieId != movie_id;
-        });
+          });
         } else {
           item.movieUserCartCount -= count;
         }
