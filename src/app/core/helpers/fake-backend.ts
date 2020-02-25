@@ -470,11 +470,11 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return authenticate();
                 case url.endsWith('/auth/signup') && method === 'POST':
                     return registerate();
-                case url.endsWith('/changeUserDetails') && method === 'POST':
+                case url.endsWith('/changeuserdetails') && method === 'POST':
                     return changeUserInfo();
                 case url.endsWith('/changepassword') && method === 'POST':
                     return changePassword();
-                case url.includes("/credentialsRecovery") && method === 'POST':
+                case url.includes("/credentialsrecovery") && method === 'POST':
                         return forgetPasswordEmailOnly();
                 case url.includes("/forgetPassword") && method === 'POST':
                     return forgetPassword();
@@ -712,11 +712,11 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function changeUserInfo() {
-            const user_id = body.user_id;
-            const user_login = body.user_login;
-            const user_firstname = body.user_firstname;
-            const user_lastname = body.user_lastname;
-            const user_email = body.user_email;
+            const user_id = body.userId;
+            const user_login = body.userLogin;
+            const user_firstname = body.userFirstname;
+            const user_lastname = body.userLastname;
+            const user_email = body.userEmail;
             let user = users.find(x => x.userId === parseInt(user_id));
             if (!user) {
                 return error("Utilisateur introuvable");

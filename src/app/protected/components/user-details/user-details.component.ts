@@ -81,6 +81,7 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           this.authenticationService.updateUser(data)
+          console.log("User updated. "+JSON.stringify(data));
         },
         error => {
           console.log(error);

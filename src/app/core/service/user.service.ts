@@ -18,8 +18,8 @@ export class UserService {
         return this.http.get<User>(`${environment.apiUrl}/users/${id}`);
     }
 
-    changeUserDetails(user_id : number,user_lastname : string ,user_firstname :string, user_login : string,user_email :string) {
-        return this.http.post<any>(`${environment.apiUrl}/changeUserDetails`, { user_id,user_lastname,user_firstname,user_login, user_email });
+    changeUserDetails(userId : number, userLastname : string, userFirstname : string, userLogin : string, userEmail : string) {
+        return this.http.post<any>(`${environment.apiUrl}/user/changeuserdetails`, {userId,userLastname,userFirstname,userLogin,userEmail});
     }
 
     changePassword(userId : number,password :string) {
@@ -31,7 +31,7 @@ export class UserService {
     }
 
     forgetPasswordEmailOnly(user_email :string) {
-        return this.http.post<any>(`${environment.apiUrl}/auth/credentialsRecovery`, { user_email });
+        return this.http.post<any>(`${environment.apiUrl}/auth/credentialsrecovery`, { user_email });
     }
     
     checkUserPassword(userId : number,password :string) {
