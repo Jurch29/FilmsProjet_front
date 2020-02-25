@@ -83,7 +83,7 @@ export class MovieDetailsComponent implements OnInit,OnDestroy {
   }
 
   addToCart(){
-    this.cartService.addItemToCart(this.authenticationService.currentUserValue.userId, this.id)
+    this.cartService.addItemToCart(this.authenticationService.currentUserValue.userId, this.id, 1)
     .pipe()
     .subscribe(
       data => {

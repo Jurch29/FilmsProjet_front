@@ -25,11 +25,11 @@ export class CartService {
     });
   }
 
-  addItemToCart(userId : number, movieId : number) {
-    return this.http.post<any>(`${environment.apiUrl}/user/additemtocart`, {movieId, userId});
+  addItemToCart(userId : number, movieId : number, count : number) {
+    return this.http.post<any>(`${environment.apiUrl}/user/additemtocart`, {movieId, userId, count});
   }
 
-  addItemToLocalCart(movie_id : number) {
+  addItemToLocalCart(movie_id : number, count : number) {
     return new Promise((resolve, reject) => {
       if (!localStorage.getItem('userLocalCart')) {
         let localCart : CartItem[] = new Array<CartItem>();
@@ -38,14 +38,14 @@ export class CartService {
       let localCart : CartItem[] = JSON.parse(localStorage.getItem('userLocalCart'));
       let item = localCart.find(x => x.embeddedKeyMovieUser.movieId === movie_id);
       if (item) {
-        item.movieUserCartCount += 1;
+        item.movieUserCartCount += count;
       } else {
         item = {
           embeddedKeyMovieUser : {
             movieId : movie_id,
             userId : -1
           },
-          movieUserCartCount : 1
+          movieUserCartCount : count
         };
         localCart.push(item);
       }
@@ -54,23 +54,27 @@ export class CartService {
     });
   }
 
-  removeItemToCart(userId : number, movieId : number) {
-    return this.http.post<any>(`${environment.apiUrl}/user/removeitemtocart`, {movieId, userId});
+  removeItemToCart(userId : number, movieId : number, count : number) {
+    return this.http.post<any>(`${environment.apiUrl}/user/removeitemtocart`, {movieId, userId, count});
   }
 
-  removeItemToLocalCart(movie_id : number) {
+  removeItemToLocalCart(movie_id : number, count : number) {
     return new Promise((resolve, reject) => {
       let localCart : CartItem[] = JSON.parse(localStorage.getItem('userLocalCart'));
       let item = localCart.find(x => x.embeddedKeyMovieUser.movieId === movie_id);
-      if (item.movieUserCartCount == 1) {
-        localCart = localCart.filter(function (element) {
-          return element.embeddedKeyMovieUser.movieId != movie_id;
-      });
+      if (count <= item.movieUserCartCount) {
+        if (item.movieUserCartCount == count) {
+          localCart = localCart.filter(function (element) {
+            return element.embeddedKeyMovieUser.movieId != movie_id;
+        });
+        } else {
+          item.movieUserCartCount -= count;
+        }
+        localStorage.setItem('userLocalCart', JSON.stringify(localCart));
+        resolve();
       } else {
-        item.movieUserCartCount -= 1;
+        reject("Nombre d'articles à enlever supérieur au nombre d'article présents");
       }
-      localStorage.setItem('userLocalCart', JSON.stringify(localCart));
-      resolve();
     });
   }
 

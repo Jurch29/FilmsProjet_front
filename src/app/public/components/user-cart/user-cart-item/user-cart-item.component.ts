@@ -5,6 +5,7 @@ import { CartItem } from 'src/app/shared/models/cart-item';
 import { CartService } from 'src/app/core/service/cart.service';
 import { AuthenticationService } from 'src/app/core/service/authentication.service';
 import { NumberOfItemsInCartService } from 'src/app/core/service/number-of-items-in-cart.service';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-user-cart-item',
@@ -24,6 +25,7 @@ export class UserCartItemComponent {
   cartItem : CartItem;
   @Input()
   cart : UserCartComponent;
+  countChanger : FormControl = new FormControl('1', [Validators.required, Validators.min(1)]);
 
   constructor(private movieService : MovieService, private cartService : CartService, private authenticationService : AuthenticationService, private numberOfItemService : NumberOfItemsInCartService) {}
 
@@ -47,81 +49,85 @@ export class UserCartItemComponent {
   }
 
   addItem() {
-    let user_id : number;
-    if (this.authenticationService.currentUserValue) {
-      user_id = this.authenticationService.currentUserValue.userId;
-    } else {
-      user_id = -1;
-    }
-    if (user_id != -1) {
-      this.cartService.addItemToCart(user_id, this.movieId)
-      .subscribe(
-        data => {
-          this.addItemUpdate();
-        }
-      );
-    } else {
-      this.cartService.addItemToLocalCart(this.movieId)
-      .then(
-        data => {
-          this.addItemUpdate();
-        }
-      );
+    if (!this.countChanger.errors) {
+      let user_id : number;
+      if (this.authenticationService.currentUserValue) {
+        user_id = this.authenticationService.currentUserValue.userId;
+      } else {
+        user_id = -1;
+      }
+      if (user_id != -1) {
+        this.cartService.addItemToCart(user_id, this.movieId, parseInt(this.countChanger.value))
+        .subscribe(
+          data => {
+            this.addItemUpdate();
+          }
+        );
+      } else {
+        this.cartService.addItemToLocalCart(this.movieId, parseInt(this.countChanger.value))
+        .then(
+          data => {
+            this.addItemUpdate();
+          }
+        );
+      }
     }
   }
 
   addItemUpdate() {
     if (this.authenticationService.currentUserValue == undefined) {
-      this.cartItem.movieUserCartCount += 1;
+      this.cartItem.movieUserCartCount += parseInt(this.countChanger.value);
     }
     this.numberOfItems = this.cartItem.movieUserCartCount;
     this.totalCost = this.numberOfItems * this.unitCost;
-    this.cart.addToTotalCost(this.unitCost);
-    this.numberOfItemService.ChangeNumberOfItemsInCartMessage(this.numberOfItemService.getNumberOfItemsInCart + 1);
+    this.cart.addToTotalCost(this.unitCost * parseInt(this.countChanger.value));
+    this.numberOfItemService.ChangeNumberOfItemsInCartMessage(this.numberOfItemService.getNumberOfItemsInCart + parseInt(this.countChanger.value));
   }
 
   removeItem() {
-    let user_id : number;
-    if (this.authenticationService.currentUserValue) {
-      user_id = this.authenticationService.currentUserValue.userId;
-    } else {
-      user_id = -1;
-    }
-    if (user_id != -1) {
-      this.cartService.removeItemToCart(user_id, this.movieId)
-      .subscribe(
-        data => {
-          this.removeItemUpdate();
-        },
-        error => {
-          console.log(error);
-        }
-      );
-    } else {
-      this.cartService.removeItemToLocalCart(this.movieId)
-      .then(
-        data => {
-          this.removeItemUpdate();
-        },
-        error => {
-          console.log(error);
-        }
-      );
+    if (!this.countChanger.errors && parseInt(this.countChanger.value) <= this.numberOfItems) {
+      let user_id : number;
+      if (this.authenticationService.currentUserValue) {
+        user_id = this.authenticationService.currentUserValue.userId;
+      } else {
+        user_id = -1;
+      }
+      if (user_id != -1) {
+        this.cartService.removeItemToCart(user_id, this.movieId, parseInt(this.countChanger.value))
+        .subscribe(
+          data => {
+            this.removeItemUpdate();
+          },
+          error => {
+            console.log(error);
+          }
+        );
+      } else {
+        this.cartService.removeItemToLocalCart(this.movieId, parseInt(this.countChanger.value))
+        .then(
+          data => {
+            this.removeItemUpdate();
+          },
+          error => {
+            console.log(error);
+          }
+        );
+      }
     }
   }
 
   removeItemUpdate() {
-    if (this.numberOfItems != 1) {
+    if (this.numberOfItems != 1 && this.numberOfItems != parseInt(this.countChanger.value)) {
       if (this.authenticationService.currentUserValue == undefined) {
-        this.cartItem.movieUserCartCount -= 1;
+        this.cartItem.movieUserCartCount -= parseInt(this.countChanger.value);
       }
       this.numberOfItems = this.cartItem.movieUserCartCount;
       this.totalCost = this.numberOfItems * this.unitCost;
-      this.cart.removeToTotalCost(this.unitCost);
-      this.numberOfItemService.ChangeNumberOfItemsInCartMessage(this.numberOfItemService.getNumberOfItemsInCart - 1);
+      this.cart.removeToTotalCost(this.unitCost * parseInt(this.countChanger.value));
+      this.numberOfItemService.ChangeNumberOfItemsInCartMessage(this.numberOfItemService.getNumberOfItemsInCart - parseInt(this.countChanger.value));
     } else {
-      this.cart.removeToTotalCost(this.unitCost);
-      this.numberOfItemService.ChangeNumberOfItemsInCartMessage(this.numberOfItemService.getNumberOfItemsInCart - 1);
+      this.cart.removeToTotalCost(this.unitCost * parseInt(this.countChanger.value));
+      this.numberOfItemService.ChangeNumberOfItemsInCartMessage(this.numberOfItemService.getNumberOfItemsInCart - parseInt(this.countChanger.value));
       this.cart.ngOnInit();
     }
   }

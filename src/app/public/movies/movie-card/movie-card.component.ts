@@ -80,7 +80,7 @@ export class MovieCardComponent implements OnInit,OnDestroy{
       user_id = -1;
     }
     if (user_id != -1) {
-      this.cartService.addItemToCart(user_id, this.id)
+      this.cartService.addItemToCart(user_id, this.id, 1)
       .pipe()
       .subscribe(
         data => {
@@ -96,7 +96,7 @@ export class MovieCardComponent implements OnInit,OnDestroy{
         error => console.log(error)
       );
     } else {
-      this.cartService.addItemToLocalCart(this.id)
+      this.cartService.addItemToLocalCart(this.id, 1)
       .then(
         data => {
           this.cartService.getUserLocalCart()

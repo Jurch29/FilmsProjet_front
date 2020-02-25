@@ -759,6 +759,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         function addItemToCart() {
             const user_id = body.userId;
             const movie_id = body.movieId;
+            const count = body.count;
             if (!users.find(x => x.userId === parseInt(user_id))) {
                 return error("Utilisateur inconnu");
             }
@@ -767,7 +768,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             }
             let cart = carts.find(x => x.embeddedKeyMovieUser.userId === parseInt(user_id) && x.embeddedKeyMovieUser.movieId === parseInt(movie_id));
             if (cart) {
-                cart.movieUserCartCount = cart.movieUserCartCount + 1;
+                cart.movieUserCartCount = cart.movieUserCartCount + parseInt(count);
             } else {
                 let embeddedKeyMovieUser = new EmbeddedKeyMovieUser();
                 embeddedKeyMovieUser.userId = parseInt(user_id);
@@ -775,7 +776,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 carts.push(
                     {
                         embeddedKeyMovieUser,
-                        movieUserCartCount: 1
+                        movieUserCartCount: parseInt(count)
                     }
                 )
             }
@@ -785,6 +786,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         function removeItemToCart() {
             const user_id = body.userId;
             const movie_id = body.movieId;
+            const count = body.count;
             if (!users.find(x => x.userId === parseInt(user_id))) {
                 return error("Utilisateur inconnu");
             }
@@ -795,8 +797,11 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             if (!cart) {
                 return error('Panier vide');
             }
-            if (1 < cart.movieUserCartCount) {
-                cart.movieUserCartCount -= 1;
+            if (parseInt(count) > cart.movieUserCartCount) {
+                return error("Nombre d'articles à enlever supérieur au nombre d'article présents");
+            }
+            if (parseInt(count) != cart.movieUserCartCount) {
+                cart.movieUserCartCount -= parseInt(count);
             } else {
                 carts = carts.filter(function (element) {
                     return (element.embeddedKeyMovieUser.userId != parseInt(user_id) || element.embeddedKeyMovieUser.movieId != parseInt(movie_id));
