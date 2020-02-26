@@ -24,8 +24,7 @@ export class AuthenticationService {
 
     updateUser(user : User) {
         localStorage.setItem('currentUser',JSON.stringify(user));
-        this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
-        this.currentUser = this.currentUserSubject.asObservable();
+        this.currentUserSubject.next(user);
     }
     
     validateUser(userActivation: UserActivation) {
