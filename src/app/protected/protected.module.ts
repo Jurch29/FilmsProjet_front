@@ -8,14 +8,15 @@ import { UserCommentHistoryComponent } from './components/user-comment-history/u
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { UserCartHistoryPurchaseComponent } from './components/user-cart-history-purchase/user-cart-history-purchase.component';
 import { UserCartHistoryPurchaseItemComponent } from './components/user-cart-history-purchase-item/user-cart-history-purchase-item.component';
+import { PasswordCheckComponent } from './components/password-check/password-check.component';
 
 
 @NgModule({
-  declarations: [UserCartHistoryComponent, UserDetailsComponent, UserCommentHistoryComponent, ChangePasswordComponent, UserCartHistoryPurchaseComponent, UserCartHistoryPurchaseItemComponent],
+  declarations: [UserCartHistoryComponent, UserDetailsComponent, UserCommentHistoryComponent, ChangePasswordComponent, UserCartHistoryPurchaseComponent, UserCartHistoryPurchaseItemComponent, PasswordCheckComponent],
   imports: [
     SharedModule,
     ProtectedRoutingModule
   ],
-  entryComponents : [ChangePasswordComponent]
+  entryComponents : [ChangePasswordComponent, PasswordCheckComponent]
 })
 export class ProtectedModule { }

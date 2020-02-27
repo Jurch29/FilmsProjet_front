@@ -6,6 +6,7 @@ import { ChangePasswordComponent } from '../change-password/change-password.comp
 import { MatDialog } from '@angular/material';
 import { UserService } from 'src/app/core/service/user.service';
 import { first } from 'rxjs/operators';
+import { PasswordCheckComponent } from '../password-check/password-check.component';
 
 @Component({
   selector: 'app-user-details',
@@ -54,12 +55,12 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
     if (this.lightMode)
       dialogRef = this.dialog.open(ChangePasswordComponent, {
         width: '380px'
-      });
+    });
     else
       dialogRef = this.dialog.open(ChangePasswordComponent, {
         width: '380px',
         panelClass: 'dark'
-      });
+    });
   }
 
   checkValidationBeforeSubmit() {
@@ -76,6 +77,18 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
       this.submitted = false;
       return;
     }
+
+    let dialogRef;
+    if (this.lightMode)
+      dialogRef = this.dialog.open(PasswordCheckComponent, {
+        width: '320px'
+    });
+    else
+      dialogRef = this.dialog.open(PasswordCheckComponent, {
+        width: '320px',
+        panelClass: 'dark'
+    });
+
     this.userservice.changeUserDetails(this.authenticationService.currentUserValue.userId, this.lastname.value, this.firstname.value, this.username.value, this.email.value)
       .pipe(first())
       .subscribe(
