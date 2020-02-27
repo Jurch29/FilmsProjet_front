@@ -20,7 +20,6 @@ export class MoviePreviewComponent implements OnInit,OnDestroy {
 
 
   @ViewChild("infobulecontainer", { static: false, read: ViewContainerRef }) containerinfobule;
-  Movies: Movie[];
   infoBulleMovieId: number;
 
   constructor(private route: Router,private movieService: MovieService, private lightmodeService: LightmodeService, private resolver: ComponentFactoryResolver) {
@@ -29,11 +28,9 @@ export class MoviePreviewComponent implements OnInit,OnDestroy {
  
   ngOnInit() {
     this.movieService.getAllMovies().pipe(first()).subscribe(data => {
-       this.Movies = data;
-       console.log(this.Movies);
+       this.movieService.ChangeMoviesToDisplay(data);
       }
     );
-
     this.subscriptionlightMode =  this.lightmodeService.getLightModeEventMessage().subscribe(value =>
       this.lightMode = value
     );

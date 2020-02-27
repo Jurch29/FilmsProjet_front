@@ -1,6 +1,6 @@
 <div>
     <div #infobulecontainer></div>
-    <div *ngFor="let movie of Movies">
+    <div *ngFor="let movie of this.movieService.getMoviesToDisplay">
         <div [class.dark]="!lightMode" class="item">
             <div class="cover fadein" [ngStyle]="image(movie.movieImagePath)" (click)="infobule(movie)">
                 <div class="overlay">

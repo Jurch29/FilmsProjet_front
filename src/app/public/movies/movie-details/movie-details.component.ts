@@ -1,6 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, NgZone, ViewChild } from '@angular/core';
 import { MovieService } from 'src/app/core/service/movie-service.service';
-import { first } from 'rxjs/operators';
+import { first, take } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { Author } from 'src/app/shared/models/author';
 import { Actor } from 'src/app/shared/models/actor';
@@ -13,6 +13,8 @@ import { NumberOfItemsInCartService } from 'src/app/core/service/number-of-items
 import { DomSanitizer } from '@angular/platform-browser';
 import { ThrowStmt } from '@angular/compiler';
 import { StarRatingComponent } from 'ng-starrating';
+import { HttpClient } from '@angular/common/http';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 
 @Component({
   selector: 'app-movie-details',
@@ -31,6 +33,7 @@ export class MovieDetailsComponent implements OnInit,OnDestroy {
   private synopsis: string;
   private trailers: Trailer[];
   subscriptionlightMode: any;
+  srcResult:any = null;
   movie: any;
   safeContent: any;
   ratingValueUsers: number;
@@ -38,9 +41,48 @@ export class MovieDetailsComponent implements OnInit,OnDestroy {
   ratingValueCritique: number;
   DidBuy: boolean;
   ratingValueCurrentUser: number;
+  Comments: any[] = [
+    {
+      Username: "uyedfteytdfedyeftrye",
+      UserComment: "eby tfdetdfc",
+      ImageComment: []
+    },
+    {
+      Username: "pierre",
+      UserComment: "c",
+      ImageComment: [
+        {
+          url:
+            "https://www.voyage.fr/sites/default/files/styles/1170x530/public/2018-04/00-les-paysages-russes-a-voir-absolument.jpg?itok=V_lDD5Ip"
+        },
+        {
+          url:
+            "https://www.voyage.fr/sites/default/files/styles/1170x530/public/2018-04/00-les-paysages-russes-a-voir-absolument.jpg?itok=V_lDD5Ip"
+        },
+        {
+          url:
+            "https://www.voyage.fr/sites/default/files/styles/1170x530/public/2018-04/00-les-paysages-russes-a-voir-absolument.jpg?itok=V_lDD5Ip"
+        },
+        {
+          url:
+            "https://www.voyage.fr/sites/default/files/styles/1170x530/public/2018-04/00-les-paysages-russes-a-voir-absolument.jpg?itok=V_lDD5Ip"
+        },
+        {
+          url:
+            "https://www.voyage.fr/sites/default/files/styles/1170x530/public/2018-04/00-les-paysages-russes-a-voir-absolument.jpg?itok=V_lDD5Ip"
+        },
+        {
+          url:
+            "https://www.voyage.fr/sites/default/files/styles/1170x530/public/2018-04/00-les-paysages-russes-a-voir-absolument.jpg?itok=V_lDD5Ip"
+        }
+      ]
+    }
+  ];
+
+  constructor(private _ngZone: NgZone, private httpClient: HttpClient,private lightmodeService: LightmodeService, private authenticationService: AuthenticationService, private cartService: CartService, private numberofitemsincartService: NumberOfItemsInCartService, private sanitizer: DomSanitizer, private movieService: MovieService, private route: ActivatedRoute) { }
  
-  constructor(private lightmodeService: LightmodeService, private authenticationService: AuthenticationService, private cartService: CartService, private numberofitemsincartService: NumberOfItemsInCartService, private sanitizer: DomSanitizer, private movieService: MovieService, private route: ActivatedRoute) { }
- 
+  @ViewChild("autosize",{static:false}) autosize: CdkTextareaAutosize;
+
   ngOnInit() {
     this.route.params.pipe(first()).subscribe(data => this.id = data.movieID)
 
@@ -114,5 +156,21 @@ export class MovieDetailsComponent implements OnInit,OnDestroy {
 
   trailer(trailer : string) {
     return this.sanitizer.bypassSecurityTrustResourceUrl(trailer);
+  }
+  triggerResize() {
+    this._ngZone.onStable
+      .pipe(take(1))
+      .subscribe(() => this.autosize.resizeToFitContent(true));
+  }
+
+  onFileSelected() {
+    const inputNode: any = document.querySelector("#file");
+    if (typeof FileReader !== "undefined") {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.srcResult = e.target.result;
+      };
+      reader.readAsArrayBuffer(inputNode.files[0]);
+    }
   }
 }

@@ -7,12 +7,23 @@ import { Author } from 'src/app/shared/models/author';
 import { Category } from 'src/app/shared/models/category';
 import { Trailer } from 'src/app/shared/models/trailer';
 import { Synopsis } from 'src/app/shared/models/synopsis';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MovieService {
   constructor(private http: HttpClient) { }
+
+  private MoviesDisplay = new BehaviorSubject<Movie[]>(new Array());
+
+  ChangeMoviesToDisplay(MoviesToDisplay : Movie[]){
+    this.MoviesDisplay.next(MoviesToDisplay);
+  }
+
+  get getMoviesToDisplay() : Movie[]{
+    return this.MoviesDisplay.value;
+  }
 
   getAllMovies() {
     return this.http.get<Movie[]>(`${environment.apiUrl}/movie/movies`);

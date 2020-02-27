@@ -33,7 +33,7 @@
 .actionContainer{
     display: block;
     position: relative;
-    left: 35px;
+    padding-left: 35px;
     top: 35px;
 }
 .actionContainer p{
@@ -185,8 +185,179 @@
     width: 80px;
     display: inline-block;
     left: 2px;
+} 
+.containerComment{
+    position: relative;
+    text-align: center;
+    top: 100px;
+    background-color:lightgrey;
+}
+.movieCardContainer.dark .containerComment{
+    background-color:unset;
 }
 
+.CommentRow{
+    margin-bottom: 20px;
+}
+.CommentRow,
+  .UserComment,
+  .userdetails {
+    display: inline-block;
+  }
+  .buttonClear {
+    font-size: 14px;
+    left: -1.5px;
+    position: relative;
+    line-height: 20px !important;
+  }
+  .buttonDeleteImage {
+    position: relative;
+    left: -10%;
+    width: 20px;
+    top: -95%;
+    height: 20px;
+    line-height: 20px;
+  }
+  .buttonDelete {
+    color: black;
+    background-color: red;
+    display: inline-block;
+    margin-right: 50px;
+  }
+  .buttonsActionsCommentUser {
+    width: 285px;
+    text-align: right;
+  }
+  .actionButtonsContaiener {
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: right;
+  }
+  .buttonLoadFile {
+    display: inline-block;
+    margin-right: 10px;
+  }
+  .buttonSave {
+    color: white;
+    background-color: green;
+    display: inline-block;
+  }
+  
+  .userIcon {
+    font-size: 80px;
+    width: 80px;
+    height: 80px;
+  }
+  .textAreaContainer {
+    width: 100%;
+  }
+  .textareaField {
+    width: 100%;
+    height: 100%;
+  }
+  .userdetails {
+    width: 125px;
+  }
+  .userdetails span {
+    display: block;
+    text-overflow: ellipsis;
+    width: 125px;
+    overflow: hidden;
+  }
+  .UserComment {
+    width: 400px;
+    height: 80px;
+    vertical-align: top;
+    text-align: left;
+    padding: 10px;
+    padding-bottom: 0px;
+    margin: 10px 10px;
+    border-radius: 5px;
+    border: 1px solid;
+    overflow-y: scroll;
+  }
+  .ContainerImages {
+    display: block;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    width: 500px;
+    height: 150px;
+    border: 1px solid;
+    border-radius: 10px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .Images {
+    width: 100%;
+    text-align: unset;
+    white-space: nowrap;
+  }
+  .Images div {
+    display: inline-block;
+    margin: 10px 20px;
+  }
+  .Images div,
+  .Images div img {
+    height: 130px;
+    width: 130px;
+  }
+  
+  .icones {
+    margin-left: 5px;
+    position: relative;
+    top: -1px;
+  }
+  @media (max-width: 640px) {
+    .userIcon {
+      font-size: 30px;
+      width: 30px;
+      height: 30px;
+    }
+    .Images div,
+    .Images div img {
+      height: 80px;
+      width: 80px;
+    }
+    .ContainerImages {
+      width: 85vw;
+      height: 105px;
+    }
+  
+    .UserComment {
+      width: 85vw;
+      height: 80px;
+    }
+  
+    .userdetails span {
+      width: 105px;
+    }
+    .buttonDelete {
+      margin-right: 25px;
+    }
+    .buttonDelete,
+    .buttonLoadFile,
+    .buttonSave {
+      line-height: 20px;
+      font-size: 12px;
+      padding: 0px 5px;
+    }
+    .buttonsActionsCommentUser {
+      width: 285px;
+    }
+    .actionButtonsContaiener {
+      width: 85vw;
+    }
+    .userdetails {
+      width: 105px;
+    }
+    .icones {
+      font-size: 15px;
+      line-height: 25px;
+      margin-left: 0px;
+    }
+  }
+  
 @media(max-width:900px){
     .playercontainer{
         position: relative;

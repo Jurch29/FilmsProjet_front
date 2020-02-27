@@ -7,6 +7,7 @@ import { Actor } from 'src/app/shared/models/actor';
 import { LightmodeService } from '../../service/lightmode.service';
 import { Observable } from 'rxjs';
 import { FormControl } from '@angular/forms';
+import { Movie } from 'src/app/shared/models/movie';
 
 @Component({
   selector: 'app-filterbar',
@@ -24,6 +25,7 @@ export class FilterbarComponent implements OnInit, OnDestroy {
   filterActor = new FormControl();
   filteredOptionsAuthor: Observable<Author[]>;
   filterAuthor = new FormControl();
+  movies: Movie[];
 
 
   constructor(private lightmodeService: LightmodeService, private movieService: MovieService) { }
@@ -53,14 +55,14 @@ export class FilterbarComponent implements OnInit, OnDestroy {
     );
   }
   displayAuthor(author: Author): string {
-    return author ?  author.authorFirstName +' '+ author.authorLastName: '';
+    return author ? author.authorFirstName + ' ' + author.authorLastName : '';
   }
   displayActor(actor: Actor): string {
-    return actor ? actor.actorFirstName+' '+actor.actorLastName : '';
+    return actor ? actor.actorFirstName + ' ' + actor.actorLastName : '';
   }
 
   _filterActor(inputedValue: string): Actor[] {
-    if (inputedValue != null ) {
+    if (inputedValue != null) {
       const filterValue = inputedValue.toString().toLowerCase();
       return this.actors.filter(item => {
         let value = `${item.actorFirstName} ${item.actorLastName}`
@@ -85,16 +87,95 @@ export class FilterbarComponent implements OnInit, OnDestroy {
     this.subscriptionlightMode.unsubscribe();
   }
   onOrderByChange(event) {
-    console.log("event = " + event.value);//If undefined means choose no selection
+    this.movies = this.movieService.getMoviesToDisplay;
+    if (event.value == undefined) {
+      this.movies.sort(function (a, b) {
+        return <any>b.movieDate - <any>a.movieDate;
+      });
+    } else {
+      this.movies.sort(function (a, b) {
+        var textA = a.movieTitle.toUpperCase();
+        var textB = b.movieTitle.toUpperCase();
+        return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+      });
+    }
+    this.movieService.ChangeMoviesToDisplay(this.movies)
+
   }
   onCategoryChange(event) {
-    console.log("event = " + event.value);//If undefined means choose no selection
+    this.movies = this.movieService.getMoviesToDisplay;
+    if (event.value == undefined) {
+      this.movieService.getAllMovies().pipe().subscribe(data => {
+        this.movieService.ChangeMoviesToDisplay(data);
+      });
+    } else {
+      const cathegory = event.value.toLowerCase();
+      this.movies = this.movies.filter(item => {
+        if (item.categories.find(element => element.categoryTitle.toLowerCase() === cathegory) != undefined) {
+          return item;
+        }
+        return null;
+      });
+    }
+    if (this.movies != null) {
+      this.movieService.ChangeMoviesToDisplay(this.movies);
+    } else {
+      this.movieService.getAllMovies().pipe().subscribe(data => {
+        this.movieService.ChangeMoviesToDisplay(data);
+      });
+    }
+
   }
   onAuthorChange(event) {
-    console.log("event = " + event.option.value.author_id);//If undefined means choose no selection
+    this.movies = this.movieService.getMoviesToDisplay;
+    if (event.option.value == undefined) {
+      this.movieService.getAllMovies().pipe().subscribe(data => {
+        this.movieService.ChangeMoviesToDisplay(data);
+      });
+    } else {
+      const frist = event.option.value.authorFirstName.toLowerCase();
+      const last = event.option.value.authorLastName.toLowerCase();
+      this.movies = this.movies.filter(item => {
+        if (item.authors.find(element => element.authorFirstName.toLowerCase() === frist
+          &&
+          element.authorLastName.toLowerCase() === last) != undefined) {
+          return item;
+        }
+        return null;
+      });
+    }
+    if (this.movies != null) {
+      this.movieService.ChangeMoviesToDisplay(this.movies);
+    } else {
+      this.movieService.getAllMovies().pipe().subscribe(data => {
+        this.movieService.ChangeMoviesToDisplay(data);
+      });
+    }
   }
   onActorChange(event) {
-    console.log("event = " + event.option.value.actor_id);//If undefined means choose no selection
+    this.movies = this.movieService.getMoviesToDisplay;
+    if (event.option.value == undefined) {
+      this.movieService.getAllMovies().pipe().subscribe(data => {
+        this.movieService.ChangeMoviesToDisplay(data);
+      });
+    } else {
+      const frist = event.option.value.actorFirstName.toLowerCase();
+      const last = event.option.value.actorLastName.toLowerCase();
+      this.movies = this.movies.filter(item => {
+        if (item.actors.find(element => element.actorFirstName.toLowerCase() === frist
+          &&
+          element.actorLastName.toLowerCase() === last) != undefined) {
+          return item;
+        }
+        return null;
+      });
+    }
+    if (this.movies != null) {
+      this.movieService.ChangeMoviesToDisplay(this.movies);
+    } else {
+      this.movieService.getAllMovies().pipe().subscribe(data => {
+        this.movieService.ChangeMoviesToDisplay(data);
+      });
+    }
   }
-
 }
