@@ -5,6 +5,7 @@ import { Movie } from 'src/app/shared/models/movie';
 import { MovieService } from 'src/app/core/service/movie-service.service';
 import { first } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-movie-preview',
@@ -18,11 +19,10 @@ export class MoviePreviewComponent implements OnInit,OnDestroy {
   lightMode: boolean;
   subscriptionlightMode: any;
 
-
   @ViewChild("infobulecontainer", { static: false, read: ViewContainerRef }) containerinfobule;
   infoBulleMovieId: number;
 
-  constructor(private route: Router,private movieService: MovieService, private lightmodeService: LightmodeService, private resolver: ComponentFactoryResolver) {
+  constructor(private route: Router,private movieService: MovieService, private lightmodeService: LightmodeService, private resolver: ComponentFactoryResolver,public datepipe: DatePipe) {
     this.componentFactory = resolver.resolveComponentFactory(MovieCardComponent);
   }
  
@@ -35,24 +35,17 @@ export class MoviePreviewComponent implements OnInit,OnDestroy {
       this.lightMode = value
     );
   }
+
   ngOnDestroy(){
     this.subscriptionlightMode.unsubscribe();
   }
-  formatDate(date : Date) {
-    let monthNames = [
-      "Janvier", "Février", "Mars",
-      "Avril", "Mai", "Juin", "Juillet",
-      "Âout", "Septembre", "Octobre",
-      "Novembre", "Décembre"
-    ];
-  
-    let day = ("0" + date.getDate()).slice(-2);
-    let monthIndex = date.getMonth();
-    let year = date.getFullYear();
-  
-    return day + ' ' + monthNames[monthIndex] + ' ' + year;
+
+  formatDate(strDate : string) {
+    let date = new Date(strDate);
+    let formattedDate =this.datepipe.transform(date, 'dd-MM-yyyy');
+    return formattedDate;
   }
-  
+
   infobule(movie: Movie) {
     if(window.innerWidth < 900){
       this.route.navigate(["/nowMoreMovie/",movie.movieId]);
@@ -81,4 +74,5 @@ export class MoviePreviewComponent implements OnInit,OnDestroy {
       "background-image": "url(" + url + ")"
     };
   }
+
 }

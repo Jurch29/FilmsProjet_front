@@ -23,3 +23,15 @@
 .description div{
     margin-right: 10px;
 }
+
+.mat-input-element{
+    vertical-align: middle !important;
+    width: 35px !important;
+    height: 35px !important;
+    text-align: center !important;
+    background-color: white !important;
+}
+
+input.mat-input-element {
+    margin: 0px !important;
+}

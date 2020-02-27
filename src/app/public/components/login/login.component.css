@@ -5,6 +5,7 @@
 
 .alertError{
     color: red;
+    text-align: center;
 }
 
 .header{
@@ -34,6 +35,7 @@
     background: none;
     border: none;
     color: rgba(0,0,0,.6);
+    cursor: pointer;
 }
 .parentButtonSendEmail{
     text-align: center;

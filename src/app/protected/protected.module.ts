@@ -6,14 +6,17 @@ import { UserCartHistoryComponent } from './components/user-cart-history/user-ca
 import { UserDetailsComponent } from './components/user-details/user-details.component';
 import { UserCommentHistoryComponent } from './components/user-comment-history/user-comment-history.component';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { UserCartHistoryPurchaseComponent } from './components/user-cart-history-purchase/user-cart-history-purchase.component';
+import { UserCartHistoryPurchaseItemComponent } from './components/user-cart-history-purchase-item/user-cart-history-purchase-item.component';
+import { PasswordCheckComponent } from './components/password-check/password-check.component';
 
 
 @NgModule({
-  declarations: [UserCartHistoryComponent, UserDetailsComponent, UserCommentHistoryComponent, ChangePasswordComponent],
+  declarations: [UserCartHistoryComponent, UserDetailsComponent, UserCommentHistoryComponent, ChangePasswordComponent, UserCartHistoryPurchaseComponent, UserCartHistoryPurchaseItemComponent, PasswordCheckComponent],
   imports: [
     SharedModule,
     ProtectedRoutingModule
   ],
-  entryComponents : [ChangePasswordComponent]
+  entryComponents : [ChangePasswordComponent, PasswordCheckComponent]
 })
 export class ProtectedModule { }

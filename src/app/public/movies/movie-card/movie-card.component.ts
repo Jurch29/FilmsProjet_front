@@ -10,6 +10,8 @@ import { first } from 'rxjs/operators';
 import { AuthenticationService } from 'src/app/core/service/authentication.service';
 import { CartService } from 'src/app/core/service/cart.service';
 import { LightmodeService } from 'src/app/core/service/lightmode.service';
+import { DatePipe } from '@angular/common';
+import { CartItem } from 'src/app/shared/models/cart-item';
 
 
 @Component({
@@ -34,7 +36,10 @@ export class MovieCardComponent implements OnInit,OnDestroy{
   queryToDetails: string;
   safeContent: any;
 
-  constructor(private lightmodeService: LightmodeService,private movieService : MovieService, private authenticationService : AuthenticationService, private cartService : CartService, private numberofitemsincartService : NumberOfItemsInCartService, private sanitizer: DomSanitizer) { }
+  constructor(private lightmodeService: LightmodeService,private movieService : MovieService, 
+              private authenticationService : AuthenticationService, private cartService : CartService,
+              private numberofitemsincartService : NumberOfItemsInCartService, private sanitizer: DomSanitizer,
+              public datepipe: DatePipe) { }
 
  
   ngOnInit() {
@@ -42,6 +47,7 @@ export class MovieCardComponent implements OnInit,OnDestroy{
       this.lightMode = value
     );
   }
+
   ngOnDestroy(){
     this.subscriptionlightMode.unsubscribe();
   }
@@ -57,50 +63,64 @@ export class MovieCardComponent implements OnInit,OnDestroy{
     this.realisators = movie.authors;
     this.categories = movie.categories;
     this.safeContent =  this.sanitizer.bypassSecurityTrustResourceUrl(this.trailer);
-    this.movieService.getSynopsis(movie.movieId).pipe(first()).subscribe(data => this.synopsis = data.synopsis);
+    this.movieService.getSynopsis(movie.movieId).pipe(first()).subscribe(data => this.synopsis = data.movieDescription);
     this.infobulecontainer = container;
   }
-
+  
   formatDate(date : Date) {
-    let monthNames = [
-      "Janvier", "Février", "Mars",
-      "Avril", "Mai", "Juin", "Juillet",
-      "Âout", "Septembre", "Octobre",
-      "Novembre", "Décembre"
-    ];
-  
-    let day = ("0" + date.getDate()).slice(-2);
-    let monthIndex = date.getMonth();
-    let year = date.getFullYear();
-  
-    return day + ' ' + monthNames[monthIndex] + ' ' + year;
+    let formattedDate =this.datepipe.transform(date, 'dd-MMMM-yyyy');
+    return formattedDate;
   }
 
   addToCart(){
-    console.log(this.authenticationService.currentUserValue);
-    this.cartService.addItemToCart(this.authenticationService.currentUserValue.userId, this.id)
-    .pipe()
-    .subscribe(
-      data => {
-        this.cartService.getUserCart(this.authenticationService.currentUserValue.userId)
-        .pipe()
-        .subscribe(
-          data => {
-            let numberOfItems = 0;
-            for (let item of data) {
-              numberOfItems += item.movieUserCartCount;
+    let user_id : number;
+    if (this.authenticationService.currentUserValue) {
+      user_id = this.authenticationService.currentUserValue.userId;
+    } else {
+      user_id = -1;
+    }
+    if (user_id != -1) {
+      this.cartService.addItemToCart(user_id, this.id, 1)
+      .pipe()
+      .subscribe(
+        data => {
+          this.cartService.getUserCart(user_id)
+          .pipe()
+          .subscribe(
+            data => {
+              this.countItems(data);
+            },
+            error => console.log(error)
+          );
+        },
+        error => console.log(error)
+      );
+    } else {
+      this.cartService.addItemToLocalCart(this.id, 1)
+      .then(
+        data => {
+          this.cartService.getUserLocalCart()
+          .then(
+            (data : CartItem[]) => {
+              this.countItems(data);
             }
-            this.numberofitemsincartService.ChangeNumberOfItemsInCartMessage(numberOfItems);
-          },
-          error => console.log(error)
-        );
-      },
-      error => console.log(error)
-    );
+          );
+        },
+        error => console.log(error)
+      );
+    }
   }
 
   close() {
     this.infobulecontainer.clear();
   }
- 
+
+  countItems(data : CartItem[]) {
+    let numberOfItems = 0;
+    for (let item of data) {
+      numberOfItems += item.movieUserCartCount;
+    }
+    this.numberofitemsincartService.ChangeNumberOfItemsInCartMessage(numberOfItems);
+  }
+
 }

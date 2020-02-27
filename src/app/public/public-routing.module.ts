@@ -8,6 +8,7 @@ import { AnonymousGuard } from '../core/helpers/anonymous.guard';
 import { ForbiddenComponent } from './components/forbidden/forbidden.component';
 import { MoviesComponent } from './movies/movies/movies.component';
 import { MovieDetailsComponent } from './movies/movie-details/movie-details.component';
+import { PasswordresetComponent } from './components/passwordreset/passwordreset.component';
 
 
 const routes: Routes = [
@@ -16,7 +17,8 @@ const routes: Routes = [
   { path: 'nowMoreMovie/:movieID', component: MovieDetailsComponent},
   { path: 'register', component : RegisterComponent, canActivate: [AnonymousGuard]},
   { path: 'userCart', component : UserCartComponent},
-  { path: 'unauthorized', component : ForbiddenComponent}
+  { path: 'unauthorized', component : ForbiddenComponent},
+  { path: 'passwordreset', component : PasswordresetComponent}
 ];
 
 @NgModule({

@@ -54,9 +54,11 @@ export class FilterbarComponent implements OnInit, OnDestroy {
       this.lightMode = value
     );
   }
+
   displayAuthor(author: Author): string {
     return author ? author.authorFirstName + ' ' + author.authorLastName : '';
   }
+
   displayActor(actor: Actor): string {
     return actor ? actor.actorFirstName + ' ' + actor.actorLastName : '';
   }
@@ -72,6 +74,7 @@ export class FilterbarComponent implements OnInit, OnDestroy {
       });
     }
   }
+
   _filterAuthor(inputedValue: string): Author[] {
     if (inputedValue != null) {
       const filterValue = inputedValue.toString().toLowerCase();
@@ -83,9 +86,11 @@ export class FilterbarComponent implements OnInit, OnDestroy {
       });
     }
   }
+
   ngOnDestroy(): void {
     this.subscriptionlightMode.unsubscribe();
   }
+
   onOrderByChange(event) {
     this.movies = this.movieService.getMoviesToDisplay;
     if (event.value == undefined) {
@@ -102,6 +107,7 @@ export class FilterbarComponent implements OnInit, OnDestroy {
     this.movieService.ChangeMoviesToDisplay(this.movies)
 
   }
+
   onCategoryChange(event) {
     this.movies = this.movieService.getMoviesToDisplay;
     if (event.value == undefined) {
@@ -126,6 +132,7 @@ export class FilterbarComponent implements OnInit, OnDestroy {
     }
 
   }
+
   onAuthorChange(event) {
     this.movies = this.movieService.getMoviesToDisplay;
     if (event.option.value == undefined) {
@@ -152,6 +159,7 @@ export class FilterbarComponent implements OnInit, OnDestroy {
       });
     }
   }
+  
   onActorChange(event) {
     this.movies = this.movieService.getMoviesToDisplay;
     if (event.option.value == undefined) {

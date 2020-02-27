@@ -33,6 +33,7 @@ export class HomeComponent implements OnInit,OnDestroy {
       this.nbMovies = data.length;
     });
   }
+
   ngOnDestroy(){
     this.subscriptionlightMode.unsubscribe();
   }

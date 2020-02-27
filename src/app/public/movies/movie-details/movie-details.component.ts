@@ -15,13 +15,14 @@ import { ThrowStmt } from '@angular/compiler';
 import { StarRatingComponent } from 'ng-starrating';
 import { HttpClient } from '@angular/common/http';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-movie-details',
   templateUrl: './movie-details.component.html',
   styleUrls: ['./movie-details.component.css']
 })
-export class MovieDetailsComponent implements OnInit,OnDestroy {
+export class MovieDetailsComponent implements OnInit, OnDestroy {
   lightMode: any;
   private id: number;
   private date: string;
@@ -33,7 +34,7 @@ export class MovieDetailsComponent implements OnInit,OnDestroy {
   private synopsis: string;
   private trailers: Trailer[];
   subscriptionlightMode: any;
-  srcResult:any = null;
+  srcResult: any = null;
   movie: any;
   safeContent: any;
   ratingValueUsers: number;
@@ -79,9 +80,11 @@ export class MovieDetailsComponent implements OnInit,OnDestroy {
     }
   ];
 
-  constructor(private _ngZone: NgZone, private httpClient: HttpClient,private lightmodeService: LightmodeService, private authenticationService: AuthenticationService, private cartService: CartService, private numberofitemsincartService: NumberOfItemsInCartService, private sanitizer: DomSanitizer, private movieService: MovieService, private route: ActivatedRoute) { }
- 
-  @ViewChild("autosize",{static:false}) autosize: CdkTextareaAutosize;
+  constructor(private _ngZone: NgZone, private httpClient: HttpClient, private lightmodeService: LightmodeService, private authenticationService: AuthenticationService,
+    private cartService: CartService, private numberofitemsincartService: NumberOfItemsInCartService,
+    private sanitizer: DomSanitizer, private movieService: MovieService, private route: ActivatedRoute, public datepipe: DatePipe) { }
+
+  @ViewChild("autosize", { static: false }) autosize: CdkTextareaAutosize;
 
   ngOnInit() {
     this.route.params.pipe(first()).subscribe(data => this.id = data.movieID)
@@ -90,14 +93,16 @@ export class MovieDetailsComponent implements OnInit,OnDestroy {
       this.movie = data;
       this.setupMoviedetails();
     });
-    this.subscriptionlightMode =  this.lightmodeService.getLightModeEventMessage().subscribe(value =>
+    this.subscriptionlightMode = this.lightmodeService.getLightModeEventMessage().subscribe(value =>
       this.lightMode = value
     );
   }
-  ngOnDestroy(){
+
+  ngOnDestroy() {
     this.subscriptionlightMode.unsubscribe();
   }
-  setupMoviedetails(){
+
+  setupMoviedetails() {
     this.ratingValueCritique = this.movie.movieMark;
     this.date = this.formatDate(this.movie.movieDate);
     this.duration = this.movie.movieDuration;
@@ -109,52 +114,43 @@ export class MovieDetailsComponent implements OnInit,OnDestroy {
     this.readonly = true;
     this.DidBuy = true;
     //this.ratingValueUsers   not set for now but to do
-     //this.ratingValueCurrentUser = 2;   not set for now but to do
-    this.safeContent =  this.sanitizer.bypassSecurityTrustResourceUrl(this.movie.movieTrailerPath);
-    this.movieService.getSynopsis(this.movie.movieId).pipe(first()).subscribe(data => this.synopsis = data.synopsis);
-  }
-  formatDate(date : Date) {
-    let monthNames = [
-      "Janvier", "Février", "Mars",
-      "Avril", "Mai", "Juin", "Juillet",
-      "Âout", "Septembre", "Octobre",
-      "Novembre", "Décembre"
-    ];
-  
-    let day = ("0" + date.getDate()).slice(-2);
-    let monthIndex = date.getMonth();
-    let year = date.getFullYear();
-  
-    return day + ' ' + monthNames[monthIndex] + ' ' + year;
+    //this.ratingValueCurrentUser = 2;   not set for now but to do
+    this.safeContent = this.sanitizer.bypassSecurityTrustResourceUrl(this.movie.movieTrailerPath);
+    this.movieService.getSynopsis(this.movie.movieId).pipe(first()).subscribe(data => this.synopsis = data.movieDescription);
   }
 
-  addToCart(){
-    this.cartService.addItemToCart(this.authenticationService.currentUserValue.userId, this.id)
-    .pipe()
-    .subscribe(
-      data => {
-        this.cartService.getUserCart(this.authenticationService.currentUserValue.userId)
-        .pipe()
-        .subscribe(
-          data => {
-            let numberOfItems = 0;
-            for (let item of data) {
-              numberOfItems += item.movieUserCartCount;
-            }
-            this.numberofitemsincartService.ChangeNumberOfItemsInCartMessage(numberOfItems);
-          },
-          error => console.log(error)
-        );
-      },
-      error => console.log(error)
-    );
-  }
-  
-  onRate($event:{oldValue:number, newValue:number, starRating:StarRatingComponent}) {
-    this.ratingValueCurrentUser=$event.newValue;
+  formatDate(date: Date) {
+    let formattedDate = this.datepipe.transform(date, 'dd MMMM yyyy');
+    return formattedDate;
   }
 
-  trailer(trailer : string) {
+  addToCart() {
+    this.cartService.addItemToCart(this.authenticationService.currentUserValue.userId, this.id, 1)
+      .pipe()
+      .subscribe(
+        data => {
+          this.cartService.getUserCart(this.authenticationService.currentUserValue.userId)
+            .pipe()
+            .subscribe(
+              data => {
+                let numberOfItems = 0;
+                for (let item of data) {
+                  numberOfItems += item.movieUserCartCount;
+                }
+                this.numberofitemsincartService.ChangeNumberOfItemsInCartMessage(numberOfItems);
+              },
+              error => console.log(error)
+            );
+        },
+        error => console.log(error)
+      );
+  }
+
+  onRate($event: { oldValue: number, newValue: number, starRating: StarRatingComponent }) {
+    this.ratingValueCurrentUser = $event.newValue;
+  }
+
+  trailer(trailer: string) {
     return this.sanitizer.bypassSecurityTrustResourceUrl(trailer);
   }
   triggerResize() {

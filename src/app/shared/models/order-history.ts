@@ -1,6 +1,6 @@
 import { Order } from './order';
 
 export class OrderHistory {
-    user_id : number;
+    userId : number;
     orders : Order[];
 }

@@ -12,8 +12,8 @@ import { OpensidenavService } from '../../service/opensidenav.service';
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
   styleUrls: ['./sidenav.component.css']
-  
 })
+
 export class SidenavComponent implements OnInit, OnDestroy {
 
   subscriptionOpenSideNav: any;
@@ -24,7 +24,6 @@ export class SidenavComponent implements OnInit, OnDestroy {
   
   @ViewChild('snav', {static: false}) public sidenav: MatSidenav;
   
-
   _mobileQueryListener: () => void;
   currentUser:User = this.authenticationService.currentUserValue;
 
@@ -38,7 +37,6 @@ export class SidenavComponent implements OnInit, OnDestroy {
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener); 
   }
-  
 
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
@@ -46,7 +44,6 @@ export class SidenavComponent implements OnInit, OnDestroy {
     this.subscriptionlightMode.unsubscribe();
   }
 
-  
   ngOnInit() {
     this.subscriptionOpenSideNav = this.opensidenavService.getOpenSidenavEventMessage().subscribe(dataTransmited =>{
       this.toggleSideNav(dataTransmited);
@@ -69,5 +66,4 @@ export class SidenavComponent implements OnInit, OnDestroy {
     this.authenticationService.logout();
   }
 
-  
 }

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { SharedModule } from 'src/app/shared/shared.module'; 
+import { SharedModule } from 'src/app/shared/shared.module';
+import { DatePipe } from '@angular/common';
 
 import { PublicRoutingModule } from './public-routing.module';
 import { RegisterComponent } from './components/register/register.component';
@@ -11,9 +12,10 @@ import { NotfoundComponent } from './components/notfound/notfound.component';
 
 import { HomeModule } from './home/home.module';
 import { MoviesModule } from './movies/movies.module';
+import { PasswordresetComponent } from './components/passwordreset/passwordreset.component';
 
 @NgModule({
-  declarations: [RegisterComponent, LoginComponent, UserCartComponent, UserCartItemComponent, ForbiddenComponent, NotfoundComponent],
+  declarations: [RegisterComponent, LoginComponent, UserCartComponent, UserCartItemComponent, ForbiddenComponent, NotfoundComponent, PasswordresetComponent],
   imports: [
     SharedModule,
     PublicRoutingModule,
@@ -21,6 +23,7 @@ import { MoviesModule } from './movies/movies.module';
     MoviesModule
   ],
   exports: [RegisterComponent, LoginComponent],
-  entryComponents: [LoginComponent,UserCartItemComponent]
+  entryComponents: [LoginComponent,UserCartItemComponent],
+  providers: [DatePipe]
 })
 export class PublicModule { }

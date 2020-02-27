@@ -6,14 +6,15 @@ import { ChangePasswordComponent } from '../change-password/change-password.comp
 import { MatDialog } from '@angular/material';
 import { UserService } from 'src/app/core/service/user.service';
 import { first } from 'rxjs/operators';
+import { PasswordCheckComponent } from '../password-check/password-check.component';
 
 @Component({
   selector: 'app-user-details',
   templateUrl: './user-details.component.html',
   styleUrls: ['./user-details.component.css']
 })
-export class UserDetailsComponent implements OnInit, OnDestroy {
 
+export class UserDetailsComponent implements OnInit, OnDestroy {
 
   subscriptionlightMode: any;
   lightMode: boolean;
@@ -24,7 +25,6 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
   username = new FormControl('', Validators.required);
   email = new FormControl('', [Validators.required, Validators.email]);
 
-
   groupControl = new FormGroup({
     lastname: this.lastname,
     firstname: this.firstname,
@@ -32,7 +32,6 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
     email: this.email
   });
   error: any;
-
 
   constructor(public dialog: MatDialog, private userservice: UserService, private authenticationService: AuthenticationService, private lightmodeService: LightmodeService) { }
 
@@ -46,20 +45,22 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
       this.lightMode = value
     );
   }
+
   ngOnDestroy() {
     this.subscriptionlightMode.unsubscribe();
   }
+
   changePassword() {
     let dialogRef;
     if (this.lightMode)
       dialogRef = this.dialog.open(ChangePasswordComponent, {
         width: '380px'
-      });
+    });
     else
       dialogRef = this.dialog.open(ChangePasswordComponent, {
         width: '380px',
         panelClass: 'dark'
-      });
+    });
   }
 
   checkValidationBeforeSubmit() {
@@ -68,6 +69,7 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
       control.markAsTouched({ onlySelf: true });
     });
   }
+
   changeUserDetails() {
     this.submitted = true;
     this.checkValidationBeforeSubmit();
@@ -75,6 +77,18 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
       this.submitted = false;
       return;
     }
+
+    let dialogRef;
+    if (this.lightMode)
+      dialogRef = this.dialog.open(PasswordCheckComponent, {
+        width: '320px'
+    });
+    else
+      dialogRef = this.dialog.open(PasswordCheckComponent, {
+        width: '320px',
+        panelClass: 'dark'
+    });
+
     this.userservice.changeUserDetails(this.authenticationService.currentUserValue.userId, this.lastname.value, this.firstname.value, this.username.value, this.email.value)
       .pipe(first())
       .subscribe(

@@ -194,7 +194,7 @@ const movies: Movie[] = [
     }, {
         movieId: 2,
         movieTitle: "Batman : The Dark Night",
-        moviePrice: 10,
+        moviePrice: 6.3,
         movieImagePath: "http://culturaddict.com/wp-content/uploads/2016/07/TDK1.jpg",
         movieTrailerPath: "https://www.youtube.com/embed/EXeTwQWrcwY?rel=0&showinfo=0&controls=0&iv_load_policy=3&modestbranding=1",
         movieFilePath: "PicturesFolder/Preview/BDA_TheDarkNight.jpg",
@@ -246,7 +246,7 @@ const movies: Movie[] = [
     }, {
         movieId: 3,
         movieTitle: "Elysium",
-        moviePrice: 10,
+        moviePrice: 5.36,
         movieImagePath: "https://4.bp.blogspot.com/-V-rf6RaIruI/WJwwBeC5ssI/AAAAAAAAi-k/uMMSK5N8N9o022w5vIuMg2_C6jOsSAV0gCLcB/s1600/01.jpg",
         movieTrailerPath: "https://www.youtube.com/embed/oIBtePb-dGY?rel=0&showinfo=0&controls=0&iv_load_policy=3&modestbranding=1",
         movieFilePath: "PicturesFolder/Preview/BDA_Elysium.jpg",
@@ -377,7 +377,6 @@ let embeddedKeyMovieUser: EmbeddedKeyMovieUser[] = [
         movieId: 3,
         userId: 2
     }
-
 ]
 
 let carts: CartItem[] = [
@@ -416,20 +415,20 @@ const movieTrailer: MovieTrailer[] = [
 
 const synopsises: Synopsis[] = [
     {
-        movie_id: 1,
-        synopsis: "c'est le synopsis de deadpool là"
+        movieId: 1,
+        movieDescription: "c'est le synopsis de deadpool là"
     }, {
-        movie_id: 2,
-        synopsis: "c'est le synopsis de dark knight là"
+        movieId: 2,
+        movieDescription: "c'est le synopsis de dark knight là"
     }, {
-        movie_id: 3,
-        synopsis: "c'est le synopsis de elysium là"
+        movieId: 3,
+        movieDescription: "c'est le synopsis de elysium là"
     }
 ];
 
 const orders: OrderHistory[] = [
     {
-        user_id: 2,
+        userId: 2,
         orders: [
             {
                 purchase_date: new Date('2017/12/10 18:48:06'),
@@ -471,15 +470,15 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return authenticate();
                 case url.endsWith('/auth/signup') && method === 'POST':
                     return registerate();
-                case url.endsWith('/changeUserDetails') && method === 'POST':
+                case url.endsWith('/changeuserdetails') && method === 'POST':
                     return changeUserInfo();
-                case url.endsWith('/changePassword') && method === 'POST':
+                case url.endsWith('/changepassword') && method === 'POST':
                     return changePassword();
+                case url.includes("/credentialsrecovery") && method === 'POST':
+                        return forgetPasswordEmailOnly();
                 case url.includes("/forgetPassword") && method === 'POST':
                     return forgetPassword();
-                case url.includes("/forgetPasswordEmailOnly") && method === 'POST':
-                    return forgetPasswordEmailOnly();
-                case url.includes("/checkUserPassword") && method === 'POST':
+                case url.includes("/checkuserpassword") && method === 'GET':
                     return checkUserPassword();
                 case url.includes("/auth/activation") && method === 'GET':
                     return activate();
@@ -489,7 +488,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return getUserById();
                 case url.endsWith('/movies') && method === 'GET':
                     return getMovies();
-                case url.match(/\/movies\/\d+$/) && method === 'GET':
+                case url.match(/\/movie\/\d+$/) && method === 'GET':
                     return getMovieById();
                 case url.endsWith('/actors') && method === 'GET':
                     return getActors();
@@ -509,10 +508,18 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return getSynopsisByMovieId();
                 case url.match(/\/user\/cart\/\d+$/) && method === 'GET':
                     return getUserCart();
-                case url.match(/\/user\/cart\/add/) && method === 'GET':
+                case url.match(/\/user\/additemtocart/) && method === 'POST':
                     return addItemToCart();
-                case url.match(/\/user\/cart\/buy\/\d+$/) && method === 'GET':
+                case url.match(/\/user\/removeitemtocart/) && method === 'POST':
+                    return removeItemToCart();
+                case url.match(/\/user\/clearcart/) && method === 'POST':
+                    return clearCart();
+                case url.match(/\/user\/cartmerge/) && method === 'POST':
+                    return mergeItemsToCart();
+                case url.match(/\/user\/buycart/) && method === 'POST':
                     return buyCart();
+                case url.match(/\/user\/orders\/\d+$/) && method === 'GET':
+                    return getOrdersByUserId();
                 default:
                     return next.handle(request);
             }
@@ -525,7 +532,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function getSynopsisByMovieId() {
-            let synopsis = synopsises.find(x => x.movie_id === idFromUrl());
+            let synopsis = synopsises.find(x => x.movieId === idFromUrl());
             return ok(synopsis);
         }
 
@@ -643,11 +650,19 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             const user = users.find(x => x.userId === idFromUrl());
             return ok(user);
         }
+
         function forgetPasswordEmailOnly(){
             console.log(body.user_email);
             //Send email forget password
+            let user = users.find(x => x.userEmail === body.user_email);
+            console.log(user);
+            if (!user) {
+                return error("Aucun compte n'existe avec cette adresse mail.");
+            }
+            console.log("Send MAIL")
             return ok({});
         }
+
         function forgetPassword(){
             console.log(body.user_id);
             console.log(body.user_email);
@@ -658,6 +673,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             //Send email forget password
             return ok({});
         }
+
         function getMovies() {
             return ok(movies);
         }
@@ -680,26 +696,27 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             }
             return ok({ isActivated: false });
         }
+
         function checkUserPassword(){
-            const user_id = body.user_id;
-            const user_newPassword = body.user_newPassword;
-            let user = users.find(x => x.userId === parseInt(user_id));
+            const userId = request.params.get('userId');
+            const password = request.params.get('password');
+
+            let user = users.find(x => x.userId === parseInt(userId));
             if (!user) {
                 return error({unknown : true})
             }
-            if(user.userPassword != user_newPassword){
+            if(user.userPassword != password){
                 return error({unmatch : true})
             }
-            user.userPassword = user_newPassword;
             return ok({});
-
         }
+
         function changeUserInfo() {
-            const user_id = body.user_id;
-            const user_login = body.user_login;
-            const user_firstname = body.user_firstname;
-            const user_lastname = body.user_lastname;
-            const user_email = body.user_email;
+            const user_id = body.userId;
+            const user_login = body.userLogin;
+            const user_firstname = body.userFirstname;
+            const user_lastname = body.userLastname;
+            const user_email = body.userEmail;
             let user = users.find(x => x.userId === parseInt(user_id));
             if (!user) {
                 return error("Utilisateur introuvable");
@@ -720,23 +737,15 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function changePassword() {
-            const user_id = body.user_id;
-            const user_password = body.user_password;
+            const user_id = body.userId;
+            const user_password = body.password;
 
             let user = users.find(x => x.userId === parseInt(user_id));
             if (!user) {
                 return error("Utilisateur introuvable");
             }
             user.userPassword = user_password;
-            return ok({
-                userId: user.userId,
-                userLogin: user.userLogin,
-                userFirstname: user.userFirstname,
-                userLastname: user.userLastname,
-                roles: user.roles,
-                userEmail: user.userEmail,
-                token: `fake-jwt-token.${user.userId}`
-            });
+            return ok({});
         }
 
         function getUserCart() {
@@ -748,8 +757,9 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function addItemToCart() {
-            const user_id = request.params.get('user_id');
-            const movie_id = request.params.get('movie_id');
+            const user_id = body.userId;
+            const movie_id = body.movieId;
+            const count = body.count;
             if (!users.find(x => x.userId === parseInt(user_id))) {
                 return error("Utilisateur inconnu");
             }
@@ -758,7 +768,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             }
             let cart = carts.find(x => x.embeddedKeyMovieUser.userId === parseInt(user_id) && x.embeddedKeyMovieUser.movieId === parseInt(movie_id));
             if (cart) {
-                cart.movieUserCartCount = cart.movieUserCartCount + 1;
+                cart.movieUserCartCount = cart.movieUserCartCount + parseInt(count);
             } else {
                 let embeddedKeyMovieUser = new EmbeddedKeyMovieUser();
                 embeddedKeyMovieUser.userId = parseInt(user_id);
@@ -766,15 +776,76 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 carts.push(
                     {
                         embeddedKeyMovieUser,
-                        movieUserCartCount: 1
+                        movieUserCartCount: parseInt(count)
                     }
                 )
             }
             return ok({});
         }
 
+        function removeItemToCart() {
+            const user_id = body.userId;
+            const movie_id = body.movieId;
+            const count = body.count;
+            if (!users.find(x => x.userId === parseInt(user_id))) {
+                return error("Utilisateur inconnu");
+            }
+            if (!movies.find(x => x.movieId === parseInt(movie_id))) {
+                return error("Film inconnu");
+            }
+            let cart = carts.find(x => x.embeddedKeyMovieUser.userId === parseInt(user_id) && x.embeddedKeyMovieUser.movieId === parseInt(movie_id));
+            if (!cart) {
+                return error('Panier vide');
+            }
+            if (parseInt(count) > cart.movieUserCartCount) {
+                return error("Nombre d'articles à enlever supérieur au nombre d'article présents");
+            }
+            if (parseInt(count) != cart.movieUserCartCount) {
+                cart.movieUserCartCount -= parseInt(count);
+            } else {
+                carts = carts.filter(function (element) {
+                    return (element.embeddedKeyMovieUser.userId != parseInt(user_id) || element.embeddedKeyMovieUser.movieId != parseInt(movie_id));
+                });
+            }
+            return ok({});
+        }
+
+        function clearCart() {
+            const user_id = body.userId;
+            if (!users.find(x => x.userId === parseInt(user_id))) {
+                return error("Utilisateur inconnu");
+            }
+            let cart = carts.find(x => x.embeddedKeyMovieUser.userId === parseInt(user_id));
+            if (!cart) {
+                return error('Panier vide');
+            } else {
+                carts = carts.filter(function (element) {
+                    return element.embeddedKeyMovieUser.userId != parseInt(user_id);
+                });
+            }
+            return ok({});
+        }
+
+        function mergeItemsToCart() {
+            const user_id = body.userId;
+            const items = body.localCart;
+            for (let localCartItem of items) {
+                let item = carts.find(x => x.embeddedKeyMovieUser.userId === user_id && x.embeddedKeyMovieUser.movieId === localCartItem.embeddedKeyMovieUser.movieId);
+                if (!item) {
+                    localCartItem.embeddedKeyMovieUser.userId = user_id;
+                    carts.push(localCartItem);
+                } else {
+                    item.movieUserCartCount += localCartItem.movieUserCartCount;
+                }
+            }
+            let reportCart = carts.filter(function (element) {
+                return element.embeddedKeyMovieUser.userId == user_id;
+            });
+            return ok({});
+        }
+
         function buyCart() {
-            const user_id = idFromUrl();
+            const user_id = body.userId;
             let user = users.find(x => x.userId === user_id);
             if (!user) {
                 return error("Utilisateur introuvable");
@@ -785,11 +856,11 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             if (!userCart) {
                 return error("Panier vide");
             }
-            let order: Order = new Order();
+            let order : Order = new Order();
             order.purchase_date = new Date();
             order.items = new Array<OrderItem>();
             for (let cartItem of userCart) {
-                let orderItem: OrderItem = new OrderItem();
+                let orderItem : OrderItem = new OrderItem();
                 orderItem.movie_id = cartItem.embeddedKeyMovieUser.movieId;
                 let movie = movies.find(x => x.movieId === orderItem.movie_id);
                 if (!movie) {
@@ -799,10 +870,28 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 orderItem.count = cartItem.movieUserCartCount;
                 order.items.push(orderItem);
             }
+            let userOrderHistory : OrderHistory = orders.find(x => x.userId === user_id);
+            if (!userOrderHistory) {
+                userOrderHistory = new OrderHistory();
+                userOrderHistory.userId = user_id;
+                userOrderHistory.orders = new Array<Order>();
+                orders.push(userOrderHistory);
+            }
+            userOrderHistory.orders.push(order);
             carts = carts.filter(function (element) {
                 return element.embeddedKeyMovieUser.userId != user_id;
             });
             return ok({});
+        }
+
+        function getOrdersByUserId() {
+            const user_id : number = idFromUrl();
+            let userOrders = orders.find(x => x.userId === user_id);
+            if (!userOrders) {
+                userOrders = new OrderHistory();
+                userOrders.orders = new Array<Order>();
+            }
+            return ok(userOrders.orders);
         }
 
         // helper functions

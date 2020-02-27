@@ -5,7 +5,6 @@ import { MatDialogRef } from '@angular/material';
 import { AuthenticationService } from 'src/app/core/service/authentication.service';
 import { UserService } from 'src/app/core/service/user.service';
 import { first } from 'rxjs/operators';
-import { resolve } from 'url';
 
 @Component({
   selector: 'app-change-password',
@@ -50,6 +49,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscriptionlightMode.unsubscribe();
   }
+
   changePassword() {
     this.submitted = true;
     this.checkValidationBeforeSubmit(this.groupControl);
@@ -61,7 +61,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
           .pipe(first())
           .subscribe(
             data => {
-              this.authenticationService.updateUser(data)
+              console.log(data);
             },
             error => {
               console.log(error);
@@ -97,12 +97,14 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
   forgetPassword() {
     this.isForgetPassword = true;
   }
+
   checkValidationBeforeSubmit(group) {
     Object.keys(group.controls).forEach(field => {
       const control = group.get(field);
       control.markAsTouched({ onlySelf: true });
     });
   }
+
   oldPasswdCheck() {
     return new Promise((resolve, reject) => {
       this.userservice.checkUserPassword(this.authenticationService.currentUserValue.userId, this.oldPasswd.value)
@@ -121,6 +123,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
         });
       });
   }
+
   confPasswdCheck() {
     if (this.newPasswd.value !== this.confPasswd.value)
       this.confPasswd.setErrors({ unmatch: true });

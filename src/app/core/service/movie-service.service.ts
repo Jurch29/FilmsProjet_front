@@ -30,7 +30,7 @@ export class MovieService {
   }
 
   getMovieById(id : number) {
-    return this.http.get<Movie>(`${environment.apiUrl}/movies/${id}`);
+    return this.http.get<Movie>(`${environment.apiUrl}/movie/movie/${id}`);
   }
 
   getActorByMovieId(id : number) {
@@ -62,6 +62,6 @@ export class MovieService {
   }
 
   getSynopsis(id : number) {
-    return this.http.get<Synopsis>(`${environment.apiUrl}/synopsis/${id}`);
+    return this.http.get<Synopsis>(`${environment.apiUrl}/mdb/synopsis/${id}`);
   }
 }
