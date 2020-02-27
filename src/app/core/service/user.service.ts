@@ -18,8 +18,8 @@ export class UserService {
         return this.http.get<User>(`${environment.apiUrl}/users/${id}`);
     }
 
-    changeUserDetails(userId : number, userLastname : string, userFirstname : string, userLogin : string, userEmail : string) {
-        return this.http.post<any>(`${environment.apiUrl}/user/changeuserdetails`, {userId,userLastname,userFirstname,userLogin,userEmail});
+    changeUserDetails(userId : number, userLastname : string, userFirstname : string, userLogin : string, userEmail : string, password : string) {
+        return this.http.post<any>(`${environment.apiUrl}/user/changeuserdetails`, {userId,password,userLastname,userFirstname,userLogin,userEmail});
     }
 
     changePassword(userId : number,password :string) {

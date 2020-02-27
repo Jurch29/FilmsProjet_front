@@ -53,6 +53,10 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
   changePassword() {
     this.submitted = true;
     this.checkValidationBeforeSubmit(this.groupControl);
+    if (this.groupControl.invalid){
+      this.submitted = false;
+      return;
+    }
     this.oldPasswdCheck().then(data=>{
       if (this.groupControl.invalid || !data) {
         this.submitted = false;
@@ -112,7 +116,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           this.oldPasswd.setErrors(null);
-          return  resolve(true);
+          return resolve(true);
         },
         error => {
           if (error.unmatch == true)

@@ -89,14 +89,18 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
         panelClass: 'dark'
     });
 
-    this.userservice.changeUserDetails(this.authenticationService.currentUserValue.userId, this.lastname.value, this.firstname.value, this.username.value, this.email.value)
-      .pipe(first())
-      .subscribe(
-        data => {
-          this.authenticationService.updateUser(data)
-        },
-        error => {
-          console.log(error);
+    dialogRef.afterClosed().subscribe(result => {
+      if (result!=undefined){
+          this.userservice.changeUserDetails(this.authenticationService.currentUserValue.userId, this.lastname.value, this.firstname.value, this.username.value, this.email.value, result)
+        .pipe(first())
+        .subscribe(
+          data => {
+            this.authenticationService.updateUser(data)
+          },
+          error => {
+            console.log(error);
         });
+      }
+    });
   }
 }

@@ -20,21 +20,6 @@ export class UserCartComponent {
   constructor(private navbar : NavbarComponent, private authenticationService : AuthenticationService,
               private cartService : CartService, private numberofitemsincartService : NumberOfItemsInCartService) {}
 
-  buy() {
-    this.cartService.buyCart(this.authenticationService.currentUserValue.userId)
-    .pipe()
-    .subscribe(
-      data => {
-        this.items = false;
-        this.numberofitemsincartService.ChangeNumberOfItemsInCartMessage(0);
-        this.cart = undefined;
-      },
-      error => {
-        console.log(error);
-      }
-    );
-  }
-
   ngOnInit() {
     this.cart = undefined;
     this.currentUser = this.authenticationService.currentUserValue;
@@ -64,6 +49,21 @@ export class UserCartComponent {
           );
         }
     });
+  }
+
+  buy() {
+    this.cartService.buyCart(this.authenticationService.currentUserValue.userId)
+    .pipe()
+    .subscribe(
+      data => {
+        this.items = false;
+        this.numberofitemsincartService.ChangeNumberOfItemsInCartMessage(0);
+        this.cart = undefined;
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
   login() {
