@@ -27,7 +27,6 @@ export class FilterbarComponent implements OnInit, OnDestroy {
   filterAuthor = new FormControl();
   movies: Movie[];
 
-
   constructor(private lightmodeService: LightmodeService, private movieService: MovieService) { }
 
   ngOnInit() {
@@ -105,7 +104,6 @@ export class FilterbarComponent implements OnInit, OnDestroy {
       });
     }
     this.movieService.ChangeMoviesToDisplay(this.movies)
-
   }
 
   onCategoryChange(event) {
@@ -130,7 +128,6 @@ export class FilterbarComponent implements OnInit, OnDestroy {
         this.movieService.ChangeMoviesToDisplay(data);
       });
     }
-
   }
 
   onAuthorChange(event) {
@@ -186,4 +183,5 @@ export class FilterbarComponent implements OnInit, OnDestroy {
       });
     }
   }
+
 }

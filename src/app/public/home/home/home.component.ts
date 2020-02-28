@@ -15,9 +15,9 @@ export class HomeComponent implements OnInit,OnDestroy {
   nbActors :number;
   nbAutors :number;
 
-  constructor(private lightmodeService: LightmodeService,private movieService : MovieService) {
-   }
-   ngOnInit(){
+  constructor(private lightmodeService: LightmodeService,private movieService : MovieService) {}
+
+  ngOnInit(){
     this.subscriptionlightMode =  this.lightmodeService.getLightModeEventMessage().subscribe(value =>
       this.lightMode = value
     ); 
@@ -37,12 +37,15 @@ export class HomeComponent implements OnInit,OnDestroy {
   ngOnDestroy(){
     this.subscriptionlightMode.unsubscribe();
   }
+
   totheleft(){
     var scrollLeft = document.getElementById("row").scrollLeft;
     document.getElementById("row").scrollLeft = scrollLeft - document.getElementById("row").offsetWidth;
   }
+
   totheright(){
     var scrollLeft = document.getElementById("row").scrollLeft;
     document.getElementById("row").scrollLeft = scrollLeft + document.getElementById("row").offsetWidth;
   }
+
 }
