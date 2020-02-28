@@ -95,7 +95,8 @@ export class MovieCardComponent implements OnInit,OnDestroy{
         },
         error => console.log(error)
       );
-    } else {
+    } 
+    else {
       this.cartService.addItemToLocalCart(this.id, 1)
       .then(
         data => {
