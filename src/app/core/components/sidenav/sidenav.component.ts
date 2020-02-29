@@ -6,6 +6,7 @@ import { User } from 'src/app/shared/models/user';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { LightmodeService } from '../../service/lightmode.service';
 import { OpensidenavService } from '../../service/opensidenav.service';
+import { Role } from 'src/app/shared/models/role';
 
 
 @Component({
@@ -21,6 +22,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
   show: string;
   subscriptionlightMode: any;
   lightMode : boolean;
+  isAdmin : boolean = false;
   
   @ViewChild('snav', {static: false}) public sidenav: MatSidenav;
   
@@ -54,8 +56,12 @@ export class SidenavComponent implements OnInit, OnDestroy {
     );
    
     this.authenticationService.currentUser.subscribe(dataTransmited =>
-      this.currentUser =dataTransmited
-      );
+        this.currentUser = dataTransmited
+    );
+    console.log("user : "+JSON.stringify(this.currentUser));
+    if (this.currentUser != null && this.currentUser.roles.includes(Role.Admin)){
+      this.isAdmin = true;
+    }
   }
   
   openLoginDialog() {

@@ -21,7 +21,7 @@
         <a [class.dark]="!lightMode" mat-list-item *ngIf="!currentUser" routerLink="/register">
           <mat-icon>person_add</mat-icon><span class="distanceLogo">Inscription</span>
         </a>
-        <a [class.dark]="!lightMode" mat-list-item *ngIf="currentUser">
+        <a [class.dark]="!lightMode" mat-list-item *ngIf="currentUser && isAdmin" routerLink="/administration">
           <mat-icon>build</mat-icon><span class="distanceLogo">Administration</span>
         </a>
         <a [class.dark]="!lightMode" mat-list-item *ngIf="currentUser" (click)="disconnect()">

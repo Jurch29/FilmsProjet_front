@@ -4,7 +4,6 @@ import { LoginComponent } from '../../../public/components/login/login.component
 import { first } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
-
 import { User } from '../../../shared/models/user';
 import { AuthenticationService } from '../../service/authentication.service';
 import { UserService } from '../../service/user.service';
@@ -13,7 +12,6 @@ import { OpensidenavService } from '../../service/opensidenav.service';
 import { NumberOfItemsInCartService } from '../../service/number-of-items-in-cart.service';
 import { OpenfilterbarService } from '../../service/openfilterbar.service';
 import { CartService } from '../../service/cart.service';
-import { MatInput } from '@angular/material';
 
 @Component({
   selector: 'app-navbar',
@@ -74,9 +72,6 @@ export class NavbarComponent implements OnInit {
     });
     if (window.innerWidth < 500) this.SmallSettingsNoButtons = true;
     if (this.currentUser != null) {
-      this.userService.getById(this.currentUser.userId).pipe(first()).subscribe(user => {
-        this.userFromApi = user;
-      });
       this.cartService.getUserCart(this.currentUser.userId)
       .pipe()
       .subscribe(
@@ -93,7 +88,7 @@ export class NavbarComponent implements OnInit {
       );
     }
     this.authenticationService.currentUser.subscribe(dataTransmited => {
-      this.currentUser =dataTransmited
+      this.currentUser = dataTransmited
     });
   }
   

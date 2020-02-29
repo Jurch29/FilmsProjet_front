@@ -1,0 +1,12 @@
+.Title{
+    margin-top: 25px;
+    text-align: center;
+    font-weight: 900;
+    font-family: fantasy;
+}
+
+.ControlPanel{
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+}
