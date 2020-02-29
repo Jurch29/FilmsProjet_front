@@ -25,20 +25,35 @@ export class FilterbarComponent implements OnInit, OnDestroy {
   filterActor = new FormControl();
   filteredOptionsAuthor: Observable<Author[]>;
   filterAuthor = new FormControl();
-  movies: Movie[];
-
+  MoviesToDisplay: Movie[];
+  allMovies: Movie[];
+  FilterAuthorA: Movie[];
+  FilterActorB: Movie[];
+  FilterNameC: Movie[];
+  FilterCategoryD: Movie[];
+  OrderByChoice: any;
 
   constructor(private lightmodeService: LightmodeService, private movieService: MovieService) { }
 
   ngOnInit() {
-    this.movieService.getAllCategorys().pipe(first()).subscribe(data => this.categorys = data);
+
+    this.movieService.getAllMovies().then(data => {
+      this.FilterAuthorA = data;
+      this.FilterActorB = data;
+      this.FilterNameC = data;
+      this.FilterCategoryD = data;
+      this.MoviesToDisplay = data;
+    });
+    this.movieService.getAllCategorys().pipe(first()).subscribe(data => {
+      this.categorys = data;
+    });
     this.movieService.getAllAuthors().pipe(first()).subscribe(data => {
       this.authors = data
       this.filteredOptionsAuthor = this.filterAuthor.valueChanges
         .pipe(
           startWith(''),
-          map(value => typeof value === 'string' ? value : value),
-          map(inputedValue => this._filterAuthor(inputedValue))
+          map(value =>  value),
+          map(inputedValue => this._AutocompleteSaisieAuthor(inputedValue))
         );
     });
     this.movieService.getAllActors().pipe(first()).subscribe(data => {
@@ -46,13 +61,20 @@ export class FilterbarComponent implements OnInit, OnDestroy {
       this.filteredOptionsActor = this.filterActor.valueChanges
         .pipe(
           startWith(''),
-          map(value => typeof value === 'string' ? value : value),
-          map(inputedValue => this._filterActor(inputedValue))
+          map(value =>  value),
+          map(inputedValue => this._AutocompleteSaisieActor(inputedValue))
         );
     });
     this.subscriptionlightMode = this.lightmodeService.getLightModeEventMessage().subscribe(value =>
       this.lightMode = value
     );
+    this.movieService.getValueTitleSearch().subscribe(value => {
+      if(value.length>0){
+        this.FilterNameC = value;
+        this.compileFilters();
+        this.onOrderByChange(this.OrderByChoice);
+      }
+    });
   }
 
   displayAuthor(author: Author): string {
@@ -63,7 +85,7 @@ export class FilterbarComponent implements OnInit, OnDestroy {
     return actor ? actor.actorFirstName + ' ' + actor.actorLastName : '';
   }
 
-  _filterActor(inputedValue: string): Actor[] {
+  _AutocompleteSaisieActor(inputedValue: string): Actor[] {
     if (inputedValue != null) {
       const filterValue = inputedValue.toString().toLowerCase();
       return this.actors.filter(item => {
@@ -72,10 +94,12 @@ export class FilterbarComponent implements OnInit, OnDestroy {
           return item;
         }
       });
+    }else{
+      return this.actors;
     }
   }
 
-  _filterAuthor(inputedValue: string): Author[] {
+  _AutocompleteSaisieAuthor(inputedValue: string): Author[] {
     if (inputedValue != null) {
       const filterValue = inputedValue.toString().toLowerCase();
       return this.authors.filter(item => {
@@ -84,6 +108,8 @@ export class FilterbarComponent implements OnInit, OnDestroy {
           return item;
         }
       });
+    }else{
+      return this.authors;
     }
   }
 
@@ -92,98 +118,96 @@ export class FilterbarComponent implements OnInit, OnDestroy {
   }
 
   onOrderByChange(event) {
-    this.movies = this.movieService.getMoviesToDisplay;
-    if (event.value == undefined) {
-      this.movies.sort(function (a, b) {
+    if (event == undefined || event.value == undefined) {
+      this.OrderByChoice = undefined;
+      this.MoviesToDisplay.sort(function (a, b) {
         return <any>b.movieDate - <any>a.movieDate;
       });
     } else {
-      this.movies.sort(function (a, b) {
+      this.OrderByChoice = event;
+      this.MoviesToDisplay.sort(function (a, b) {
         var textA = a.movieTitle.toUpperCase();
         var textB = b.movieTitle.toUpperCase();
         return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
       });
     }
-    this.movieService.ChangeMoviesToDisplay(this.movies)
-
+    this.movieService.ChangeMoviesToDisplay(this.MoviesToDisplay)
   }
-
+  compileFilters() {
+    this.MoviesToDisplay = this.allMovies.filter(x => this.FilterAuthorA.includes(x));
+    this.MoviesToDisplay = this.MoviesToDisplay.filter(x => this.FilterActorB.includes(x));
+    this.MoviesToDisplay = this.MoviesToDisplay.filter(x => this.FilterNameC.includes(x));
+    this.MoviesToDisplay = this.MoviesToDisplay.filter(x => this.FilterCategoryD.includes(x));
+  }
   onCategoryChange(event) {
-    this.movies = this.movieService.getMoviesToDisplay;
-    if (event.value == undefined) {
-      this.movieService.getAllMovies().pipe().subscribe(data => {
-        this.movieService.ChangeMoviesToDisplay(data);
-      });
-    } else {
-      const cathegory = event.value.toLowerCase();
-      this.movies = this.movies.filter(item => {
-        if (item.categories.find(element => element.categoryTitle.toLowerCase() === cathegory) != undefined) {
-          return item;
-        }
-        return null;
-      });
-    }
-    if (this.movies != null) {
-      this.movieService.ChangeMoviesToDisplay(this.movies);
-    } else {
-      this.movieService.getAllMovies().pipe().subscribe(data => {
-        this.movieService.ChangeMoviesToDisplay(data);
-      });
-    }
-
+    this.movieService.getAllMovies().then(data => {
+      this.allMovies = data;
+      if (event.value == undefined) {
+        this.FilterCategoryD = this.allMovies;
+      } else {
+        const cathegory = event.value.toLowerCase();
+        this.FilterCategoryD = this.allMovies.filter(item => {
+          if (item.categories.find(element => element.categoryTitle.toLowerCase() === cathegory) != undefined) {
+            return item;
+          }
+          return null;
+        });
+      }
+      if (this.FilterCategoryD == null) {
+        this.FilterCategoryD = this.allMovies;
+      }
+      this.compileFilters();
+      this.onOrderByChange(this.OrderByChoice);
+    });
   }
 
   onAuthorChange(event) {
-    this.movies = this.movieService.getMoviesToDisplay;
-    if (event.option.value == undefined) {
-      this.movieService.getAllMovies().pipe().subscribe(data => {
-        this.movieService.ChangeMoviesToDisplay(data);
-      });
-    } else {
-      const frist = event.option.value.authorFirstName.toLowerCase();
-      const last = event.option.value.authorLastName.toLowerCase();
-      this.movies = this.movies.filter(item => {
-        if (item.authors.find(element => element.authorFirstName.toLowerCase() === frist
-          &&
-          element.authorLastName.toLowerCase() === last) != undefined) {
-          return item;
-        }
-        return null;
-      });
-    }
-    if (this.movies != null) {
-      this.movieService.ChangeMoviesToDisplay(this.movies);
-    } else {
-      this.movieService.getAllMovies().pipe().subscribe(data => {
-        this.movieService.ChangeMoviesToDisplay(data);
-      });
-    }
+    this.movieService.getAllMovies().then(data => {
+      this.allMovies = data;
+      if (event.option.value == undefined) {
+        this.FilterAuthorA = this.allMovies;
+      } else {
+        const frist = event.option.value.authorFirstName.toLowerCase();
+        const last = event.option.value.authorLastName.toLowerCase();
+        this.FilterAuthorA = this.allMovies.filter(item => {
+          if (item.authors.find(element => element.authorFirstName.toLowerCase() === frist
+            &&
+            element.authorLastName.toLowerCase() === last) != undefined) {
+            return item;
+          }
+          return null;
+        });
+      }
+      if (this.FilterAuthorA == null) {
+        this.FilterAuthorA = this.allMovies;
+      }
+      this.compileFilters();
+      this.onOrderByChange(this.OrderByChoice);
+    });
   }
-  
+
   onActorChange(event) {
-    this.movies = this.movieService.getMoviesToDisplay;
-    if (event.option.value == undefined) {
-      this.movieService.getAllMovies().pipe().subscribe(data => {
-        this.movieService.ChangeMoviesToDisplay(data);
-      });
-    } else {
-      const frist = event.option.value.actorFirstName.toLowerCase();
-      const last = event.option.value.actorLastName.toLowerCase();
-      this.movies = this.movies.filter(item => {
-        if (item.actors.find(element => element.actorFirstName.toLowerCase() === frist
-          &&
-          element.actorLastName.toLowerCase() === last) != undefined) {
-          return item;
-        }
-        return null;
-      });
-    }
-    if (this.movies != null) {
-      this.movieService.ChangeMoviesToDisplay(this.movies);
-    } else {
-      this.movieService.getAllMovies().pipe().subscribe(data => {
-        this.movieService.ChangeMoviesToDisplay(data);
-      });
-    }
+    this.movieService.getAllMovies().then(data => {
+      this.allMovies = data;
+      if (event.option.value == undefined) {
+        this.FilterActorB = this.allMovies;
+      } else {
+        const frist = event.option.value.actorFirstName.toLowerCase();
+        const last = event.option.value.actorLastName.toLowerCase();
+        this.FilterActorB = this.allMovies.filter(item => {
+          if (item.actors.find(element => element.actorFirstName.toLowerCase() === frist
+            &&
+            element.actorLastName.toLowerCase() === last) != undefined) {
+            return item;
+          }
+          return null;
+        });
+      }
+      if (this.FilterActorB == null) {
+        this.FilterActorB = this.allMovies;
+      }
+      this.compileFilters();
+      this.onOrderByChange(this.OrderByChoice);
+    });
   }
 }

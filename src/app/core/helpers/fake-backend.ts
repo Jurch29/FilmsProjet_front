@@ -652,20 +652,15 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function forgetPasswordEmailOnly(){
-            console.log(body.user_email);
             //Send email forget password
             let user = users.find(x => x.userEmail === body.user_email);
-            console.log(user);
             if (!user) {
                 return error("Aucun compte n'existe avec cette adresse mail.");
             }
-            console.log("Send MAIL")
             return ok({});
         }
 
         function forgetPassword(){
-            console.log(body.user_id);
-            console.log(body.user_email);
             let user = users.find(x => x.userId === parseInt(body.user_id));
             if (!user) {
                 return error("Utilisateur introuvable");

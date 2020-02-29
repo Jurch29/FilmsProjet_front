@@ -13,7 +13,7 @@ import { OpensidenavService } from '../../service/opensidenav.service';
 import { NumberOfItemsInCartService } from '../../service/number-of-items-in-cart.service';
 import { OpenfilterbarService } from '../../service/openfilterbar.service';
 import { CartService } from '../../service/cart.service';
-import { MatInput } from '@angular/material';
+import { MovieService } from '../../service/movie-service.service';
 
 @Component({
   selector: 'app-navbar',
@@ -30,7 +30,7 @@ export class NavbarComponent implements OnInit {
   showSearchBar: boolean;
   textValue: any;
 
-  constructor(public dialog : MatDialog, private userService : UserService, private router : Router,
+  constructor(public dialog : MatDialog, private movieService: MovieService,private userService : UserService, private router : Router,
     private authenticationService : AuthenticationService, private lightmodeService : LightmodeService,
     private opensidenavService : OpensidenavService, private openfilterbarService : OpenfilterbarService, 
     private numberOfItemsService : NumberOfItemsInCartService, private cartService : CartService) {
@@ -43,7 +43,17 @@ export class NavbarComponent implements OnInit {
   }
 
   initiateSearch() {
-    console.log("searching"+this.textValue);
+      this.movieService.getAllMovies().then(data => {
+        let FilterNameC = data.filter(item => {
+          if (item.movieTitle.toLowerCase().indexOf(this.textValue.toLowerCase()) !== -1) {
+            return item;
+          } else {
+            return null;
+          }
+        });
+        this.movieService.ChangeMoviesToDisplay(FilterNameC);
+        this.movieService.changeTitleSearch(FilterNameC);
+    });
   }
 
   openFilterBar(){

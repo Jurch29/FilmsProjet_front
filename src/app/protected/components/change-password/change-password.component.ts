@@ -64,7 +64,6 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
               console.log(data);
             },
             error => {
-              console.log(error);
             });
         this.dialogRef.close();
       }
@@ -83,7 +82,6 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
           console.log(data);
         },
         error => {
-          console.log(error);
         });
     this.dialogRef.close();
   }

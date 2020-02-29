@@ -27,10 +27,10 @@ export class MoviePreviewComponent implements OnInit,OnDestroy {
   }
  
   ngOnInit() {
-    this.movieService.getAllMovies().pipe(first()).subscribe(data => {
-       this.movieService.ChangeMoviesToDisplay(data);
-      }
-    );
+    this.movieService.getAllMovies().then(data=>{
+      console.log(data);
+      this.movieService.ChangeMoviesToDisplay(data);
+    });
     this.subscriptionlightMode =  this.lightmodeService.getLightModeEventMessage().subscribe(value =>
       this.lightMode = value
     );
