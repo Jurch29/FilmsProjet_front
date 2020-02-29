@@ -486,19 +486,19 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return getUsers();
                 case url.match(/\/users\/\d+$/) && method === 'GET':
                     return getUserById();
-                case url.endsWith('/movies') && method === 'GET':
+                case url.endsWith('/movie/movies') && method === 'GET':
                     return getMovies();
-                case url.match(/\/movie\/\d+$/) && method === 'GET':
+                case url.match(/\/movie\/movie\/\d+$/) && method === 'GET':
                     return getMovieById();
-                case url.endsWith('/actors') && method === 'GET':
+                case url.endsWith('/movie/actors') && method === 'GET':
                     return getActors();
                 case url.match(/\/actors\/\d+$/) && method === 'GET':
                     return getActorsByMovieId();
-                case url.endsWith('/author') && method === 'GET':
+                case url.endsWith('/movie/authors') && method === 'GET':
                     return getAuthors();
                 case url.match(/\/author\/\d+$/) && method === 'GET':
                     return getAuthorsByMovieId();
-                case url.endsWith('/category') && method === 'GET':
+                case url.endsWith('/movie/categories') && method === 'GET':
                     return getCategorys();
                 case url.match(/\/category\/\d+$/) && method === 'GET':
                     return getCategorysByMovieId();
