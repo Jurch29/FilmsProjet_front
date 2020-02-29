@@ -11,7 +11,7 @@
     <mat-form-field>
         <mat-label>Catégorie</mat-label>
         <mat-select class="filterscroll" (selectionChange)="onCategoryChange($event)">
-            <mat-option></mat-option>
+            <mat-option>None</mat-option>
             <mat-option *ngFor="let category of categorys" [value]="category.categoryTitle">
                 {{category.categoryTitle}}
             </mat-option>
@@ -20,8 +20,8 @@
     <mat-form-field>
         <mat-label>Auteur</mat-label>
         <input class="filterscroll" type="text" [matAutocomplete]="autoAuthor" matInput [formControl]="filterAuthor">
-        <mat-autocomplete (optionSelected)="onAuthorChange($event)" [displayWith]="displayAuthor" #autoAuthor="matAutocomplete">
-            <mat-option></mat-option>
+        <mat-autocomplete (optionActivated)="onAuthorChange($event)" (optionSelected)="onAuthorChange($event)" [displayWith]="displayAuthor" #autoAuthor="matAutocomplete">
+            <mat-option>None</mat-option>
             <mat-option *ngFor="let author of filteredOptionsAuthor | async" [value]='author'>
                 {{author.authorFirstName}} {{author.authorLastName}}
             </mat-option>
@@ -30,8 +30,8 @@
     <mat-form-field>
         <mat-label>Acteur</mat-label>
         <input class="filterscroll" type="text" [matAutocomplete]="autoActor" matInput [formControl]="filterActor">
-        <mat-autocomplete (optionSelected)="onActorChange($event)" [displayWith]="displayActor" #autoActor="matAutocomplete">
-            <mat-option></mat-option>
+        <mat-autocomplete (optionActivated)="onActorChange($event)" (optionSelected)="onActorChange($event)"  [displayWith]="displayActor" #autoActor="matAutocomplete">
+            <mat-option>None</mat-option>
             <mat-option *ngFor="let actor of filteredOptionsActor | async" [value]='actor'>
                 {{actor.actorFirstName}} {{actor.actorLastName}}
             </mat-option>

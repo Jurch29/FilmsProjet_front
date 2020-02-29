@@ -32,7 +32,6 @@ export class CartService {
   addItemToLocalCart(movie_id : number, count : number) {
     return new Promise((resolve, reject) => {
       if (!localStorage.getItem('userLocalCart')) {
-        console.log("here")
         let localCart : CartItem[] = new Array<CartItem>();
         localStorage.setItem('userLocalCart', JSON.stringify(localCart));
       }

@@ -486,19 +486,19 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return getUsers();
                 case url.match(/\/users\/\d+$/) && method === 'GET':
                     return getUserById();
-                case url.endsWith('/movies') && method === 'GET':
+                case url.endsWith('/movie/movies') && method === 'GET':
                     return getMovies();
-                case url.match(/\/movie\/\d+$/) && method === 'GET':
+                case url.match(/\/movie\/movie\/\d+$/) && method === 'GET':
                     return getMovieById();
-                case url.endsWith('/actors') && method === 'GET':
+                case url.endsWith('/movie/actors') && method === 'GET':
                     return getActors();
                 case url.match(/\/actors\/\d+$/) && method === 'GET':
                     return getActorsByMovieId();
-                case url.endsWith('/author') && method === 'GET':
+                case url.endsWith('/movie/authors') && method === 'GET':
                     return getAuthors();
                 case url.match(/\/author\/\d+$/) && method === 'GET':
                     return getAuthorsByMovieId();
-                case url.endsWith('/category') && method === 'GET':
+                case url.endsWith('/movie/categories') && method === 'GET':
                     return getCategorys();
                 case url.match(/\/category\/\d+$/) && method === 'GET':
                     return getCategorysByMovieId();
@@ -652,20 +652,15 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function forgetPasswordEmailOnly(){
-            console.log(body.user_email);
             //Send email forget password
             let user = users.find(x => x.userEmail === body.user_email);
-            console.log(user);
             if (!user) {
                 return error("Aucun compte n'existe avec cette adresse mail.");
             }
-            console.log("Send MAIL")
             return ok({});
         }
 
         function forgetPassword(){
-            console.log(body.user_id);
-            console.log(body.user_email);
             let user = users.find(x => x.userId === parseInt(body.user_id));
             if (!user) {
                 return error("Utilisateur introuvable");

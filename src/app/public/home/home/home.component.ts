@@ -29,9 +29,9 @@ export class HomeComponent implements OnInit,OnDestroy {
       this.nbAutors = data.length;
     });
 
-    this.movieService.getAllMovies().pipe(first()).subscribe(data => {
+    this.movieService.getAllMovies().then(data =>{
       this.nbMovies = data.length;
-    });
+    })
   }
 
   ngOnDestroy(){

@@ -44,7 +44,6 @@ export class AuthenticationService {
     }
 
     register(user : User) {
-        console.log(user);
         return this.http.post<any>(`${environment.apiUrl}/auth/signup`, user);
     }
 

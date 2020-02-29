@@ -52,7 +52,6 @@ export class PasswordresetComponent implements OnInit {
     .pipe(first())
     .subscribe(
       data => {
-        console.log(data.message);
         if (data.message==="invalid token"){
           this.router.navigate(['/']);
         }
@@ -87,7 +86,6 @@ export class PasswordresetComponent implements OnInit {
     this.submitted = true;
     this.checkValidationBeforeSubmit(this.groupControl);
     if (!this.groupControl.invalid){
-      console.log(this.newPasswd.value);
       this.authenticationService.resetPassword(this.token, this.newPasswd.value)
       .pipe(first())
       .subscribe(
