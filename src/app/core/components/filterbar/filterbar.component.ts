@@ -210,4 +210,5 @@ export class FilterbarComponent implements OnInit, OnDestroy {
       this.onOrderByChange(this.OrderByChoice);
     });
   }
+
 }

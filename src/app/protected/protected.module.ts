@@ -9,13 +9,15 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
 import { UserCartHistoryPurchaseComponent } from './components/user-cart-history-purchase/user-cart-history-purchase.component';
 import { UserCartHistoryPurchaseItemComponent } from './components/user-cart-history-purchase-item/user-cart-history-purchase-item.component';
 import { PasswordCheckComponent } from './components/password-check/password-check.component';
+import { AdministrationModule } from './administration/administration.module';
 
 
 @NgModule({
   declarations: [UserCartHistoryComponent, UserDetailsComponent, UserCommentHistoryComponent, ChangePasswordComponent, UserCartHistoryPurchaseComponent, UserCartHistoryPurchaseItemComponent, PasswordCheckComponent],
   imports: [
     SharedModule,
-    ProtectedRoutingModule
+    ProtectedRoutingModule,
+    AdministrationModule
   ],
   entryComponents : [ChangePasswordComponent, PasswordCheckComponent]
 })

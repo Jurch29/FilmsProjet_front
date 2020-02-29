@@ -50,7 +50,7 @@ export class MovieService {
   }
 
   getAllActors() {
-    return this.http.get<Actor[]>(`${environment.apiUrl}/actors`);
+    return this.http.get<Actor[]>(`${environment.apiUrl}/movie/actors`);
   }
 
   getAuthorsByMovieId(id: number) {
@@ -58,7 +58,7 @@ export class MovieService {
   }
 
   getAllAuthors() {
-    return this.http.get<Author[]>(`${environment.apiUrl}/author`);
+    return this.http.get<Author[]>(`${environment.apiUrl}/movie/authors`);
   }
 
   getCategorysByMovieId(id: number) {
@@ -66,7 +66,7 @@ export class MovieService {
   }
 
   getAllCategorys() {
-    return this.http.get<Category[]>(`${environment.apiUrl}/category`);
+    return this.http.get<Category[]>(`${environment.apiUrl}/movie/categories`);
   }
 
   getTrailersByMovieId(id: number) {

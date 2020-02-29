@@ -431,7 +431,7 @@ const orders: OrderHistory[] = [
         userId: 2,
         orders: [
             {
-                purchase_date: new Date('2017/12/10 18:48:06'),
+                purchase_date: '2017/12/10 18:48:06',
                 items: [
                     {
                         movie_id: 3,
@@ -852,7 +852,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 return error("Panier vide");
             }
             let order : Order = new Order();
-            order.purchase_date = new Date();
+            order.purchase_date = new Date().toDateString();
             order.items = new Array<OrderItem>();
             for (let cartItem of userCart) {
                 let orderItem : OrderItem = new OrderItem();

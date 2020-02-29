@@ -17,11 +17,12 @@ export class UserCartHistoryPurchaseComponent {
   constructor() {}
 
   ngOnInit() {
-    this.purchase_date = this.formatDate(this.order.purchase_date);
+    this.purchase_date = this.order.purchase_date;
     this.items = this.order.items;
     this.totalCost = 0;
   }
 
+  //Les dates mongo sont des strings direct ==> méthode probablement inutile
   formatDate(date : Date) {
     let monthNames = [
       "Janvier", "Février", "Mars",
