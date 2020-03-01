@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { User } from 'src/app/shared/models/user';
 import { UserService } from 'src/app/core/service/user.service';
 import { first } from 'rxjs/operators';
-import { MatTableDataSource, MatDialog } from '@angular/material';
+import { MatTableDataSource, MatDialog, MatPaginator } from '@angular/material';
 import { DatePipe } from '@angular/common';
 import { AuthenticationService } from 'src/app/core/service/authentication.service';
 import { AdministrationService } from 'src/app/core/service/administration.service';
 import { ChangepasswordadmComponent } from '../changepasswordadm/changepasswordadm.component';
 import { AdduseradmComponent } from '../adduseradm/adduseradm.component';
+import { DataSource } from '@angular/cdk/table';
 
 export interface UserElement {
   userFirstname: string;
@@ -25,6 +26,8 @@ export interface UserElement {
 
 export class UsersadmComponent implements OnInit {
 
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+
   public firstname : any = {};
   public lastname : any = {};
   public login : any = {};
@@ -41,6 +44,7 @@ export class UsersadmComponent implements OnInit {
               private authenticationService: AuthenticationService, private AdministrationService: AdministrationService) {}
 
   ngOnInit() {
+    this.paginator._intl.itemsPerPageLabel = 'Objet par page';
     this.userservice.getAllUser()
     .pipe(first())
     .subscribe(
@@ -60,6 +64,7 @@ export class UsersadmComponent implements OnInit {
         this.email = this.users.map(({ userEmail }) => userEmail);
 
         this.dataSource = new MatTableDataSource(this.users);
+        this.dataSource.paginator = this.paginator;
       },
       error => {
         console.log(error);
@@ -116,7 +121,8 @@ export class UsersadmComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       //pareil
-      window.location.reload();
+      if (result==="ok")
+        window.location.reload();
     });
   }
 
@@ -126,6 +132,15 @@ export class UsersadmComponent implements OnInit {
         width: '380px',
         data: {id: this.usersid[line]}
     });
+  }
+
+  applyFilter(event: Event) {
+    //Problème ici aussi lié surement au problème précèdent
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
 }
