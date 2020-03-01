@@ -1,0 +1,46 @@
+<div class="adduser-container">
+
+    <mat-form-field>
+        <input matInput placeholder="Nom :" [formControl]="lastname" required>
+        <mat-error *ngIf="lastname.errors?.required">Champ requis</mat-error>
+        <mat-error *ngIf="lastname.errors"></mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="Prénom :" [formControl]="firstname" required>
+        <mat-error *ngIf="firstname.errors?.required">Champ requis</mat-error>
+        <mat-error *ngIf="firstname.errors"></mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="Login :" [formControl]="login" required>
+        <mat-error *ngIf="login.errors?.required">Champ requis</mat-error>
+        <mat-error *ngIf="login.errors"></mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+            <input matInput placeholder="Email :" [formControl]="email" required>
+            <mat-error *ngIf="email.errors?.required">Champ requis</mat-error>
+            <mat-error *ngIf="email.errors?.email">Email non valide</mat-error>
+            <mat-error *ngIf="email.errors"></mat-error>
+        </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="Mot de passe :" [formControl]="password" required
+        [type]="hide ? 'password' : 'text'">
+        <mat-error *ngIf="password.errors?.required">Champ requis</mat-error>
+        <mat-error *ngIf="password.errors"></mat-error>
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Cacher le mot de passe'"
+        [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+    </mat-form-field>
+
+    <div class="parentButtonValidateAddUser">
+        <button class="buttonValidateAddUser" mat-button color="primary"
+        (click)="addUser()">Envoyer</button>
+        <div *ngIf="error" class="alertError">{{error}}</div>
+        <mat-spinner *ngIf="loading" diameter="30"></mat-spinner>
+    </div>
+
+</div>

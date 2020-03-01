@@ -1,0 +1,24 @@
+.adduser-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.alertError{
+    color: red;
+}
+
+.parentButtonValidateAddUser{
+    text-align: center;
+}
+
+.ButtonValidateAddUser{
+    display: inline-block;
+    color: green;
+    padding: 0px 10px;
+}
+
+mat-spinner{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

@@ -34,7 +34,9 @@ export class SidenavComponent implements OnInit, OnDestroy {
     this.sidenav.toggle();
   }
 
-  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,private lightmodeService: LightmodeService,private opensidenavService: OpensidenavService,private authenticationService: AuthenticationService,private navbar:NavbarComponent ) {
+  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher,private lightmodeService: LightmodeService,
+            private opensidenavService: OpensidenavService,private authenticationService: AuthenticationService,
+            private navbar:NavbarComponent ) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener); 
@@ -58,7 +60,6 @@ export class SidenavComponent implements OnInit, OnDestroy {
     this.authenticationService.currentUser.subscribe(dataTransmited =>
         this.currentUser = dataTransmited
     );
-    console.log("user : "+JSON.stringify(this.currentUser));
     if (this.currentUser != null && this.currentUser.roles.includes(Role.Admin)){
       this.isAdmin = true;
     }

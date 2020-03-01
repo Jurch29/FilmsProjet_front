@@ -1,0 +1,28 @@
+table{
+    width: 90vh;
+}
+
+mat-icon{
+    cursor: pointer;
+}
+
+mat-icon:hover{
+    color: green;
+}
+
+.validate{
+    margin-left: 15px;
+}
+
+.buttonAddUser{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.adduser{
+    margin:0 auto;
+    display:block;
+    padding: 5px;
+    color: white;
+    background: yellowgreen;
+}

@@ -7,7 +7,6 @@ import { Router } from '@angular/router';
 
 import { User } from '../../../shared/models/user';
 import { AuthenticationService } from '../../service/authentication.service';
-import { UserService } from '../../service/user.service';
 import { LightmodeService } from '../../service/lightmode.service';
 import { OpensidenavService } from '../../service/opensidenav.service';
 import { NumberOfItemsInCartService } from '../../service/number-of-items-in-cart.service';
@@ -30,7 +29,7 @@ export class NavbarComponent implements OnInit {
   showSearchBar: boolean;
   textValue: any;
 
-  constructor(public dialog : MatDialog, private movieService: MovieService,private userService : UserService, private router : Router,
+  constructor(public dialog : MatDialog, private movieService: MovieService, private router : Router,
     private authenticationService : AuthenticationService, private lightmodeService : LightmodeService,
     private opensidenavService : OpensidenavService, private openfilterbarService : OpenfilterbarService, 
     private numberOfItemsService : NumberOfItemsInCartService, private cartService : CartService) {
@@ -84,9 +83,6 @@ export class NavbarComponent implements OnInit {
     });
     if (window.innerWidth < 500) this.SmallSettingsNoButtons = true;
     if (this.currentUser != null) {
-      this.userService.getById(this.currentUser.userId).pipe(first()).subscribe(user => {
-        this.userFromApi = user;
-      });
       this.cartService.getUserCart(this.currentUser.userId)
       .pipe()
       .subscribe(

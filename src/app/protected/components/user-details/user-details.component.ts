@@ -20,6 +20,8 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
   lightMode: boolean;
   loading = false;
   submitted = false;
+  error: any;
+
   lastname = new FormControl('', Validators.required);
   firstname = new FormControl('', Validators.required);
   username = new FormControl('', Validators.required);
@@ -31,9 +33,9 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
     username: this.username,
     email: this.email
   });
-  error: any;
 
-  constructor(public dialog: MatDialog, private userservice: UserService, private authenticationService: AuthenticationService, private lightmodeService: LightmodeService) { }
+  constructor(public dialog: MatDialog, private userservice: UserService, private authenticationService: AuthenticationService,
+              private lightmodeService: LightmodeService) {}
 
   ngOnInit() {
     this.lastname.setValue(this.authenticationService.currentUserValue.userLastname);

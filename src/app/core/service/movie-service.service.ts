@@ -30,9 +30,11 @@ export class MovieService {
   ChangeMoviesToDisplay(MoviesToDisplay: Movie[]) {
     this.MoviesDisplay.next(MoviesToDisplay);
   }
+
   get getMoviesToDisplay(): Movie[] {
     return this.MoviesDisplay.value;
   }
+
   async getAllMovies() {
     if (this.AllMovies.value.length <= 0) {
       const t =await this.http.get<Movie[]>(`${environment.apiUrl}/movie/movies`).toPromise();
@@ -76,4 +78,5 @@ export class MovieService {
   getSynopsis(id: number) {
     return this.http.get<Synopsis>(`${environment.apiUrl}/mdb/synopsis/${id}`);
   }
+  
 }

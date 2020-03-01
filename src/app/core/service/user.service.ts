@@ -4,18 +4,17 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { environment } from '../../../environments/environment';
 import { User } from '../../shared/models/user';
-import { map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
     constructor(private http: HttpClient) { }
 
-    getAll() {
+    getAllUser() {
         return this.http.get<User[]>(`${environment.apiUrl}/user/users`);
     }
 
-    getById(id: number) {
-        return this.http.get<User>(`${environment.apiUrl}/users/${id}`);
+    getUserById(id: number) {
+        return this.http.get<User>(`${environment.apiUrl}/user/user/${id}`);
     }
 
     changeUserDetails(userId : number, userLastname : string, userFirstname : string, userLogin : string, userEmail : string, password : string) {
