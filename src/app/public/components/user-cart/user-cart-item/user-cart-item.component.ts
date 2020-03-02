@@ -12,6 +12,7 @@ import { FormControl, Validators } from '@angular/forms';
   templateUrl: './user-cart-item.component.html',
   styleUrls: ['./user-cart-item.component.css']
 })
+
 export class UserCartItemComponent {
   movieId : number;
   movieTitle : string;
@@ -21,10 +22,12 @@ export class UserCartItemComponent {
   moviePreviewImage = {
     "background-image": ""
   }
+
   @Input()
   cartItem : CartItem;
   @Input()
   cart : UserCartComponent;
+
   countChanger : FormControl = new FormControl('1', [Validators.required, Validators.min(1)]);
 
   constructor(private movieService : MovieService, private cartService : CartService, private authenticationService : AuthenticationService, private numberOfItemService : NumberOfItemsInCartService) {}
@@ -38,7 +41,7 @@ export class UserCartItemComponent {
         this.movieId = movie.movieId;
         this.movieTitle = movie.movieTitle;
         this.unitCost = movie.moviePrice;
-        this.totalCost = this.unitCost * this.numberOfItems;
+        this.totalCost = parseFloat((this.unitCost * this.numberOfItems).toFixed(2));
         this.moviePreviewImage["background-image"] = "url(" + movie.movieImagePath + ")";
         this.cart.addToTotalCost(this.totalCost);
       },
@@ -75,11 +78,9 @@ export class UserCartItemComponent {
   }
 
   addItemUpdate() {
-    if (this.authenticationService.currentUserValue == undefined) {
-      this.cartItem.movieUserCartCount += parseInt(this.countChanger.value);
-    }
+    this.cartItem.movieUserCartCount += parseInt(this.countChanger.value);
     this.numberOfItems = this.cartItem.movieUserCartCount;
-    this.totalCost = this.numberOfItems * this.unitCost;
+    this.totalCost = parseFloat((this.unitCost * this.numberOfItems).toFixed(2));
     this.cart.addToTotalCost(this.unitCost * parseInt(this.countChanger.value));
     this.numberOfItemService.ChangeNumberOfItemsInCartMessage(this.numberOfItemService.getNumberOfItemsInCart + parseInt(this.countChanger.value));
   }
@@ -118,11 +119,9 @@ export class UserCartItemComponent {
 
   removeItemUpdate() {
     if (this.numberOfItems != 1 && this.numberOfItems != parseInt(this.countChanger.value)) {
-      if (this.authenticationService.currentUserValue == undefined) {
-        this.cartItem.movieUserCartCount -= parseInt(this.countChanger.value);
-      }
+      this.cartItem.movieUserCartCount -= parseInt(this.countChanger.value);
       this.numberOfItems = this.cartItem.movieUserCartCount;
-      this.totalCost = this.numberOfItems * this.unitCost;
+      this.totalCost = parseFloat((this.unitCost * this.numberOfItems).toFixed(2));
       this.cart.removeToTotalCost(this.unitCost * parseInt(this.countChanger.value));
       this.numberOfItemService.ChangeNumberOfItemsInCartMessage(this.numberOfItemService.getNumberOfItemsInCart - parseInt(this.countChanger.value));
     } else {
