@@ -88,3 +88,11 @@
 .rating-star{
     display: inline-block;
 }
+.NoMovies{
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  color: black;
+}
+
+.NoMovies.dark{
+    color: white;
+} 
