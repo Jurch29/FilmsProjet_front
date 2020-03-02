@@ -86,7 +86,7 @@ export class UserCartComponent {
     this.totalCost -= cost;
   }
 
-  removeItem() {
+  emptyCart() {
     let user_id : number;
     if (this.authenticationService.currentUserValue) {
       user_id = this.authenticationService.currentUserValue.userId;

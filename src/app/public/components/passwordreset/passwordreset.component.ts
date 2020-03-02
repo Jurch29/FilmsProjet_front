@@ -33,8 +33,7 @@ export class PasswordresetComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute, private userservice: UserService,
               private authenticationService: AuthenticationService, private lightmodeService: LightmodeService,
-              private router: Router,) 
-  { 
+              private router: Router) { 
     this.activatedRoute.queryParams.subscribe(params => {
       this.token = params['token'];
       this.email = params['user_email'];
