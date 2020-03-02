@@ -4,7 +4,7 @@
     <div class="parentCost">
       <span class="cost">Coût total : {{totalCost}} €</span>
     </div>
-    <button mat-raised-button color="warn" class="clearCart" (click)="removeItem()">Vider le panier<mat-icon>remove_shopping_cart</mat-icon></button>
+    <button mat-raised-button color="warn" class="clearCart" (click)="emptyCart()">Vider le panier<mat-icon>remove_shopping_cart</mat-icon></button>
     <button *ngIf="getUser" mat-raised-button color="primary" class="BuyButton" (click)="buy()"><span>Payer</span>
       <mat-icon>payment</mat-icon>
     </button>
