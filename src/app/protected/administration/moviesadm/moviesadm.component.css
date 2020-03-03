@@ -58,3 +58,33 @@ table {
     color: white;
     background: yellowgreen;
 }
+
+.leftList{
+  margin-left: 5%;
+}
+
+.rightList{
+  margin-left: 15%;
+}
+
+.mat-list-item{
+  margin-top: 20px;
+}
+
+.LastListItem{
+  margin-bottom: 15px;
+}
+
+.buttonSave{
+  margin-top: 15px;
+  color: green;
+}
+
+.buttonDelete{
+  margin-top: 30px;
+  color: red;
+}
+
+.actionButton{
+    margin-left: 5%;
+}
