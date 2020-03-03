@@ -8,7 +8,6 @@ import { AuthenticationService } from 'src/app/core/service/authentication.servi
 import { AdministrationService } from 'src/app/core/service/administration.service';
 import { ChangepasswordadmComponent } from '../changepasswordadm/changepasswordadm.component';
 import { AdduseradmComponent } from '../adduseradm/adduseradm.component';
-import { DataSource } from '@angular/cdk/table';
 
 export interface UserElement {
   userFirstname: string;
