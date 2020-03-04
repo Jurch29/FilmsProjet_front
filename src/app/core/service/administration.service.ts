@@ -51,8 +51,8 @@ export class AdministrationService {
     return this.http.post<Movie>(`${environment.apiUrl}/administration/updatemovie`, { movieTitle, moviePrice, movieDate, movieImagePath, movieTrailerPath, movieDuration });
   }
 
-  addMovie(movie, actors, authors, categories) {
-    return this.http.post<any>(`${environment.apiUrl}/administration/addmovie`, { movie, actors, authors, categories });
+  addMovie(movie) {
+    return this.http.post<any>(`${environment.apiUrl}/administration/addmovie`, { movie });
   }
 
 }

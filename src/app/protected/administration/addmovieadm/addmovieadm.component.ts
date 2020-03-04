@@ -89,8 +89,11 @@ export class AddmovieadmComponent implements OnInit {
     movie.movieDate = this.date.value;
     movie.movieDuration = this.duration.value;
     movie.movieTrailerPath = this.trailer.value;
+    movie.actors = this.actorsControl.value;
+    movie.authors = this.authorsControl.value;
+    movie.categories = this.categoreiesControl.value;
 
-    this.AdministrationService.addMovie(movie, this.actorsControl.value, this.authorsControl.value, this.categoreiesControl.value).pipe(first())
+    this.AdministrationService.addMovie(movie).pipe(first())
     .subscribe(
       data => {
         console.log(data);
