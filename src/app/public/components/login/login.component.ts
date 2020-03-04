@@ -9,6 +9,7 @@ import { CartService } from 'src/app/core/service/cart.service';
 import { NumberOfItemsInCartService } from 'src/app/core/service/number-of-items-in-cart.service';
 import { UserActivation } from 'src/app/shared/models/user-activation';
 import { UserService } from 'src/app/core/service/user.service';
+import { UserCartComponent } from '../user-cart/user-cart.component';
 
 @Component({
   selector: 'app-login',
