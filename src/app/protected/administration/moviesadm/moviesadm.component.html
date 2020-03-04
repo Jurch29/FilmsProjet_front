@@ -68,11 +68,11 @@
           </mat-list>
           <div class="actionButton">
               <div class="saveMovie">
-                  <button mat-raised-button class="buttonSave" (click)="saveMovie(i)">Sauvegarder</button>
+                  <button mat-raised-button class="buttonSave" (click)="saveMovie(paginator.pageIndex * paginator.pageSize + i)">Sauvegarder</button>
               </div>
     
               <div class="deleteMovie">
-                  <button mat-raised-button class="buttonDelete" (click)="deleteMovie(i)">Supprimer</button>
+                  <button mat-raised-button class="buttonDelete" (click)="deleteMovie(paginator.pageIndex * paginator.pageSize + i)">Supprimer</button>
               </div>
           </div>
         

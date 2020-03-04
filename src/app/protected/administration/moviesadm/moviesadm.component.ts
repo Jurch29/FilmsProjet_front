@@ -102,7 +102,8 @@ export class MoviesadmComponent implements OnInit {
         // this.dataSource.data.splice(index, 1);
         // this.dataSource._updateChangeSubscription();
         //Par défaut on fait un reolad de la page si pas de solution
-        //window.location.reload();
+        console.log(data);
+        window.location.reload();
       },
       error => {
         console.log(error);
