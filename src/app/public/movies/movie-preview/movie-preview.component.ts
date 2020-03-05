@@ -40,6 +40,8 @@ export class MoviePreviewComponent implements OnInit,OnDestroy {
   }
 
   formatDate(strDate : string) {
+    var re = /0000/gi; 
+    strDate = strDate.replace(re, "00:00");
     let date = new Date(strDate);
     let formattedDate =this.datepipe.transform(date, 'dd-MM-yyyy');
     return formattedDate;

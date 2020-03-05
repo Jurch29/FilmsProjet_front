@@ -2,6 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LightmodeService } from 'src/app/core/service/lightmode.service';
 import { MovieService } from 'src/app/core/service/movie-service.service';
 import { first } from 'rxjs/operators';
+import { DatePipe } from '@angular/common';
+import { Movie } from 'src/app/shared/models/movie';
 
 @Component({
   selector: 'app-home',
@@ -14,8 +16,9 @@ export class HomeComponent implements OnInit,OnDestroy {
   nbMovies :number;
   nbActors :number;
   nbAutors :number;
-
-  constructor(private lightmodeService: LightmodeService,private movieService : MovieService) {}
+  movies : Movie[];
+  
+  constructor(private lightmodeService: LightmodeService,private movieService : MovieService,public datepipe: DatePipe) {}
 
   ngOnInit(){
     this.subscriptionlightMode =  this.lightmodeService.getLightModeEventMessage().subscribe(value =>
@@ -34,6 +37,18 @@ export class HomeComponent implements OnInit,OnDestroy {
     })
   }
 
+  formatDate(strDate : string) {
+    var re = /0000/gi; 
+    strDate = strDate.replace(re, "00:00");
+    let date = new Date(strDate);
+    let formattedDate =this.datepipe.transform(date, 'dd-MM-yyyy');
+    return formattedDate;
+  }
+  image(url : string) {
+    return {
+      "background-image": "url(" + url + ")"
+    };
+  }
   ngOnDestroy(){
     this.subscriptionlightMode.unsubscribe();
   }

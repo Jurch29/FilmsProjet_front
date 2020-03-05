@@ -70,11 +70,17 @@ export class UsersadmComponent implements OnInit {
       });
   }
 
-  formatDate(strDate : string) {
-    let date = new Date(strDate);
-    let formattedDate =this.datepipe.transform(date, 'dd-MM-yyyy HH:ss');
-    return formattedDate;
+  
+  formatDate(srtdate: string) {
+    var re = /0000/gi; 
+    if(srtdate !=null){
+      let date = new Date(srtdate.replace(re, "00:00"));
+      let formattedDate =this.datepipe.transform(date, 'dd-MM-yyyy');
+      return formattedDate;
+    }
+    return null;
   }
+
 
   delete(line){
     let id = this.usersid[line];

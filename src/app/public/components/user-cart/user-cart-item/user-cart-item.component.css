@@ -5,8 +5,11 @@
     text-align: left;
 }
 .panel{
-    background-color: lightgray !important;
+    background-color: lightgray ;
     box-shadow: 0px 0px 10px;
+}
+.header{
+    background-color: lightgray !important;
 }
 .cover {
     background-size: 134px 196px;
@@ -16,22 +19,22 @@
     box-shadow: 0px 0px 10px;
     opacity: 1;
 }
+.countChanger{
+    border:none ;
+    background-color: lightgray;
+    border-radius: 5px ;
+    margin: 5px ;
+    vertical-align: middle ;
+    width: 35px ;
+    height: 35px;
+    text-align: center;
+    font-size: 15px;
+    color:black;
+}
 .inlineClass{
     display: inline-block;
     margin-right: 10px;
 }
 .description div{
     margin-right: 10px;
-}
-
-.mat-input-element{
-    vertical-align: middle !important;
-    width: 35px !important;
-    height: 35px !important;
-    text-align: center !important;
-    background-color: white !important;
-}
-
-input.mat-input-element {
-    margin: 0px !important;
 }

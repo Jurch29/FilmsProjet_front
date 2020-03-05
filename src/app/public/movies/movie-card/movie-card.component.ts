@@ -72,11 +72,14 @@ export class MovieCardComponent implements OnInit,OnDestroy{
       });
     this.infobulecontainer = container;
   }
-  
-  formatDate(date : Date) {
-    let formattedDate =this.datepipe.transform(date, 'dd-MMMM-yyyy');
+ 
+  formatDate(srtdate: Date) {
+    var re = /0000/gi; 
+    let date = new Date(srtdate.toString().replace(re, "00:00"));
+    let formattedDate =this.datepipe.transform(date, 'dd-MM-yyyy');
     return formattedDate;
   }
+
 
   addToCart(){
     let user_id : number;

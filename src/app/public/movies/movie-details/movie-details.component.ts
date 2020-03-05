@@ -16,6 +16,8 @@ import { StarRatingComponent } from 'ng-starrating';
 import { HttpClient } from '@angular/common/http';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { DatePipe } from '@angular/common';
+import { Movie } from 'src/app/shared/models/movie';
+import { User } from 'src/app/shared/models/user';
 
 @Component({
   selector: 'app-movie-details',
@@ -35,12 +37,13 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
   private trailers: Trailer[];
   subscriptionlightMode: any;
   srcResult: any = null;
-  movie: any;
+  movie: Movie;
   safeContent: any;
   ratingValueUsers: number;
   readonly: boolean;
   ratingValueCritique: number;
   DidBuy: boolean;
+  user : User;
   ratingValueCurrentUser: number;
   Comments: any[] = [
     {
@@ -49,7 +52,7 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
       ImageComment: []
     },
     {
-      Username: "pierre",
+      Username: "julien",
       UserComment: "c",
       ImageComment: [
         {
@@ -79,7 +82,6 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
       ]
     }
   ];
-
   constructor(private _ngZone: NgZone, private httpClient: HttpClient, private lightmodeService: LightmodeService, private authenticationService: AuthenticationService,
     private cartService: CartService, private numberofitemsincartService: NumberOfItemsInCartService,
     private sanitizer: DomSanitizer, private movieService: MovieService, private route: ActivatedRoute, public datepipe: DatePipe) { }
@@ -96,6 +98,8 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
     this.subscriptionlightMode = this.lightmodeService.getLightModeEventMessage().subscribe(value =>
       this.lightMode = value
     );
+    this.user =this.authenticationService.currentUserValue;
+    console.log(this.user)
   }
 
   ngOnDestroy() {
@@ -110,17 +114,21 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
     this.actors = this.movie.actors;
     this.realisators = this.movie.authors;
     this.categories = this.movie.categories;
-    this.trailer = this.movie.movieTrailerPath;
     this.readonly = true;
     this.DidBuy = true;
-    //this.ratingValueUsers   not set for now but to do
-    //this.ratingValueCurrentUser = 2;   not set for now but to do
+    this.id = this.movie.movieId;
     this.safeContent = this.sanitizer.bypassSecurityTrustResourceUrl(this.movie.movieTrailerPath);
-    this.movieService.getSynopsis(this.movie.movieId).pipe(first()).subscribe(data => this.synopsis = data.movieDescription);
+    this.movieService.getSynopsis(this.movie.movieId).pipe(first()).subscribe(data => {
+       this.synopsis = data.movieDescription
+    }, error =>{
+      console.log(error);
+    });
   }
 
-  formatDate(date: Date) {
-    let formattedDate = this.datepipe.transform(date, 'dd MMMM yyyy');
+  formatDate(srtdate: Date) {
+    var re = /0000/gi; 
+    let date = new Date(srtdate.toString().replace(re, "00:00"));
+    let formattedDate =this.datepipe.transform(date, 'dd-MM-yyyy');
     return formattedDate;
   }
 
@@ -150,9 +158,6 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
     this.ratingValueCurrentUser = $event.newValue;
   }
 
-  trailer(trailer: string) {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(trailer);
-  }
   triggerResize() {
     this._ngZone.onStable
       .pipe(take(1))

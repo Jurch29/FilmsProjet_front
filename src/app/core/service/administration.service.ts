@@ -3,13 +3,14 @@ import { User } from 'src/app/shared/models/user';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Movie } from 'src/app/shared/models/movie';
+import { DatePipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdministrationService {
   
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,public datepipe: DatePipe) { }
 
   updateUser(user : User) {
     let username = user.userLastname;
@@ -44,11 +45,17 @@ export class AdministrationService {
   updateMovie(updatedMovie: Movie) {
     let movieTitle = updatedMovie.movieTitle;
     let moviePrice = updatedMovie.moviePrice;
-    let movieDate = updatedMovie.movieDate;
+    let movieDate = this.formatDate(updatedMovie.movieDate);
     let movieImagePath = updatedMovie.movieImagePath;
     let movieTrailerPath = updatedMovie.movieTrailerPath;
     let movieDuration = updatedMovie.movieDuration;
     return this.http.post<Movie>(`${environment.apiUrl}/administration/updatemovie`, { movieTitle, moviePrice, movieDate, movieImagePath, movieTrailerPath, movieDuration });
+  }
+  formatDate(srtdate: Date) {
+    var re = /0000/gi; 
+    let date = new Date(srtdate.toString().replace(re, "00:00"));
+    let formattedDate =new Date(this.datepipe.transform(date, 'dd-MM-yyyy'));
+    return formattedDate;
   }
 
   addMovie(movie) {

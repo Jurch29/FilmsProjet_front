@@ -1,6 +1,6 @@
 <div class="containerItemCart">
     <mat-expansion-panel [expanded]=false class="panel">
-        <mat-expansion-panel-header>
+        <mat-expansion-panel-header class="header">
             <mat-panel-title>
                 {{movieTitle}}
             </mat-panel-title>
@@ -13,16 +13,18 @@
         <div class="cover inlineClass" [ngStyle]="moviePreviewImage">
         </div>
         <div class="inlineClass">
+        <div >
             Nombre d'unités : {{numberOfItems}}
         </div>
-        <div class="inlineClass">
+        <div >
             Cout unitaire : {{unitCost}}
         </div>
-        <div class="inlineClass">
+        <div >
             Cout total : {{totalCost}}
         </div>
+     </div>
     </mat-expansion-panel>
-    <button mat-raised-button color="primary" (click)="addItem()"><mat-icon>add_shopping_cart</mat-icon></button>
-    <input class="countChanger" matInput [formControl]="countChanger" required />
     <button mat-raised-button color="warn" (click)="removeItem()"><mat-icon>remove_shopping_cart</mat-icon></button>
+    <input class="countChanger" matInput [formControl]="countChanger" required />
+    <button mat-raised-button color="primary" (click)="addItem()"><mat-icon>add_shopping_cart</mat-icon></button>
 </div>
