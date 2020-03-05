@@ -225,7 +225,6 @@
     margin-right: 50px;
   }
   .buttonsActionsCommentUser {
-    width: 285px;
     text-align: right;
   }
   .actionButtonsContaiener {
@@ -302,6 +301,10 @@
     height: 130px;
     width: 130px;
   }
+  .Images button{
+    background-color: lightgray;
+    color: black;
+  }
   
   .icones {
     margin-left: 5px;
@@ -341,9 +344,6 @@
       line-height: 20px;
       font-size: 12px;
       padding: 0px 5px;
-    }
-    .buttonsActionsCommentUser {
-      width: 285px;
     }
     .actionButtonsContaiener {
       width: 85vw;
