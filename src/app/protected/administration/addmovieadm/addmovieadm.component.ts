@@ -30,6 +30,7 @@ export class AddmovieadmComponent implements OnInit {
   date = new FormControl('', [Validators.required]);
   duration = new FormControl('', Validators.required);
   trailer = new FormControl('', Validators.required);
+  synopsis = new FormControl('', Validators.required);
 
   error: any;
   submitted = false;
@@ -40,7 +41,8 @@ export class AddmovieadmComponent implements OnInit {
     image: this.image,
     date: this.date,
     duration: this.duration,
-    trailer: this.trailer
+    trailer: this.trailer,
+    synopsis: this.synopsis
   });
 
   constructor(private movieService: MovieService,public dialogRef: MatDialogRef<AddmovieadmComponent>,
@@ -93,10 +95,11 @@ export class AddmovieadmComponent implements OnInit {
     movie.authors = this.authorsControl.value;
     movie.categories = this.categoreiesControl.value;
 
-    this.AdministrationService.addMovie(movie).pipe(first())
+    this.AdministrationService.addMovie(movie,this.synopsis.value).pipe(first())
     .subscribe(
       data => {
         console.log(data);
+        this.dialogRef.close("OK");
       },
       error => {
         console.log(error);

@@ -43,13 +43,14 @@ export class AdministrationService {
   }
 
   updateMovie(updatedMovie: Movie) {
+    let movieId = updatedMovie.movieId;
     let movieTitle = updatedMovie.movieTitle;
     let moviePrice = updatedMovie.moviePrice;
-    let movieDate = this.formatDate(updatedMovie.movieDate);
+    let movieDate = updatedMovie.movieDate;
     let movieImagePath = updatedMovie.movieImagePath;
     let movieTrailerPath = updatedMovie.movieTrailerPath;
     let movieDuration = updatedMovie.movieDuration;
-    return this.http.post<Movie>(`${environment.apiUrl}/administration/updatemovie`, { movieTitle, moviePrice, movieDate, movieImagePath, movieTrailerPath, movieDuration });
+    return this.http.post<Movie>(`${environment.apiUrl}/administration/updatemovie`, { movieId, movieTitle, moviePrice, movieDate, movieImagePath, movieTrailerPath, movieDuration });
   }
   formatDate(srtdate: Date) {
     var re = /0000/gi; 
@@ -58,8 +59,8 @@ export class AdministrationService {
     return formattedDate;
   }
 
-  addMovie(movie) {
-    return this.http.post<any>(`${environment.apiUrl}/administration/addmovie`, { movie });
+  addMovie(movie,synopsis) {
+    return this.http.post<any>(`${environment.apiUrl}/administration/addmovie`, { movie,synopsis });
   }
 
 }

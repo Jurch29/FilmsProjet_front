@@ -50,7 +50,7 @@ export class MoviesadmComponent implements OnInit {
       this.movieid = this.movies.map(({ movieId }) => movieId);
       this.title = this.movies.map(({ movieTitle }) => movieTitle);
       this.price = this.movies.map(({ moviePrice }) => moviePrice);
-      this.date = this.movies.map(({ movieDate }) =>this.formatDate( new Date(movieDate)));
+      this.date = this.movies.map(({ movieDate }) =>new Date(movieDate));
       this.image = this.movies.map(({ movieImagePath }) => movieImagePath);
       this.trailer = this.movies.map(({ movieTrailerPath }) => movieTrailerPath);
       this.duration = this.movies.map(({ movieDuration }) => movieDuration);
@@ -74,13 +74,13 @@ export class MoviesadmComponent implements OnInit {
 
   saveMovie(line){
     let updatedMovie: Movie = new Movie();
-
+    updatedMovie.movieId = this.movieid[line];
     updatedMovie.movieTitle = this.title[line];
-    updatedMovie.moviePrice = this.price[line];
-    updatedMovie.movieDate = this.formatDate(this.date[line]);
+    updatedMovie.moviePrice = this.price[line].toString();
+    updatedMovie.movieDate = this.date[line];
     updatedMovie.movieImagePath = this.image[line];
     updatedMovie.movieTrailerPath = this.trailer[line];
-    updatedMovie.movieDuration = this.duration[line];
+    updatedMovie.movieDuration = this.duration[line].toString();
 
     this.AdministrationService.updateMovie(updatedMovie).pipe(first()).subscribe(
       data => {
