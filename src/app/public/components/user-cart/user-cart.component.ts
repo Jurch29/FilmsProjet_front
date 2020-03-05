@@ -1,23 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthenticationService } from 'src/app/core/service/authentication.service';
 import { User } from 'src/app/shared/models/user';
 import { NavbarComponent } from 'src/app/core/components/navbar/navbar.component';
 import { CartService } from 'src/app/core/service/cart.service';
 import { NumberOfItemsInCartService } from 'src/app/core/service/number-of-items-in-cart.service';
 import { CartItem } from 'src/app/shared/models/cart-item';
+import { LightmodeService } from 'src/app/core/service/lightmode.service';
 
 @Component({
   selector: 'app-user-cart',
   templateUrl: './user-cart.component.html',
   styleUrls: ['./user-cart.component.css']
 })
-export class UserCartComponent {
+export class UserCartComponent implements OnInit,OnDestroy {
   private cart : CartItem[];
   items : boolean = false;
   currentUser : User;
   private totalCost : number;
+  subscriptionlightMode: any;
+  lightMode: boolean;
   
-  constructor(private navbar : NavbarComponent, private authenticationService : AuthenticationService,
+  constructor(private lightmodeService: LightmodeService,private navbar : NavbarComponent, private authenticationService : AuthenticationService,
               private cartService : CartService, private numberofitemsincartService : NumberOfItemsInCartService) {}
 
   ngOnInit() {
@@ -49,6 +52,12 @@ export class UserCartComponent {
           );
         }
     });
+    this.subscriptionlightMode =  this.lightmodeService.getLightModeEventMessage().subscribe(value =>
+      this.lightMode = value
+    ); 
+  }
+  ngOnDestroy(){
+    this.subscriptionlightMode.unsubscribe();
   }
 
   buy() {

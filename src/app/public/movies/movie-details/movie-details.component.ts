@@ -17,6 +17,7 @@ import { HttpClient } from '@angular/common/http';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { DatePipe } from '@angular/common';
 import { Movie } from 'src/app/shared/models/movie';
+import { User } from 'src/app/shared/models/user';
 
 @Component({
   selector: 'app-movie-details',
@@ -42,6 +43,7 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
   readonly: boolean;
   ratingValueCritique: number;
   DidBuy: boolean;
+  user : User;
   ratingValueCurrentUser: number;
   Comments: any[] = [
     {
@@ -80,8 +82,6 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
       ]
     }
   ];
-  user: import("/Users/pierrebrunel/Documents/Cours/WorkspaceNTiersJEE/Projet/FilmsProjet_front/src/app/shared/models/user").User;
-
   constructor(private _ngZone: NgZone, private httpClient: HttpClient, private lightmodeService: LightmodeService, private authenticationService: AuthenticationService,
     private cartService: CartService, private numberofitemsincartService: NumberOfItemsInCartService,
     private sanitizer: DomSanitizer, private movieService: MovieService, private route: ActivatedRoute, public datepipe: DatePipe) { }

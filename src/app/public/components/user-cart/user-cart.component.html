@@ -1,4 +1,4 @@
-<div class="cartContainer">
+<div class="cartContainer"  [class.dark]="!lightMode">
   <app-user-cart-item *ngFor="let item of this.cart" [cartItem]="item" [cart]="this"></app-user-cart-item>
   <div *ngIf="items">
     <div class="parentCost">
