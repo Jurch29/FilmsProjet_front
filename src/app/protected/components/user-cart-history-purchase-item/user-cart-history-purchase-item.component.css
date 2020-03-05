@@ -1,6 +1,14 @@
 .panel{
     margin-top: 10px;
+    height: 100%;
+}
+.header, .description{
+    margin:2px 0px;
 }
 .header{
     color:black !important;
+}
+.title{
+    margin-top: auto;
+    margin-bottom: auto;
 }

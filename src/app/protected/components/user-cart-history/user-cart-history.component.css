@@ -30,11 +30,13 @@
 .mat-expansion-panel-header-description div{
     padding-right: 10px;
 }
+@media(max-width:930px){
+    .cartContainerHistory{
+        width: 70vw;
+    }
+}
 @media(max-width:600px){
     .cartContainerHistory{
         width: 100vw;
-    }
-    .mat-expansion-panel-header{
-        height: 35px !important;
     }
 }
