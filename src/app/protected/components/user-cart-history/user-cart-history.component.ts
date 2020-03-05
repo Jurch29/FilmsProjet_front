@@ -18,7 +18,6 @@ export class UserCartHistoryComponent {
     .pipe()
     .subscribe(
       data => {
-        console.log(data);
         this.orders = data
       },
       error =>  {

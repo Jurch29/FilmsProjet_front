@@ -1,1 +1,9 @@
-<p>user-comments-history works!</p>
+<div class="commentContainerHistory">
+    <div *ngIf="this.comments != undefined && this.comments.length != 0">
+        <h1>Commentaires :</h1>
+        <app-user-comment-history-comment *ngFor="let comment of comments" [comment]="comment"></app-user-comment-history-comment>
+    </div>
+    <div *ngIf="this.comments == undefined || this.comments.length == 0">
+        <p>Aucun commentaire pour le moment</p>
+    </div>
+</div>

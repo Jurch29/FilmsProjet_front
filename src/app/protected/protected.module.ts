@@ -10,10 +10,11 @@ import { UserCartHistoryPurchaseComponent } from './components/user-cart-history
 import { UserCartHistoryPurchaseItemComponent } from './components/user-cart-history-purchase-item/user-cart-history-purchase-item.component';
 import { PasswordCheckComponent } from './components/password-check/password-check.component';
 import { AdministrationModule } from './administration/administration.module';
+import { UserCommentHistoryCommentComponent } from './components/user-comment-history-comment/user-comment-history-comment.component';
 
 
 @NgModule({
-  declarations: [UserCartHistoryComponent, UserDetailsComponent, UserCommentHistoryComponent, ChangePasswordComponent, UserCartHistoryPurchaseComponent, UserCartHistoryPurchaseItemComponent, PasswordCheckComponent],
+  declarations: [UserCartHistoryComponent, UserDetailsComponent, UserCommentHistoryComponent, ChangePasswordComponent, UserCartHistoryPurchaseComponent, UserCartHistoryPurchaseItemComponent, PasswordCheckComponent, UserCommentHistoryCommentComponent],
   imports: [
     SharedModule,
     ProtectedRoutingModule,
