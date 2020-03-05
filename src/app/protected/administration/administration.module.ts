@@ -7,9 +7,10 @@ import { MoviesadmComponent } from './moviesadm/moviesadm.component';
 import { ChangepasswordadmComponent } from './changepasswordadm/changepasswordadm.component';
 import { AdduseradmComponent } from './adduseradm/adduseradm.component';
 import { AddmovieadmComponent } from './addmovieadm/addmovieadm.component';
+import { DatamovieadmComponent } from './datamovieadm/datamovieadm.component';
 
 @NgModule({
-  declarations: [AdministrationComponent, UsersadmComponent, MoviesadmComponent, ChangepasswordadmComponent, AdduseradmComponent, AddmovieadmComponent],
+  declarations: [AdministrationComponent, UsersadmComponent, MoviesadmComponent, ChangepasswordadmComponent, AdduseradmComponent, AddmovieadmComponent, DatamovieadmComponent],
   imports: [
     CommonModule,
     SharedModule
