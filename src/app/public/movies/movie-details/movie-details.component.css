@@ -230,6 +230,9 @@
   .buttonsActionsCommentUser {
     text-align: center;
   }
+  .buttonsActionsCommentUser button{
+    margin-top: 10px;
+  }
   .actionButtonsContaiener {
     width: 500px;
     margin-left: auto;
@@ -320,6 +323,7 @@
   .actionContainer p {
     width: 100%;
   }
+  
   .Addcomment{
     margin-left: 0px;
   }

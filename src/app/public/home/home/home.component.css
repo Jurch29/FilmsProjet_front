@@ -193,3 +193,14 @@
     color: #5b5b5b;
     display: inline;
 }
+@media(max-width:600px){
+    .bottomRow .bottomRowHeader{
+        font-size: 15px;
+    }
+}
+@media(max-width:400px){
+    .bottomRow{
+        margin: 0px;
+        margin-bottom: 50px;
+    }
+}

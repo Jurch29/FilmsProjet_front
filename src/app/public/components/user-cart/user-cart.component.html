@@ -1,10 +1,10 @@
 <div class="cartContainer"  [class.dark]="!lightMode">
   <app-user-cart-item *ngFor="let item of this.cart" [cartItem]="item" [cart]="this"></app-user-cart-item>
   <div class="actionsButtons" *ngIf="items">
+    <button mat-raised-button color="warn" class="clearCart" (click)="emptyCart()">Vider le panier<mat-icon>remove_shopping_cart</mat-icon></button>
     <div class="parentCost">
       <span class="cost">Coût total : {{totalCost.toFixed(2)}} €</span>
     </div>
-    <button mat-raised-button color="warn" class="clearCart" (click)="emptyCart()">Vider le panier<mat-icon>remove_shopping_cart</mat-icon></button>
     <button *ngIf="getUser" mat-raised-button color="primary" class="BuyButton" (click)="buy()"><span>Payer</span>
       <mat-icon>payment</mat-icon>
     </button>
