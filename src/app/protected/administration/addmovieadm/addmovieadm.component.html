@@ -1,0 +1,69 @@
+<div class="addmovie-container">
+
+    <mat-form-field>
+        <input matInput placeholder="Titre :" [formControl]="title" required>
+        <mat-error *ngIf="title.errors?.required">Champ requis</mat-error>
+        <mat-error *ngIf="title.errors"></mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="Prix :" [formControl]="price" required>
+        <mat-error *ngIf="price.errors?.required">Champ requis</mat-error>
+        <mat-error *ngIf="price.errors"></mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="Image URL :" [formControl]="image" required>
+        <mat-error *ngIf="image.errors?.required">Champ requis</mat-error>
+        <mat-error *ngIf="image.errors"></mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input [matDatepicker]="picker" matInput placeholder="Date de sortie :" [formControl]="date" required>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="date.errors?.required">Champ requis</mat-error>
+        <mat-error *ngIf="date.errors"></mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="Durée :" [formControl]="duration" required>
+        <mat-error *ngIf="duration.errors?.required">Champ requis</mat-error>
+        <mat-error *ngIf="duration.errors"></mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput placeholder="Trailer URL :" [formControl]="trailer" required>
+        <mat-error *ngIf="trailer.errors?.required">Champ requis</mat-error>
+        <mat-error *ngIf="trailer.errors"></mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Acteurs</mat-label>
+        <mat-select [formControl]="actorsControl" multiple>
+          <mat-option *ngFor="let actor of actors" [value]="actor">{{actor.actorLastName}} {{actor.actorFirstName}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Auteurs</mat-label>
+        <mat-select [formControl]="authorsControl" multiple>
+          <mat-option *ngFor="let author of authors" [value]="author">{{author.authorLastName}} {{author.authorFirstName}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Categories</mat-label>
+        <mat-select [formControl]="categoreiesControl" multiple>
+          <mat-option *ngFor="let category of categories" [value]="category">{{category.categoryTitle}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <div class="parentButtonValidateAddMovie">
+        <button class="buttonValidateAddMovie" mat-button color="primary"
+        (click)="addMovie()">Envoyer</button>
+        <div *ngIf="error" class="alertError">{{error}}</div>
+        <mat-spinner *ngIf="loading" diameter="30"></mat-spinner>
+    </div>
+
+</div>

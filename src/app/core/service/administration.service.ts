@@ -57,4 +57,9 @@ export class AdministrationService {
     let formattedDate =new Date(this.datepipe.transform(date, 'dd-MM-yyyy'));
     return formattedDate;
   }
+
+  addMovie(movie) {
+    return this.http.post<any>(`${environment.apiUrl}/administration/addmovie`, { movie });
+  }
+
 }

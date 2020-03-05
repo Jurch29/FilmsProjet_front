@@ -2,10 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MovieService } from 'src/app/core/service/movie-service.service';
 import { Movie } from 'src/app/shared/models/movie';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatPaginator, MatTableDataSource, MatDialog } from '@angular/material';
 import { DatePipe } from '@angular/common';
 import { AdministrationService } from 'src/app/core/service/administration.service';
 import { first } from 'rxjs/operators';
+import { AddmovieadmComponent } from '../addmovieadm/addmovieadm.component';
 
 @Component({
   selector: 'app-moviesadm',
@@ -39,7 +40,8 @@ export class MoviesadmComponent implements OnInit {
   columnsToDisplay = ['ids', 'movies'];
   expandedElement: MovieElement | null;
 
-  constructor(private movieService: MovieService, public datepipe: DatePipe, private AdministrationService: AdministrationService) { }
+  constructor(private movieService: MovieService, public datepipe: DatePipe, private AdministrationService: AdministrationService,
+              public dialog: MatDialog) { }
 
   ngOnInit() {
     this.movieService.getAllMovies().then(data=>{
@@ -59,7 +61,15 @@ export class MoviesadmComponent implements OnInit {
   }
 
   addmovie(){
-    console.log("TODO");
+    let dialogRef;
+    dialogRef = this.dialog.open(AddmovieadmComponent, {
+        width: '380px'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      //pareil
+      if (result==="ok")
+        window.location.reload();
+    });
   }
 
   saveMovie(line){
@@ -102,7 +112,8 @@ export class MoviesadmComponent implements OnInit {
         // this.dataSource.data.splice(index, 1);
         // this.dataSource._updateChangeSubscription();
         //Par défaut on fait un reolad de la page si pas de solution
-        //window.location.reload();
+        console.log(data);
+        window.location.reload();
       },
       error => {
         console.log(error);

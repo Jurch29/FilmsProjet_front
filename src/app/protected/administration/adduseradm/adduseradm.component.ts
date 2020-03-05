@@ -40,8 +40,8 @@ export class AdduseradmComponent implements OnInit {
       this.submitted = false;
       return;
     }
-    let newdUser : User = new User();
 
+    let newdUser : User = new User();
     newdUser.userFirstname = this.firstname.value;
     newdUser.userLastname = this.lastname.value;
     newdUser.userLogin = this.login.value;

@@ -63,7 +63,13 @@ export class MovieCardComponent implements OnInit,OnDestroy{
     this.realisators = movie.authors;
     this.categories = movie.categories;
     this.safeContent =  this.sanitizer.bypassSecurityTrustResourceUrl(this.trailer);
-    this.movieService.getSynopsis(movie.movieId).pipe(first()).subscribe(data => this.synopsis = data.movieDescription);
+    this.movieService.getSynopsis(movie.movieId).pipe(first()).subscribe(
+      data => {
+        this.synopsis = data.movieDescription
+      },
+      error => {
+        console.log(error)
+      });
     this.infobulecontainer = container;
   }
  

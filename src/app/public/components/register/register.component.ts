@@ -110,15 +110,7 @@ export class RegisterComponent implements OnInit,OnDestroy {
           this.error = undefined;
         },
         error => {
-          if (error.username && error.email) {
-            this.error = 'Nom d\'utilisateur et email déjà utilisés';
-          }
-          else if (error.username) {
-            this.error = 'Nom d\'utilisateur déjà utilisé';
-          }
-          else if (error.email) {
-            this.error = 'Email déjà utilisé';
-          }
+          this.error = error;
           this.success = undefined;
         });
   }
