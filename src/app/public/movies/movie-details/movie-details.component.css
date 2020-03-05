@@ -19,7 +19,7 @@
     right: 50px;
     top: 0px;
     width: 600px;
-    height: 350px;
+    height: 100%;
     position: absolute;
 }
 .playercontainer iframe {
@@ -30,19 +30,25 @@
     top: 0;
     width: 100%;
  }
+.userAddComment{
+    font-size: 30px;
+}
+.Addcomment{
+  margin-left: 130px;
+}
 .actionContainer{
-    display: block;
-    position: relative;
-    padding-left: 35px;
-    top: 35px;
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  top: 35px;
 }
 .actionContainer p{
-        display: block;
-        word-wrap: break-word;
-        word-break: break-word;
-        margin: 0px;
-        padding: 0px;
-        width: 100%;
+      display: block;
+      word-wrap: break-word;
+      word-break: break-word;
+      margin: 0px;
+      padding: 0px;
+      width: 45vw;
 }
 
 .title{
@@ -53,9 +59,11 @@
     font-size: 20px;
 }
 .synopsis{
+
+  text-align: justify;
+  text-justify: inter-word;
     font-size: 15px;
-    word-break: break-word;
-    word-wrap: break-word;
+    padding-top: 10px !important;
 }
 .nowMore,.synopsis,.rating,.yearAndDuration,.title,.actors{
     margin-bottom: 5px !important;
@@ -225,7 +233,7 @@
     margin-right: 50px;
   }
   .buttonsActionsCommentUser {
-    text-align: right;
+    text-align: center;
   }
   .actionButtonsContaiener {
     width: 500px;
@@ -385,10 +393,7 @@
         margin-bottom: 0px !important;
     }
     .synopsis{
-        text-align: justify;
-        text-justify: inter-word;
         font-size: 10px;
-        padding-top: 15px !important; 
     }
     .addCartButton{
         font-size: 10px;

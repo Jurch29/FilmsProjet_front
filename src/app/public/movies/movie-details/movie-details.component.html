@@ -73,6 +73,28 @@
     </button>
   </div>
   <div class="containerComment">
+      <div class="CommentRow Addcomment">
+        <div class="userAddComment">
+          <span>Ajoutez un commentaire : </span>
+        </div>
+        <div class="UserComment">
+          <div class="textAreaContainer" *ngIf="user">
+            <textarea class="textareaField" matInput cdkTextareaAutosize>
+            </textarea>
+          </div>
+        </div>
+        <div class="actionButtonsContaiener" *ngIf="user">
+          <div class="buttonsActionsCommentUser">
+            <button mat-raised-button class="buttonLoadFile" (click)="fileInput.click()">
+              Ajouter une image<mat-icon class="icones">attach_file</mat-icon>
+            </button>
+            <input hidden (change)="onFileSelected()" #fileInput type="file" id="file" />
+            <button (click)="SaveComment(comment)" class="buttonSave" mat-raised-button>
+              Sauvarder<mat-icon class="icones">save</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
     <div *ngFor="let comment of Comments">
       <div class="CommentRow">
         <div class="userdetails">
