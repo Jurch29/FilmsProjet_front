@@ -49,7 +49,7 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
       ImageComment: []
     },
     {
-      Username: "pierre",
+      Username: "julien",
       UserComment: "c",
       ImageComment: [
         {
@@ -79,6 +79,7 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
       ]
     }
   ];
+  user: import("/Users/pierrebrunel/Documents/Cours/WorkspaceNTiersJEE/Projet/FilmsProjet_front/src/app/shared/models/user").User;
 
   constructor(private _ngZone: NgZone, private httpClient: HttpClient, private lightmodeService: LightmodeService, private authenticationService: AuthenticationService,
     private cartService: CartService, private numberofitemsincartService: NumberOfItemsInCartService,
@@ -96,6 +97,8 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
     this.subscriptionlightMode = this.lightmodeService.getLightModeEventMessage().subscribe(value =>
       this.lightMode = value
     );
+    this.user =this.authenticationService.currentUserValue;
+    console.log(this.user)
   }
 
   ngOnDestroy() {
@@ -113,14 +116,14 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
     this.trailer = this.movie.movieTrailerPath;
     this.readonly = true;
     this.DidBuy = true;
-    //this.ratingValueUsers   not set for now but to do
-    //this.ratingValueCurrentUser = 2;   not set for now but to do
     this.safeContent = this.sanitizer.bypassSecurityTrustResourceUrl(this.movie.movieTrailerPath);
     this.movieService.getSynopsis(this.movie.movieId).pipe(first()).subscribe(data => this.synopsis = data.movieDescription);
   }
 
-  formatDate(date: Date) {
-    let formattedDate = this.datepipe.transform(date, 'dd MMMM yyyy');
+  formatDate(srtdate: Date) {
+    var re = /0000/gi; 
+    let date = new Date(srtdate.toString().replace(re, "00:00"));
+    let formattedDate =this.datepipe.transform(date, 'dd-MM-yyyy');
     return formattedDate;
   }
 

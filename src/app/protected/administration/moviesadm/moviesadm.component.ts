@@ -48,7 +48,7 @@ export class MoviesadmComponent implements OnInit {
       this.movieid = this.movies.map(({ movieId }) => movieId);
       this.title = this.movies.map(({ movieTitle }) => movieTitle);
       this.price = this.movies.map(({ moviePrice }) => moviePrice);
-      this.date = this.movies.map(({ movieDate }) => new Date(movieDate));
+      this.date = this.movies.map(({ movieDate }) =>this.formatDate( new Date(movieDate)));
       this.image = this.movies.map(({ movieImagePath }) => movieImagePath);
       this.trailer = this.movies.map(({ movieTrailerPath }) => movieTrailerPath);
       this.duration = this.movies.map(({ movieDuration }) => movieDuration);
@@ -67,7 +67,7 @@ export class MoviesadmComponent implements OnInit {
 
     updatedMovie.movieTitle = this.title[line];
     updatedMovie.moviePrice = this.price[line];
-    updatedMovie.movieDate = this.date[line];
+    updatedMovie.movieDate = this.formatDate(this.date[line]);
     updatedMovie.movieImagePath = this.image[line];
     updatedMovie.movieTrailerPath = this.trailer[line];
     updatedMovie.movieDuration = this.duration[line];
@@ -81,6 +81,16 @@ export class MoviesadmComponent implements OnInit {
         console.log(error);
       }
   )
+  }
+
+  formatDate(srtdate: Date) {
+    var re = /0000/gi; 
+    if(srtdate != null){
+      let date = new Date(srtdate.toString().replace(re, "00:00"));
+      let formattedDate =new Date(this.datepipe.transform(date, 'dd-MM-yyyy'));
+     return formattedDate;
+    }
+    return null;
   }
 
   deleteMovie(line){

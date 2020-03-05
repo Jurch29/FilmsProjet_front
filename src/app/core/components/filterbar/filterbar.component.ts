@@ -8,6 +8,7 @@ import { LightmodeService } from '../../service/lightmode.service';
 import { Observable } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { Movie } from 'src/app/shared/models/movie';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-filterbar',
@@ -33,7 +34,7 @@ export class FilterbarComponent implements OnInit, OnDestroy {
   FilterCategoryD: Movie[];
   OrderByChoice: any;
 
-  constructor(private lightmodeService: LightmodeService, private movieService: MovieService) { }
+  constructor(private lightmodeService: LightmodeService,public datepipe: DatePipe, private movieService: MovieService) { }
 
   ngOnInit() {
 
@@ -121,7 +122,10 @@ export class FilterbarComponent implements OnInit, OnDestroy {
     if (event == undefined || event.value == undefined) {
       this.OrderByChoice = undefined;
       this.MoviesToDisplay.sort(function (a, b) {
-        return <any>b.movieDate - <any>a.movieDate;
+        var re = /0000/gi;
+        let dateA = new Date(a.movieDate.toString().replace(re, "00:00"));
+        let dateB = new Date(b.movieDate.toString().replace(re, "00:00"));
+        return <any>dateB - <any>dateA;
       });
     } else {
       this.OrderByChoice = event;
@@ -133,6 +137,7 @@ export class FilterbarComponent implements OnInit, OnDestroy {
     }
     this.movieService.ChangeMoviesToDisplay(this.MoviesToDisplay)
   }
+
   compileFilters() {
     this.MoviesToDisplay = this.allMovies.filter(x => this.FilterAuthorA.includes(x));
     this.MoviesToDisplay = this.MoviesToDisplay.filter(x => this.FilterActorB.includes(x));
