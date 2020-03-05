@@ -116,6 +116,7 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
     this.categories = this.movie.categories;
     this.readonly = true;
     this.DidBuy = true;
+    this.id = this.movie.movieId;
     this.safeContent = this.sanitizer.bypassSecurityTrustResourceUrl(this.movie.movieTrailerPath);
     this.movieService.getSynopsis(this.movie.movieId).pipe(first()).subscribe(data => {
        this.synopsis = data.movieDescription

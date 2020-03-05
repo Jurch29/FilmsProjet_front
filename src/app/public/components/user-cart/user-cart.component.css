@@ -32,12 +32,13 @@
 .cost{
     background-color: lightgray !important;
     border-radius: 4px;
-    box-shadow: 0px 0px 10px;
-    opacity: 1;
     padding: 10px;
     font-size: 15px;
+    color: black;
 }
-
+.actionsButtons button,.actionsButtons div{
+    margin-top: 10px;
+}
 @media(max-width:820px){
     .cartContainer{
         width: 70vw;
