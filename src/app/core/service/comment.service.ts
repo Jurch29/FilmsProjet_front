@@ -31,4 +31,8 @@ export class CommentService {
   getCommentContentByCommentId(id : number) {
     return this.http.get<CommentContent>(`${environment.apiUrl}/user/commentcontent/${id}`);
   }
+
+  addCommentToMovie(movieId : number, userId : number, content : String) {
+    return this.http.post<any>(`${environment.apiUrl}/movie/addcommenttomovie`, {movieId, userId, content});
+  }
 }
