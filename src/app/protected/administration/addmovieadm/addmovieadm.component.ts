@@ -46,7 +46,7 @@ export class AddmovieadmComponent implements OnInit {
   });
 
   constructor(private movieService: MovieService,public dialogRef: MatDialogRef<AddmovieadmComponent>,
-              private AdministrationService: AdministrationService) { }
+              private administrationService: AdministrationService) { }
 
   ngOnInit() {
     this.movieService.getAllActors().pipe(first())
@@ -95,7 +95,7 @@ export class AddmovieadmComponent implements OnInit {
     movie.authors = this.authorsControl.value;
     movie.categories = this.categoreiesControl.value;
 
-    this.AdministrationService.addMovie(movie,this.synopsis.value).pipe(first())
+    this.administrationService.addMovie(movie,this.synopsis.value).pipe(first())
     .subscribe(
       data => {
         console.log(data);

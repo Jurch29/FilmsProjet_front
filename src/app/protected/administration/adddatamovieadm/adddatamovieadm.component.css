@@ -1,0 +1,24 @@
+.actor {
+    display: flex;
+    flex-direction: column;
+}
+
+.alertError{
+    color: red;
+}
+
+.parentButtonValidate{
+    text-align: center;
+}
+
+.ButtonValidate{
+    display: inline-block;
+    color: green;
+    padding: 0px 10px;
+}
+
+mat-spinner{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

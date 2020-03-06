@@ -1,0 +1,29 @@
+.titleItem{
+    text-align: center;
+}
+
+table {
+    width: 90vh;
+  }
+  
+.mat-form-field {
+font-size: 14px;
+width: 100%;
+}
+
+td, th {
+width: 25%;
+}
+
+.buttonAdd{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.add{
+    margin:0 auto;
+    display:block;
+    padding: 5px;
+    color: white;
+    background: yellowgreen;
+}

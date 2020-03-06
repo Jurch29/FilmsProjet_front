@@ -35,6 +35,10 @@ export class HomeComponent implements OnInit,OnDestroy {
     this.movieService.getAllMovies().then(data =>{
       this.nbMovies = data.length;
     })
+
+    this.movieService.getTopMovies().pipe(first()).subscribe(data => {
+      this.movies = data;
+    });
   }
 
   formatDate(strDate : string) {
@@ -44,11 +48,13 @@ export class HomeComponent implements OnInit,OnDestroy {
     let formattedDate =this.datepipe.transform(date, 'dd-MM-yyyy');
     return formattedDate;
   }
+
   image(url : string) {
     return {
       "background-image": "url(" + url + ")"
     };
   }
+  
   ngOnDestroy(){
     this.subscriptionlightMode.unsubscribe();
   }

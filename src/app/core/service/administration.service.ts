@@ -52,15 +52,40 @@ export class AdministrationService {
     let movieDuration = updatedMovie.movieDuration;
     return this.http.post<Movie>(`${environment.apiUrl}/administration/updatemovie`, { movieId, movieTitle, moviePrice, movieDate, movieImagePath, movieTrailerPath, movieDuration });
   }
+
+  addMovie(movie,synopsis) {
+    return this.http.post<any>(`${environment.apiUrl}/administration/addmovie`, { movie,synopsis });
+  }
+
+  deleteActor(id: number){
+    return this.http.delete<Movie>(`${environment.apiUrl}/administration/deleteactor/${id}`);
+  }
+
+  deleteAuthor(id: number){
+    return this.http.delete<Movie>(`${environment.apiUrl}/administration/deleteauthor/${id}`);
+  }
+
+  deleteCategory(id: number){
+    return this.http.delete<Movie>(`${environment.apiUrl}/administration/deletecategory/${id}`);
+  }
+
+  addActor(firstname,lastname){
+    return this.http.post<any>(`${environment.apiUrl}/administration/addactor`, { firstname,lastname });
+  }
+
+  addAuthor(firstname,lastname){
+    return this.http.post<any>(`${environment.apiUrl}/administration/addauthor`, { firstname,lastname });
+  }
+
+  addCategory(category){
+    return this.http.post<any>(`${environment.apiUrl}/administration/addcategory`, { category });
+  }
+
   formatDate(srtdate: Date) {
     var re = /0000/gi; 
     let date = new Date(srtdate.toString().replace(re, "00:00"));
     let formattedDate =new Date(this.datepipe.transform(date, 'dd-MM-yyyy'));
     return formattedDate;
-  }
-
-  addMovie(movie,synopsis) {
-    return this.http.post<any>(`${environment.apiUrl}/administration/addmovie`, { movie,synopsis });
   }
 
 }
