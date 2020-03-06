@@ -73,17 +73,17 @@
     </button>
   </div>
   <div class="containerComment">
-      <div class="CommentRow Addcomment">
+      <div *ngIf="user" class="CommentRow Addcomment">
         <div class="userAddComment">
           <span>Ajoutez un commentaire : </span>
         </div>
         <div class="UserComment">
-          <div class="textAreaContainer" *ngIf="user">
+          <div class="textAreaContainer">
             <textarea class="textareaField" matInput cdkTextareaAutosize [formControl]="content">
             </textarea>
           </div>
         </div>
-        <div class="actionButtonsContaiener" *ngIf="user">
+        <div class="actionButtonsContaiener">
           <div class="buttonsActionsCommentUser">
             <button mat-raised-button class="buttonLoadFile" (click)="fileInput.click()">
               Ajouter une image<mat-icon class="icones">attach_file</mat-icon>

@@ -1,10 +1,21 @@
+.Title.dark{
+    color: white;
+}
+
 .Title{
     margin-top: 25px;
     text-align: center;
     font-weight: 900;
     font-family: fantasy;
+    color: black;
+}
+::ng-deep .mat-tab-label{
+    color: black !important;
 }
 
+.dark::ng-deep .mat-tab-label{
+    color: white !important;
+}
 .ControlPanel{
     margin-top: 25px;
     margin-left: 25px;
