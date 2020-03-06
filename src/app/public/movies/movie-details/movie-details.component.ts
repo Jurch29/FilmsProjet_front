@@ -160,6 +160,16 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
   }
 
   saveComment() {
-    console.log(this.content.value);
+    if (this.content.errors == undefined) {
+      this.commentService.addCommentToMovie(this.id, this.authenticationService.currentUserValue.userId, this.content.value)
+      .subscribe(
+        data => {
+
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
   }
 }
