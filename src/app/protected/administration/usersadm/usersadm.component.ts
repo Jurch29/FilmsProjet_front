@@ -139,13 +139,13 @@ export class UsersadmComponent implements OnInit {
     });
   }
 
-  applyFilter(event: Event) {
-    //Problème ici aussi lié surement au problème précèdent
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
+  // applyFilter(event: Event) {
+  //   //Problème ici aussi lié surement au problème précèdent
+  //   const filterValue = (event.target as HTMLInputElement).value;
+  //   this.dataSource.filter = filterValue.trim().toLowerCase();
+  //   if (this.dataSource.paginator) {
+  //     this.dataSource.paginator.firstPage();
+  //   }
+  // }
 
 }

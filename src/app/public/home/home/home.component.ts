@@ -35,10 +35,12 @@ export class HomeComponent implements OnInit,OnDestroy {
     this.movieService.getAllMovies().then(data =>{
       this.nbMovies = data.length;
     })
+
+    this.movieService.getTopMovies().pipe(first()).subscribe(data => {
+      this.movies = data;
+    });
   }
-  ngOnDestroy(){
-    this.subscriptionlightMode.unsubscribe();
-  }
+  
   formatDate(strDate : string) {
     var re = /0000/gi; 
     strDate = strDate.replace(re, "00:00");
@@ -46,12 +48,16 @@ export class HomeComponent implements OnInit,OnDestroy {
     let formattedDate =this.datepipe.transform(date, 'dd-MM-yyyy');
     return formattedDate;
   }
+
   image(url : string) {
     return {
       "background-image": "url(" + url + ")"
     };
   }
- 
+  
+  ngOnDestroy(){
+    this.subscriptionlightMode.unsubscribe();
+  }
 
   totheleft(){
     var scrollLeft = document.getElementById("row").scrollLeft;
