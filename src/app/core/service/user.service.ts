@@ -37,4 +37,8 @@ export class UserService {
         let params = new HttpParams().set("userId",userId.toString()).set("password", password);
         return this.http.get<any>(`${environment.apiUrl}/user/checkuserpassword`, {params: params});
     }
+
+    sendMovieMark(userId : number, movieId : number, mark : number) {
+        return this.http.post<any>(`${environment.apiUrl}/user/sendnewmark`, { userId, movieId, mark });
+    }
 }

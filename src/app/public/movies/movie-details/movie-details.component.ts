@@ -22,6 +22,7 @@ import { Comment } from 'src/app/shared/models/comment';
 import { CommentService } from 'src/app/core/service/comment.service';
 import { MatTextareaAutosize } from '@angular/material';
 import { FormControl, Validators } from '@angular/forms';
+import { UserService } from 'src/app/core/service/user.service';
 
 @Component({
   selector: 'app-movie-details',
@@ -57,7 +58,7 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
   constructor(private _ngZone: NgZone, private httpClient: HttpClient, private lightmodeService: LightmodeService, private authenticationService: AuthenticationService,
     private cartService: CartService, private numberofitemsincartService: NumberOfItemsInCartService,
     private sanitizer: DomSanitizer, private movieService: MovieService, private route: ActivatedRoute, public datepipe: DatePipe,
-    private commentService : CommentService) { }
+    private commentService : CommentService, private userService : UserService) { }
 
   @ViewChild("autosize", { static: false }) autosize: CdkTextareaAutosize;
 
@@ -140,6 +141,15 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
 
   onRate($event: { oldValue: number, newValue: number, starRating: StarRatingComponent }) {
     this.ratingValueCurrentUser = $event.newValue;
+    this.userService.sendMovieMark(this.authenticationService.currentUserValue.userId, this.id, this.ratingValueCurrentUser)
+    .subscribe(
+      data => {
+
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
   triggerResize() {

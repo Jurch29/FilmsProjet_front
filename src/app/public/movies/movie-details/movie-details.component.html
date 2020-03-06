@@ -43,7 +43,7 @@
       </div>
       <div class="rating">{{ratingValueUsers}}/5</div>
     </div>
-    <div *ngIf="DidBuy">
+    <div *ngIf="authenticationService.currentUserValue">
       <div class="rating">
         <span>Votre note : </span>
         <star-rating [value]=(ratingValueCurrentUser) (rate)="onRate($event)" checkedcolor="gold" uncheckedcolor="grey"
@@ -73,17 +73,17 @@
     </button>
   </div>
   <div class="containerComment">
-      <div class="CommentRow Addcomment">
+      <div *ngIf="this.authenticationService.currentUserValue" class="CommentRow Addcomment">
         <div class="userAddComment">
           <span>Ajoutez un commentaire : </span>
         </div>
         <div class="UserComment">
-          <div class="textAreaContainer" *ngIf="user">
+          <div class="textAreaContainer">
             <textarea class="textareaField" matInput cdkTextareaAutosize [formControl]="content">
             </textarea>
           </div>
         </div>
-        <div class="actionButtonsContaiener" *ngIf="user">
+        <div class="actionButtonsContaiener">
           <div class="buttonsActionsCommentUser">
             <button mat-raised-button class="buttonLoadFile" (click)="fileInput.click()">
               Ajouter une image<mat-icon class="icones">attach_file</mat-icon>

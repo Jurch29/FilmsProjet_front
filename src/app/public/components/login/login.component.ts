@@ -10,6 +10,7 @@ import { NumberOfItemsInCartService } from 'src/app/core/service/number-of-items
 import { UserActivation } from 'src/app/shared/models/user-activation';
 import { UserService } from 'src/app/core/service/user.service';
 import { UserCartComponent } from '../user-cart/user-cart.component';
+import { MovieDetailsComponent } from '../../movies/movie-details/movie-details.component';
 
 @Component({
   selector: 'app-login',
