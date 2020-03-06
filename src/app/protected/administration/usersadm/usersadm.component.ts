@@ -8,6 +8,7 @@ import { AuthenticationService } from 'src/app/core/service/authentication.servi
 import { AdministrationService } from 'src/app/core/service/administration.service';
 import { ChangepasswordadmComponent } from '../changepasswordadm/changepasswordadm.component';
 import { AdduseradmComponent } from '../adduseradm/adduseradm.component';
+import { LightmodeService } from 'src/app/core/service/lightmode.service';
 
 export interface UserElement {
   userFirstname: string;
@@ -38,9 +39,8 @@ export class UsersadmComponent implements OnInit {
   dataSource;
 
   users : User[];
-
   constructor(private userservice: UserService, public datepipe: DatePipe, public dialog: MatDialog,
-              private authenticationService: AuthenticationService, private AdministrationService: AdministrationService) {}
+   private authenticationService: AuthenticationService, private AdministrationService: AdministrationService) {}
 
   ngOnInit() {
     this.paginator._intl.itemsPerPageLabel = 'Objet par page';

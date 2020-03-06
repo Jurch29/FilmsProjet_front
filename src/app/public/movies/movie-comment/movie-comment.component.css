@@ -201,6 +201,7 @@
 
 .CommentRow{
     margin-bottom: 20px;
+    width: 100%;
 }
 .CommentRow,
   .UserComment,
