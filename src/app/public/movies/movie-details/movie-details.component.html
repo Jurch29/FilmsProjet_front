@@ -79,7 +79,7 @@
         </div>
         <div class="UserComment">
           <div class="textAreaContainer" *ngIf="user">
-            <textarea class="textareaField" matInput cdkTextareaAutosize>
+            <textarea class="textareaField" matInput cdkTextareaAutosize [formControl]="content">
             </textarea>
           </div>
         </div>
@@ -89,51 +89,12 @@
               Ajouter une image<mat-icon class="icones">attach_file</mat-icon>
             </button>
             <input hidden (change)="onFileSelected()" #fileInput type="file" id="file" />
-            <button (click)="SaveComment(comment)" class="buttonSave" mat-raised-button>
-              Sauvarder<mat-icon class="icones">save</mat-icon>
+            <button (click)="saveComment()" class="buttonSave" mat-raised-button>
+              Sauvegarder<mat-icon class="icones">save</mat-icon>
             </button>
           </div>
         </div>
       </div>
-    <div *ngFor="let comment of Comments">
-      <div class="CommentRow">
-        <div class="userdetails">
-          <mat-icon class="userIcon">person_outline</mat-icon>
-          <span>{{comment.Username}}</span>
-        </div>
-        <div class="UserComment">
-          <span *ngIf="!user || comment.Username !== user.userLogin">{{comment.UserComment}}</span>
-          <div class="textAreaContainer" *ngIf="user && comment.Username === user.userLogin">
-            <textarea class="textareaField" matInput cdkTextareaAutosize>
-      {{comment.UserComment}}</textarea>
-          </div>
-        </div>
-        <div *ngIf="comment.ImageComment?.length > 0" class="ContainerImages">
-          <div class="Images">
-            <div *ngFor="let image of comment.ImageComment">
-              <img [src]="image.url" />
-              <button *ngIf="user && comment.Username === user.userLogin" class="buttonDeleteImage" mat-icon-button
-                (click)="DeleteImage(comment,image)">
-                <mat-icon class="buttonClear">clear</mat-icon>
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="actionButtonsContaiener" *ngIf="user && comment.Username === user.userLogin">
-          <div class="buttonsActionsCommentUser">
-            <button (click)="DeleteComment(comment)" class="buttonDelete" mat-raised-button>
-              Supprimer<mat-icon class="icones">clear</mat-icon>
-            </button>
-            <button mat-raised-button class="buttonLoadFile" (click)="fileInput.click()">
-              Ajouter une image<mat-icon class="icones">attach_file</mat-icon>
-            </button>
-            <input hidden (change)="onFileSelected()" #fileInput type="file" id="file" />
-            <button (click)="SaveComment(comment)" class="buttonSave" mat-raised-button>
-              Sauvarder<mat-icon class="icones">save</mat-icon>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <app-movie-comment *ngFor="let comment of comments" [comment]="comment" [user]="user"></app-movie-comment>
   </div>
 </div>

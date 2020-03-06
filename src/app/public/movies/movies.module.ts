@@ -9,9 +9,10 @@ import { RatingModule } from 'ng-starrating';
 import { MatCarouselModule } from '@ngmodule/material-carousel';
 import { MovieDetailsComponent } from './movie-details/movie-details.component';
 import { RouterModule } from '@angular/router';
+import { MovieCommentComponent } from './movie-comment/movie-comment.component';
 
 @NgModule({
-  declarations: [MoviesComponent,MoviePreviewComponent,MovieCardComponent, MovieDetailsComponent],
+  declarations: [MoviesComponent,MoviePreviewComponent,MovieCardComponent, MovieDetailsComponent, MovieCommentComponent],
   imports: [
     SharedModule,
     RouterModule,

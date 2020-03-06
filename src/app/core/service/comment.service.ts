@@ -16,6 +16,10 @@ export class CommentService {
     return this.http.get<Comment[]>(`${environment.apiUrl}/user/comments/${id}`);
   }
 
+  getCommentsByMovieId(id : number) {
+    return this.http.get<Comment[]>(`${environment.apiUrl}/movie/comments/${id}`);
+  }
+
   getMovieByCommentId(id : number) {
     return this.http.get<Movie>(`${environment.apiUrl}/user/commentmovie/${id}`);
   }
