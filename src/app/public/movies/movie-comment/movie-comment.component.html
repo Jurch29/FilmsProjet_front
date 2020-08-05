@@ -5,8 +5,8 @@
         <span>{{date}}</span>
     </div>
     <div class="UserComment">
-        <span *ngIf="!user || comment.Username !== user.userLogin">{{commentContent}}</span>
-        <div class="textAreaContainer" *ngIf="user && comment.Username === user.userLogin">
+        <span *ngIf="!user || username !== user.userLogin">{{commentContent}}</span>
+        <div class="textAreaContainer" *ngIf="user && username === user.userLogin">
             <textarea class="textareaField" matInput cdkTextareaAutosize>
                 {{commentContent}}
             </textarea>
@@ -14,7 +14,7 @@
     </div>
     <div *ngIf="comment.image?.length > 0" class="ContainerImages">
         <div class="Images">
-            <div *ngFor="let image of comment.image">
+            <div *ngFor="let image of comment.images">
                 <img [src]="image.url" />
                 <button *ngIf="user && username === user.userLogin" class="buttonDeleteImage" mat-icon-button
                     (click)="DeleteImage(comment,image)">

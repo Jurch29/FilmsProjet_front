@@ -31,15 +31,15 @@ import { UserService } from 'src/app/core/service/user.service';
 })
 export class MovieDetailsComponent implements OnInit, OnDestroy {
   lightMode: any;
-  private id: number;
-  private date: string;
-  private duration: number;
-  private title: string;
-  private realisators: Author[];
-  private actors: Actor[];
-  private categories: Category[];
-  private synopsis: string;
-  private trailers: Trailer[];
+  public id: number;
+  public date: string;
+  public duration: number;
+  public title: string;
+  public realisators: Author[];
+  public actors: Actor[];
+  public categories: Category[];
+  public synopsis: string;
+  public trailers: Trailer[];
   subscriptionlightMode: any;
   srcResult: any = null;
   movie: Movie;
@@ -55,7 +55,7 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
 
   private comments : Comment[];
 
-  constructor(private _ngZone: NgZone, private httpClient: HttpClient, private lightmodeService: LightmodeService, private authenticationService: AuthenticationService,
+  constructor(private _ngZone: NgZone, private httpClient: HttpClient, private lightmodeService: LightmodeService, public authenticationService: AuthenticationService,
     private cartService: CartService, private numberofitemsincartService: NumberOfItemsInCartService,
     private sanitizer: DomSanitizer, private movieService: MovieService, private route: ActivatedRoute, public datepipe: DatePipe,
     private commentService : CommentService, private userService : UserService) { }

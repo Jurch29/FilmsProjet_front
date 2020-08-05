@@ -11,12 +11,12 @@ import { User } from 'src/app/shared/models/user';
 })
 export class MovieCommentComponent {
   @Input()
-  private comment : Comment;
+  public comment : Comment;
   @Input()
-  private user : User;
-  private date : String;
-  private username : String;
-  private commentContent : String;
+  public user : User;
+  public date : String;
+  public username : String;
+  public commentContent : String;
 
   constructor(private commentService : CommentService, private datePipe : DatePipe) {}
 
@@ -46,5 +46,21 @@ export class MovieCommentComponent {
     let date = new Date(strDate);
     let formattedDate = this.datePipe.transform(date, 'dd-MM-yyyy');
     return formattedDate;
+  }
+
+  DeleteComment(value){
+    //TODO
+  }
+
+  DeleteImage(value1,value2){
+    //TODO
+  }
+
+  SaveComment(value){
+    //TODO
+  }
+
+  onFileSelected(){
+    //TODO
   }
 }

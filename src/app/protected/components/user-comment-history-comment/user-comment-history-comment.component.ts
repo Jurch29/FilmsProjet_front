@@ -9,11 +9,11 @@ import { CommentService } from 'src/app/core/service/comment.service';
   styleUrls: ['./user-comment-history-comment.component.css']
 })
 export class UserCommentHistoryCommentComponent {
-  private date : String;
-  private movieTitle : String;
-  private commentContent : String;
+  public date : String;
+  public movieTitle : String;
+  public commentContent : String;
   @Input()
-  private comment : Comment;
+  public comment : Comment;
 
   constructor(private commentService : CommentService, private datePipe : DatePipe) {}
 

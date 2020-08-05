@@ -21,7 +21,7 @@ export class MoviePreviewComponent implements OnInit,OnDestroy {
   @ViewChild("infobulecontainer", { static: false, read: ViewContainerRef }) containerinfobule;
   infoBulleMovieId: number;
 
-  constructor(private route: Router,private movieService: MovieService,
+  constructor(private route: Router,public movieService: MovieService,
     private lightmodeService: LightmodeService, private resolver: ComponentFactoryResolver,public datepipe: DatePipe) {
     this.componentFactory = resolver.resolveComponentFactory(MovieCardComponent);
   }

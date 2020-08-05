@@ -9,7 +9,7 @@ import { Comment } from 'src/app/shared/models/comment';
   styleUrls: ['./user-comment-history.component.css']
 })
 export class UserCommentHistoryComponent {
-  private comments : Comment[];
+  public comments : Comment[];
 
   constructor(private authenticationService : AuthenticationService, private commentService : CommentService) {}
 
