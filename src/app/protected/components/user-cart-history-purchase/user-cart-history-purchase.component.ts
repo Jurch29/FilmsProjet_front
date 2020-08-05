@@ -8,9 +8,9 @@ import { OrderItem } from 'src/app/shared/models/order-item';
   styleUrls: ['./user-cart-history-purchase.component.css']
 })
 export class UserCartHistoryPurchaseComponent {
-  private items : OrderItem[];
-  private purchase_date : String;
-  private totalCost : number;
+  public items : OrderItem[];
+  public purchase_date : String;
+  public totalCost : number;
   @Input()
   order : Order;
 

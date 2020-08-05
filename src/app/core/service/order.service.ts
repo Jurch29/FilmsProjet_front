@@ -10,6 +10,6 @@ export class OrderService {
   constructor(private http: HttpClient) { }
 
   getUserOrders(user_id : number) {
-    return this.http.get<Order[]>(`${environment.apiUrl}/user/orders/${user_id}`);
+    return this.http.get<any>(`${environment.apiUrl}/user/orders/${user_id}`);
   }
 }

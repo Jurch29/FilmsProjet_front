@@ -18,6 +18,8 @@ export class ChangepasswordadmComponent implements OnInit {
   password = new FormControl('', Validators.required);
   error: any;
   submitted = false;
+  hide: any;
+  loading: any = false;
   groupControl = new FormGroup({password: this.password});
 
   constructor(public dialogRef: MatDialogRef<ChangepasswordadmComponent>, private AdministrationService: AdministrationService,

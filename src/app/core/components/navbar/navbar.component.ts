@@ -32,7 +32,7 @@ export class NavbarComponent implements OnInit {
   constructor(public dialog : MatDialog, private movieService: MovieService, private router : Router,
     private authenticationService : AuthenticationService, private lightmodeService : LightmodeService,
     private opensidenavService : OpensidenavService, private openfilterbarService : OpenfilterbarService, 
-    private numberOfItemsService : NumberOfItemsInCartService, private cartService : CartService) {
+    public numberOfItemsService : NumberOfItemsInCartService, private cartService : CartService) {
       this.currentUser = this.authenticationService.currentUserValue;
   }
 

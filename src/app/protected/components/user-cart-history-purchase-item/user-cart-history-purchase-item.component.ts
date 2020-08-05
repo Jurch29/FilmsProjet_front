@@ -9,10 +9,10 @@ import { UserCartHistoryPurchaseComponent } from '../user-cart-history-purchase/
   styleUrls: ['./user-cart-history-purchase-item.component.css']
 })
 export class UserCartHistoryPurchaseItemComponent {
-  private title : String;
-  private count : number;
-  private unitCost : number;
-  private totalCost : number;
+  public title : String;
+  public count : number;
+  public unitCost : number;
+  public totalCost : number;
   @Input()
   item : OrderItem;
   @Input()

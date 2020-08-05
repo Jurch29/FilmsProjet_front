@@ -33,6 +33,7 @@ export class AddmovieadmComponent implements OnInit {
   synopsis = new FormControl('', Validators.required);
 
   error: any;
+  loading: any = false;
   submitted = false;
 
   groupControl = new FormGroup({

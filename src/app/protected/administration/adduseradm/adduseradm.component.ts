@@ -18,6 +18,8 @@ export class AdduseradmComponent implements OnInit {
   email = new FormControl('', [Validators.required, Validators.email]);
   password = new FormControl('', Validators.required);
 
+  hide : any;
+  loading: any = false;
   error: any;
   submitted = false;
 

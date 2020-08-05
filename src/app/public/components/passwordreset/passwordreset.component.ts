@@ -22,6 +22,7 @@ export class PasswordresetComponent implements OnInit {
   token : string;
   email : string;
   expiredToken: boolean = false;
+  hide: any;
 
   newPasswd = new FormControl('', [Validators.required, Validators.minLength(6)]);
   confPasswd = new FormControl('', Validators.required);

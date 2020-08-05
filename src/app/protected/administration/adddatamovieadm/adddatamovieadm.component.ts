@@ -18,7 +18,9 @@ export class AdddatamovieadmComponent implements OnInit {
   category = new FormControl('', Validators.required);
 
   error: any;
+  loading: any = false;
   submitted = false;
+  display_mode: any;
 
   groupControl = new FormGroup({
     lastname: this.lastname,
@@ -30,7 +32,10 @@ export class AdddatamovieadmComponent implements OnInit {
   });
 
   constructor(public dialogRef: MatDialogRef<AdddatamovieadmComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData, private AdministrationService: AdministrationService) { }
+    @Inject(MAT_DIALOG_DATA) public data: DialogData, private AdministrationService: AdministrationService) 
+  {
+    this.display_mode = data;
+  }
 
   ngOnInit() {
     

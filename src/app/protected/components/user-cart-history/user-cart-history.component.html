@@ -1,7 +1,7 @@
 <div class="cartContainerHistory" [class.dark]="!lightMode"> 
     <div *ngIf="this.orders != undefined && this.orders.length != 0">
         <h1>Commandes :</h1>
-        <app-user-cart-history-purchase *ngFor="let order of orders.orders" [order]="order"></app-user-cart-history-purchase>
+        <app-user-cart-history-purchase *ngFor="let order of orders" [order]="order"></app-user-cart-history-purchase>
     </div>
     <div *ngIf="this.orders == undefined || this.orders.length == 0">
         <p>Aucune commande pour le moment</p>

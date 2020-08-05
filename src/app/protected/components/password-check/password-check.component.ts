@@ -15,6 +15,8 @@ export class PasswordCheckComponent implements OnInit {
   confPasswd = new FormControl('', Validators.required);
   error: any;
   submitted = false;
+  hide: any;
+  loading: any = false;
   groupControl = new FormGroup({confPasswd: this.confPasswd});
 
   constructor(private userservice: UserService, private authenticationService: AuthenticationService,
@@ -45,6 +47,10 @@ export class PasswordCheckComponent implements OnInit {
             return  resolve(false);
         });
       });
+  }
+
+  forgetPassword() {
+
   }
 
 }

@@ -35,7 +35,7 @@ export class MoviesadmComponent implements OnInit {
   public mydate = new Date();
 
   movies : Movie[];
-  private dataSource;
+  public dataSource;
   private pageIndex = 5;
   columnsToDisplay = ['ids', 'movies'];
   expandedElement: MovieElement | null;

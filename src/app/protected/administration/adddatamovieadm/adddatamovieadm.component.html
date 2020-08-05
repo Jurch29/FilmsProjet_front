@@ -1,5 +1,5 @@
 
-<div class="actor" *ngIf="data.display==='actor'">
+<div class="actor" *ngIf="display_mode.display==='actor'">
     <mat-form-field>
         <input matInput placeholder="Nom :" [formControl]="lastname" required>
         <mat-error *ngIf="lastname.errors?.required">Champ requis</mat-error>
@@ -20,7 +20,7 @@
     </div>
 </div>
 
-<div class="actor" *ngIf="data.display==='author'">
+<div class="actor" *ngIf="display_mode.display==='author'">
     <mat-form-field>
         <input matInput placeholder="Nom :" [formControl]="lastname" required>
         <mat-error *ngIf="lastname.errors?.required">Champ requis</mat-error>
@@ -41,7 +41,7 @@
     </div>
 </div>
 
-<div class="category" *ngIf="data.display==='category'">
+<div class="category" *ngIf="display_mode.display==='category'">
     <mat-form-field>
         <input matInput placeholder="Catégorie :" [formControl]="category" required>
         <mat-error *ngIf="category.errors?.required">Champ requis</mat-error>

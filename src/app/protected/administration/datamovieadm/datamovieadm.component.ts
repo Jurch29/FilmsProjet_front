@@ -27,13 +27,13 @@ export class DatamovieadmComponent implements OnInit {
   public authorid : any = {};
   public categoryid : any = {};
 
-  private dataSourceActors;
+  public dataSourceActors;
   displayedActorColumns = ['idactor', 'nameactor', 'firstnameactor', 'deleteactor'];
 
-  private dataSourceAuthors;
+  public dataSourceAuthors;
   displayedAuthorColumns = ['idauthor', 'nameauthor', 'firstnameauthor', 'deleteauthor'];
 
-  private dataSourceCategories;
+  public dataSourceCategories;
   displayedCategoryColumns = ['idcategory', 'namecategory', 'deletecategory'];
 
   constructor(private movieService: MovieService, private administrationService: AdministrationService,public dialog: MatDialog) { }

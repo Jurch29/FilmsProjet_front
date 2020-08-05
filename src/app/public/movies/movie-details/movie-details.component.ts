@@ -53,7 +53,7 @@ export class MovieDetailsComponent implements OnInit, OnDestroy {
 
   content = new FormControl('', Validators.required);
 
-  private comments : Comment[];
+  public comments : Comment[];
 
   constructor(private _ngZone: NgZone, private httpClient: HttpClient, private lightmodeService: LightmodeService, public authenticationService: AuthenticationService,
     private cartService: CartService, private numberofitemsincartService: NumberOfItemsInCartService,

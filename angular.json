@@ -124,5 +124,8 @@
       }
     }
   },
-  "defaultProject": "ProjetsFilm"
+  "defaultProject": "ProjetsFilm",
+  "cli": {
+    "analytics": "d9b4a9f4-cbb7-4bf9-b7fa-869509db195c"
+  }
 }

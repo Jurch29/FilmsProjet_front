@@ -13,10 +13,10 @@ import { LightmodeService } from 'src/app/core/service/lightmode.service';
   styleUrls: ['./user-cart.component.css']
 })
 export class UserCartComponent implements OnInit,OnDestroy {
-  private cart : CartItem[];
+  cart : CartItem[];
   items : boolean = false;
   currentUser : User;
-  private totalCost : number;
+  totalCost : number;
   subscriptionlightMode: any;
   lightMode: boolean;
   

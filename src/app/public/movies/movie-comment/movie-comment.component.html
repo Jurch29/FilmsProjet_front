@@ -12,7 +12,7 @@
             </textarea>
         </div>
     </div>
-    <div *ngIf="comment.image?.length > 0" class="ContainerImages">
+    <div *ngIf="comment.images.length > 0" class="ContainerImages">
         <div class="Images">
             <div *ngFor="let image of comment.images">
                 <img [src]="image.url" />

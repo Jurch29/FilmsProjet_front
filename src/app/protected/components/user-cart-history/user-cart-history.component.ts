@@ -10,7 +10,7 @@ import { LightmodeService } from 'src/app/core/service/lightmode.service';
   styleUrls: ['./user-cart-history.component.css']
 })
 export class UserCartHistoryComponent {
-  private orders : Order[];
+  public orders : Order[];
   subscriptionlightMode: any;
   lightMode: boolean;
 
@@ -21,7 +21,7 @@ export class UserCartHistoryComponent {
     .pipe()
     .subscribe(
       data => {
-        this.orders = data
+        this.orders = data.orders;
       },
       error =>  {
         console.log(error);
