@@ -1,58 +1,64 @@
+h1.example-app-name {
+  margin-left: 8px;
+}
 
-  
-  h1.example-app-name {
-    margin-left: 8px;
-  }
-  
-  .example-sidenav-container {
-    flex: 1;
-  }
-  
-  .mat-sidenav-container{
-    margin-top: 0 !important;
-  }
-  .example-container {
-    display: flex;
-    
+.example-sidenav-container {
+  flex: 1;
+}
+
+.mat-sidenav-container{
+  margin-top: 0 !important;
+}
+
+.example-container {
+  display: flex;
 }
 
 .example-is-mobile .example-toolbar {
     position: fixed;
     z-index: 2;
 }
+
 .example-is-mobile .example-sidenav-container {
     flex: 1 0 auto;
     margin-top: 0px !important;
 }
+
 .container {
   height: calc(100vh - 114px);
 }
+
 .container.dark{
   background-color: #222222;
 }
+
 .mat-drawer{  
   background-color: lightgrey;
 }
+
 .mat-list-base.dark,.mat-drawer.dark, .mat-list-item.dark {
   background-color: #666;
   color: white;
 }
 
-
 .mat-drawer:not(.mat-drawer-side){
   bottom: 30px !important;
 }
+
 .mat-sidenav-content {
   width: 100vw!important; 
+  overflow-x: hidden;
 }
+
 .mat-sidenav-content-drawer-open{
   width: 91vw!important;
 }
+
 .distanceLogo{
   margin-left: 10px;
 }
+
 @media (max-width: 839px)  {
-  
   .container {
       height: calc(100vh - 70px);
   }
@@ -60,8 +66,8 @@
     font-size: 12px !important;
     height: 32px !important;
   }
- 
 }
+
 @media(max-width: 600px){
   .mat-sidenav-content-drawer-open{
     width: 100vw!important;

@@ -9,23 +9,29 @@
 .title{
     position: relative;
 }
+
 .search-container {
     padding-top: 20px;
 }
+
 .search-container mat-form-field{
     width: 50vw;
 }
+
 .search-container input{
     font-size: 12px;
 }
+
 button{
    min-width: 0px;
 }
+
 @media (max-width: 986px)  {
     button{
         padding: 0 7px;
      }
 }
+
 @media (max-width: 937px)  {
     .search-container{
         font-size: 10px;

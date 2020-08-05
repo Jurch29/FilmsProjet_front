@@ -10,6 +10,7 @@
 .contain {
   width: 100%;
 }
+
 .header{
     color: black;
     position: absolute;
@@ -17,13 +18,16 @@
     left: 70px;
     font-weight: bold;
 }
+
 .dark .header{
     color: white;
 }
+
 .content{
     width: 100vw;
     display: inline-flex;
 }
+
 .row {
     transition: 450ms transform;
     font-size: 0;
@@ -38,16 +42,20 @@
     box-shadow: 0px 0px 10px;
     color: black;
 }
+
 .dark .row{
     color: darkgray;
 }
+
 .row::-webkit-scrollbar {
     display: none;
     -ms-overflow-style: none;
 }
+
 .category{
     display: inline;
 }
+
 .before, .after{
     font-family: 'FontAwesome';
     color: black;
@@ -60,21 +68,27 @@
     margin-bottom: auto;
     margin-top: auto;
 }
+
 .dark .before,.dark .after{
     color: white;
 }
+
 .before:hover, .after:hover{
     transform: scale(1.5);
 }
+
 .before::before{
     content: "\f053";
 }
+
 .after::after{
     content: "\f054";
 }
+
 .row__inner{
     display: inline-block;
 }
+
 .row__inner {
   position: relative;
   display: inline-block;
@@ -87,17 +101,20 @@
   transform-origin: center left;
   color: black;
 }
+
 .bottomRowHeader{
   display:table;
   margin:0 auto;
   font-size: 20px;
   margin-bottom: 25px;
 }
+
 .bottomRow{
     color: black;
     margin: 0 50px;
     margin-bottom: 50px;
 }
+
 .blackbloc{
     margin-left: 5vw;
     box-shadow: 0px 0px 10px;
@@ -114,6 +131,7 @@
     padding: 0 10px;
     vertical-align: middle;
 }
+
 .containerBlackBloc{
     width: 100%;
     display: flex;
@@ -127,9 +145,11 @@
 .category .row__inner:last-child{
     margin-right: 70px ;
 }
+
 .dark .row .row__inner {
     color: #5b5b5b;
 }
+
 .row__inner:hover {
     transform: scale(1.1);
 }
@@ -137,16 +157,20 @@
 .row__inner:hover ~ .row__inner {
   transform: translate3d(10px, 0, 0);
 }
+
 .ng-star-inserted{
     display: inline-block!important;
 }
+
 .row__inner .cover.fadein:hover {
     transition: opacity 0s ease;
     opacity: 1;
 }
+
 .row__inner:hover {
     opacity: 1;
 }
+
 .row__inner .cover {
     background-size: 134px 196px;
     width: 134px;
@@ -156,10 +180,12 @@
     cursor: pointer;
     opacity: 0;
 }
+
 .row__inner .cover.fadein {
     transition: opacity 200ms ease-in;
     opacity: 1;
 }
+
 .row__inner .cover .overlay {
     background: rgba(23,24,27,0.6);
     text-align: center;
@@ -176,6 +202,7 @@
     transition: border-color 0.5s;
     opacity: 1;
 }
+
 .row__inner .title {
     height: auto;
     margin: 6px 0 4px;
@@ -186,9 +213,11 @@
     white-space: nowrap;
     padding-bottom: 2px;
 }
+
 .dark .row .row__inner .title{
     color: white;
 }
+
 .row__inner .year {
     font-size: 0.85em;
     color: #5b5b5b;
